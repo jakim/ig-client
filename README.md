@@ -2,6 +2,9 @@
 Instagram public, web api client
 # Version
 Early dev stage. Use at your own risk.
+
+[![Build Status](https://travis-ci.org/jakim/ig-client.svg?branch=master)](https://travis-ci.org/jakim/ig-client)
+
 # Install
 composer require jakim-pj/ig-client
 # Legal
