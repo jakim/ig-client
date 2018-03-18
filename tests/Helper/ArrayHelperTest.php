@@ -36,5 +36,15 @@ class ArrayHelperTest extends TestCase
 
         $val = ArrayHelper::getValue(['0' => ['test' => 'test1']], '0.test3', 'def');
         $this->assertEquals('def', $val);
+
+        $obj = new \stdClass();
+        $obj->foo = 'bar';
+        $val = ArrayHelper::getValue($obj, 'foo');
+        $this->assertEquals($obj->foo, $val);
+
+        $val = ArrayHelper::getValue(['foo' => 'bar'], function () {
+            return 'bar1';
+        });
+        $this->assertEquals('bar1', $val);
     }
 }
