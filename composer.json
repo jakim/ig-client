@@ -1,0 +1,27 @@
+{
+  "name": "jakim-pj/ig-client",
+  "description": "Instagram public web api client",
+  "type": "library",
+  "require": {
+    "php": ">=7.1",
+    "jakim-pj/ig": "@dev",
+    "jakim-pj/ua": "@dev",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Paweł Jakimowski",
+      "email": "pawel@jakimowski.info"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Jakim\\": "src/"
+    }
+  }
+}
