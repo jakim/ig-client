@@ -16,18 +16,25 @@ use Jakim\Model\Tag;
 
 class TagQuery extends Query
 {
+    protected $findOneMapper;
+
+    public function __construct($httpClient, ExploreTags $findOneMapper = null)
+    {
+        parent::__construct($httpClient);
+        $this->findOneMapper = $findOneMapper ?? new ExploreTags();
+    }
+
     public function findOne(string $name): Tag
     {
         $url = Endpoint::exploreTags($name);
-        $mapper = new ExploreTags();
 
         $res = $this->httpClient->get($url);
         $content = $res->getBody()->getContents();
 
         $data = JsonHelper::decode($content);
-        $data = $mapper->normalizeData(Tag::class, $data);
+        $data = $this->findOneMapper->normalizeData(Tag::class, $data);
 
-        return $mapper->populate(Tag::class, $data);
+        return $this->findOneMapper->populate(Tag::class, $data);
     }
 
 }

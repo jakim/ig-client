@@ -15,7 +15,7 @@ class AccountMedia extends AccountDetails
 {
     public function nextPage(array $data)
     {
-        return ArrayHelper::getValue($data, 'data.user.edge_owner_to_timeline_media.page_info.end_cursor', false);
+        return ArrayHelper::getValue($data, 'data.user.edge_owner_to_timeline_media.page_info.end_cursor', null);
     }
 
     protected function map(): array
