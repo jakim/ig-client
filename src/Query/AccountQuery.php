@@ -76,7 +76,9 @@ class AccountQuery extends Query
     public function findPosts(string $username, int $limit = 100)
     {
         if ($limit <= 12) {
-            return $this->findLastPosts($username, $limit);
+            yield from $this->findLastPosts($username, $limit);
+
+            return;
         }
 
         $account = $this->findOne($username);

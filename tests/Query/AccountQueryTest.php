@@ -58,6 +58,7 @@ class AccountQueryTest extends TestCase
 
     public function testFindPosts()
     {
+        // more then 12 posts
         $httpClient = $this->httpClient([
             $this->accountData,
             $this->accountMediaPage1Data,
@@ -77,6 +78,24 @@ class AccountQueryTest extends TestCase
         $this->assertEquals($this->mediaFirstModel, $posts['0']);
         $this->assertEquals($this->mediaLastModel, end($posts));
         $this->assertCount(23, $posts);
+
+        // less then 12 posts
+        $httpClient = $this->httpClient([
+            $this->accountData,
+        ]);
+        $query = new AccountQuery($httpClient);
+        $query->postsPerPage = 12;
+
+        $generator = $query->findPosts('instagram', 10);
+        $this->assertInstanceOf(\Generator::class, $generator);
+
+        $posts = [];
+        foreach ($generator as $post) {
+            $this->assertInstanceOf(Post::class, $post);
+            $posts[] = $post;
+        }
+        $this->assertCount(10, $posts);
+
     }
 
     protected function httpClient(array $responses = ['{}'])
