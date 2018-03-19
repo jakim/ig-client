@@ -21,18 +21,27 @@ class AccountQuery extends Query
     const MAX_POSTS_PER_PAGE = 100;
     public $postsPerPage = 100;
 
+    protected $accountDetailsMapper;
+    protected $accountMediaMapper;
+
+    public function __construct($httpClient, AccountDetails $accountDetailsMapper = null, AccountMedia $accountMediaMapper = null)
+    {
+        parent::__construct($httpClient);
+        $this->accountDetailsMapper = $accountDetailsMapper ?? new AccountDetails();
+        $this->accountMediaMapper = $accountMediaMapper ?? new AccountMedia();
+    }
+
     public function findOne(string $username): Account
     {
         $url = Endpoint::accountDetails($username);
-        $mapper = new AccountDetails();
 
         $res = $this->httpClient->get($url);
         $content = $res->getBody()->getContents();
 
         $array = JsonHelper::decode($content);
-        $data = $mapper->normalizeData(Account::class, $array);
+        $data = $this->accountDetailsMapper->normalizeData(Account::class, $array);
 
-        return $mapper->populate(Account::class, $data);
+        return $this->accountDetailsMapper->populate(Account::class, $data);
     }
 
     /**
@@ -45,17 +54,16 @@ class AccountQuery extends Query
     public function findLastPosts(string $username, int $limit = 12)
     {
         $url = Endpoint::accountDetails($username);
-        $mapper = new AccountDetails();
 
         $res = $this->httpClient->get($url);
         $content = $res->getBody()->getContents();
         $data = JsonHelper::decode($content);
 
-        $items = $mapper->normalizeData(Post::class, $data);
+        $items = $this->accountDetailsMapper->normalizeData(Post::class, $data);
 
         $n = 0;
         foreach ($items as $item) {
-            $model = $mapper->populate(Post::class, $item);
+            $model = $this->accountDetailsMapper->populate(Post::class, $item);
 
             yield $model;
 
@@ -72,14 +80,13 @@ class AccountQuery extends Query
         }
 
         $account = $this->findOne($username);
-        $mapper = new AccountMedia();
 
         $n = 0;
-        $pages = (int)ceil($limit / ($this->postsPerPage > self::MAX_POSTS_PER_PAGE ? self::MAX_POSTS_PER_PAGE : $this->postsPerPage));
         $nextPage = '';
+        $this->postsPerPage = (int)$this->postsPerPage > self::MAX_POSTS_PER_PAGE ? self::MAX_POSTS_PER_PAGE : $this->postsPerPage;
 
-        for ($p = 0; $p < $pages; $p++) {
-            $url = Endpoint::accountMedia($account->id, 100, [
+        while ($nextPage !== null) {
+            $url = Endpoint::accountMedia($account->id, $this->postsPerPage, [
                 'variables' => ['after' => $nextPage],
             ]);
 
@@ -87,21 +94,18 @@ class AccountQuery extends Query
             $content = $res->getBody()->getContents();
             $data = JsonHelper::decode($content);
 
-            $nextPage = $mapper->nextPage($data);
+            $nextPage = $this->accountMediaMapper->nextPage($data);
 
-            $items = $mapper->normalizeData(Post::class, $data);
+            $items = $this->accountMediaMapper->normalizeData(Post::class, $data);
 
             foreach ($items as $item) {
-                yield $mapper->populate(Post::class, $item);
+
+                yield $this->accountMediaMapper->populate(Post::class, $item);
 
                 if (++$n >= $limit) {
                     break 2;
                 }
             }
-            if ($nextPage === false) {
-                break;
-            }
-
         }
     }
 }
