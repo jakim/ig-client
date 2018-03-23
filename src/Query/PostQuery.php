@@ -23,13 +23,13 @@ class PostQuery extends Query
         $this->mediaDetailsMapper = $mediaDetailsMapper ?: new MediaDetails();
     }
 
-    public function findOne(string $shortCode): Post
+    public function findOne(string $shortCode, $relations = false): Post
     {
         $url = Endpoint::mediaDetails($shortCode);
         $data = $this->fetchContentAsArray($url);
 
         $data = $this->mediaDetailsMapper->normalizeData(Post::class, $data);
 
-        return $this->mediaDetailsMapper->populate(Post::class, $data);
+        return $this->mediaDetailsMapper->populate(Post::class, $data, $relations);
     }
 }

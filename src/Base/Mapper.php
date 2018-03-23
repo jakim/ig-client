@@ -29,13 +29,21 @@ abstract class Mapper
         return $data;
     }
 
-    public function populate(string $class, array $data)
+    public function populate(string $class, array $data, $relations = false)
     {
         $itemMap = ArrayHelper::getValue($this->map(), "$class.item", []);
 
         $model = new $class();
         foreach ($itemMap as $to => $from) {
             $model->$to = ArrayHelper::getValue($data, $from);
+        }
+
+        $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations");
+        if ($relations && $relationsMap) {
+            foreach ($relationsMap as $to => $class) {
+                $relationData = $this->normalizeData($class, $data);
+                $model->$to = $this->populate($class, $relationData);
+            }
         }
 
         return $model;
