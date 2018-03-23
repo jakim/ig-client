@@ -38,15 +38,25 @@ abstract class Mapper
             $model->$to = ArrayHelper::getValue($data, $from);
         }
 
-        $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations");
-        if ($relations && $relationsMap) {
-            foreach ($relationsMap as $to => $class) {
-                $relationData = $this->normalizeData($class, $data);
-                $model->$to = $this->populate($class, $relationData);
-            }
+        if ($relations) {
+            $this->populateRelations($model, $data);
         }
 
         return $model;
+    }
+
+    /**
+     * @param array $data
+     * @param $model
+     */
+    private function populateRelations($model, array $data): void
+    {
+        $class = get_class($model);
+        $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations", []);
+        foreach ($relationsMap as $to => $class) {
+            $relationData = $this->normalizeData($class, $data);
+            $model->$to = $this->populate($class, $relationData);
+        }
     }
 
 }
