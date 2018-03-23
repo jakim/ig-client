@@ -9,7 +9,6 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
-use Jakim\Helper\JsonHelper;
 use jakim\ig\Endpoint;
 use Jakim\Mapper\ExploreTags;
 use Jakim\Model\Tag;
@@ -27,11 +26,8 @@ class TagQuery extends Query
     public function findOne(string $name): Tag
     {
         $url = Endpoint::exploreTags($name);
+        $data = $this->fetchContentAsArray($url);
 
-        $res = $this->httpClient->get($url);
-        $content = $res->getBody()->getContents();
-
-        $data = JsonHelper::decode($content);
         $data = $this->findOneMapper->normalizeData(Tag::class, $data);
 
         return $this->findOneMapper->populate(Tag::class, $data);

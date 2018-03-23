@@ -8,6 +8,8 @@
 namespace Jakim\Base;
 
 
+use Jakim\Helper\JsonHelper;
+
 abstract class Query
 {
     /**
@@ -20,5 +22,13 @@ abstract class Query
     public function __construct($httpClient)
     {
         $this->httpClient = $httpClient;
+    }
+
+    protected function fetchContentAsArray(string $url): ?array
+    {
+        $res = $this->httpClient->get($url);
+        $content = $res->getBody()->getContents();
+
+        return JsonHelper::decode($content);
     }
 }

@@ -9,7 +9,6 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
-use Jakim\Helper\JsonHelper;
 use jakim\ig\Endpoint;
 use Jakim\Mapper\AccountDetails;
 use Jakim\Mapper\AccountMedia;
@@ -34,12 +33,9 @@ class AccountQuery extends Query
     public function findOne(string $username): Account
     {
         $url = Endpoint::accountDetails($username);
+        $data = $this->fetchContentAsArray($url);
 
-        $res = $this->httpClient->get($url);
-        $content = $res->getBody()->getContents();
-
-        $array = JsonHelper::decode($content);
-        $data = $this->accountDetailsMapper->normalizeData(Account::class, $array);
+        $data = $this->accountDetailsMapper->normalizeData(Account::class, $data);
 
         return $this->accountDetailsMapper->populate(Account::class, $data);
     }
@@ -54,10 +50,7 @@ class AccountQuery extends Query
     public function findLastPosts(string $username, int $limit = 12)
     {
         $url = Endpoint::accountDetails($username);
-
-        $res = $this->httpClient->get($url);
-        $content = $res->getBody()->getContents();
-        $data = JsonHelper::decode($content);
+        $data = $this->fetchContentAsArray($url);
 
         $items = $this->accountDetailsMapper->normalizeData(Post::class, $data);
 
@@ -91,10 +84,7 @@ class AccountQuery extends Query
             $url = Endpoint::accountMedia($account->id, $this->postsPerPage, [
                 'variables' => ['after' => $nextPage],
             ]);
-
-            $res = $this->httpClient->get($url);
-            $content = $res->getBody()->getContents();
-            $data = JsonHelper::decode($content);
+            $data = $this->fetchContentAsArray($url);
 
             $nextPage = $this->accountMediaMapper->nextPage($data);
 
