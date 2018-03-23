@@ -5,9 +5,8 @@
  * Date: 15.03.2018
  */
 
-namespace Helper;
+namespace Jakim\Helper;
 
-use Jakim\Helper\JsonHelper;
 use PHPUnit\Framework\TestCase;
 
 class JsonHelperTest extends TestCase

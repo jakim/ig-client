@@ -5,7 +5,7 @@
  * Date: 15.03.2018
  */
 
-namespace Query;
+namespace Jakim\Query;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -13,7 +13,6 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Jakim\Model\Account;
 use Jakim\Model\Post;
-use Jakim\Query\AccountQuery;
 use PHPUnit\Framework\TestCase;
 
 class AccountQueryTest extends TestCase

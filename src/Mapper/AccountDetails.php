@@ -8,15 +8,20 @@
 namespace Jakim\Mapper;
 
 
-use Jakim\Base\Mapper;
-use Jakim\Contract\MapperInterface;
+use Jakim\Helper\ArrayHelper;
 use Jakim\Model\Account;
 use Jakim\Model\Post;
 
-class AccountDetails extends Mapper implements MapperInterface
+class AccountDetails extends MediaDetails
 {
     protected function map(): array
     {
+        $class = Post::class;
+        $postMap = ArrayHelper::getValue(parent::map(), "$class.item");
+        array_walk($postMap, function (&$item) {
+            $item = "node.{$item}";
+        });
+
         return [
             Account::class => [
                 'envelope' => 'graphql.user',
@@ -35,16 +40,7 @@ class AccountDetails extends Mapper implements MapperInterface
             ],
             Post::class => [
                 'envelope' => 'graphql.user.edge_owner_to_timeline_media.edges',
-                'item' => [
-                    'id' => 'node.id',
-                    'shortcode' => 'node.shortcode',
-                    'url' => 'node.display_url',
-                    'caption' => 'node.edge_media_to_caption.edges.0.node.text',
-                    'likes' => 'node.edge_media_preview_like.count',
-                    'comments' => 'node.edge_media_to_comment.count',
-                    'takenAt' => 'node.taken_at_timestamp',
-                    'isVideo' => 'node.is_video',
-                ],
+                'item' => $postMap,
             ],
         ];
     }
