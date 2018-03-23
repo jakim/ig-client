@@ -8,15 +8,17 @@
 namespace Jakim\Mapper;
 
 
-use Jakim\Base\Mapper;
-use Jakim\Contract\MapperInterface;
 use Jakim\Helper\ArrayHelper;
+use Jakim\Model\Post;
 use Jakim\Model\Tag;
 
-class ExploreTags extends Mapper implements MapperInterface
+class ExploreTags extends AccountDetails
 {
     protected function map(): array
     {
+        $class = Post::class;
+        $postMap = ArrayHelper::getValue(parent::map(), "$class.item");
+
         return [
             Tag::class => [
                 'envelope' => 'graphql.hashtag',
@@ -51,6 +53,10 @@ class ExploreTags extends Mapper implements MapperInterface
                         return end($comments);
                     },
                 ],
+            ],
+            Post::class => [
+                'envelope' => 'graphql.hashtag.edge_hashtag_to_top_posts.edges',
+                'item' => $postMap,
             ],
         ];
     }

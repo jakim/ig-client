@@ -19,12 +19,26 @@ class TagQueryTest extends TestCase
 {
     protected $tagData;
     protected $tagModel;
+    protected $firstPostModel;
 
     public function testFindOne()
     {
         $query = new TagQuery($this->httpClient([$this->tagData]));
         $tag = $query->findOne('cojarobie');
         $this->assertEquals($this->tagModel, $tag);
+    }
+
+    public function testFindTopPosts()
+    {
+        $query = new TagQuery($this->httpClient([$this->tagData]));
+        $posts = $query->findTopPosts('cojarobie');
+
+        $this->assertInstanceOf(\Generator::class, $posts);
+        $this->assertContainsOnlyInstancesOf(Post::class, $posts);
+
+        $query = new TagQuery($this->httpClient([$this->tagData]));
+        $posts = $query->findTopPosts('cojarobie');
+        $this->assertEquals($this->firstPostModel, $posts->current());
     }
 
     protected function httpClient(array $responses = ['{}'])
@@ -52,5 +66,16 @@ class TagQueryTest extends TestCase
         $model->minComments = 0;
         $model->maxComments = 8;
         $this->tagModel = $model;
+
+        $model = new Post();
+        $model->id = '1700840133324304245';
+        $model->caption = 'Wtf #cojarobie #niepytaj #czemu #niema #mema';
+        $model->shortcode = 'BeamRb-he91';
+        $model->comments = 3;
+        $model->takenAt = 1516976081;
+        $model->url = 'https://instagram.fhen1-1.fna.fbcdn.net/vp/10bbc2e9b8b9e3f9acdc3af1dc708001/5AAEDBEA/t51.2885-15/e35/26869160_1722475194439887_5234250414269923328_n.jpg';
+        $model->likes = 20;
+        $model->isVideo = true;
+        $this->firstPostModel = $model;
     }
 }
