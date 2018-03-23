@@ -20,7 +20,7 @@ class AccountMedia extends AccountDetails
 
     protected function map(): array
     {
-        $map = ArrayHelper::getValue(parent::map(),Post::class);
+        $map = ArrayHelper::getValue(parent::map(), Post::class);
         $map['envelope'] = 'data.user.edge_owner_to_timeline_media.edges';
 
         return [
