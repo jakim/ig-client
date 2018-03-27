@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Jakim\Model\Account;
 use Jakim\Model\Post;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +23,7 @@ class PostQueryTest extends TestCase
     public function testFindOne()
     {
         $query = new PostQuery($this->httpClient([$this->postData]));
-        $account = $query->findOne('instagram');
+        $account = $query->findOne('instagram', true);
 
         $this->assertInstanceOf(Post::class, $account);
         $this->assertEquals($this->postModel, $account);
@@ -51,6 +52,15 @@ class PostQueryTest extends TestCase
         $model->comments = 8;
         $model->takenAt = 1494779009;
         $model->likes = 102;
+
+        $account = new Account();
+        $account->id = '3666715406';
+        $account->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/db1e740d681f3caf34c77802913993ec/5B746D80/t51.2885-19/s150x150/27881193_152057518820705_1143441489582358528_n.jpg';
+        $account->username = 'cenkmiratpekcanatti';
+        $account->fullName = 'Cenk \'Mirat\' PEKCANATTI';
+        $account->isPrivate = false;
+
+        $model->account = $account;
         $this->postModel = $model;
     }
 }

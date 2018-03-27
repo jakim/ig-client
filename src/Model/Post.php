@@ -18,4 +18,6 @@ class Post
     public $takenAt;
     public $likes;
     public $comments;
+
+    public $account;
 }
