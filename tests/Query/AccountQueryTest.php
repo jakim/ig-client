@@ -110,21 +110,21 @@ class AccountQueryTest extends TestCase
 
     protected function setUp()
     {
-        $this->accountData = file_get_contents(__DIR__ . '/../_data/account_details.json');
+        $this->accountData = file_get_contents(__DIR__ . '/../_data/account_details.html');
         $this->accountMediaPage1Data = file_get_contents(__DIR__ . '/../_data/account_media_query_id_page_1.json');
         $this->accountMediaPage2Data = file_get_contents(__DIR__ . '/../_data/account_media_query_id_page_2.json');
 
         $model = new Account();
         $model->username = 'instagram';
         $model->id = '25025320';
-        $model->biography = 'Discovering — and telling — stories from around the world.';
+        $model->biography = 'Discovering — and telling — stories from around the world. Founded in 2010 by @kevin and @mikeyk.';
         $model->externalUrl = null;
-        $model->followedBy = 233257261;
-        $model->follows = 193;
+        $model->followedBy = 234321415;
+        $model->follows = 184;
         $model->fullName = 'Instagram';
         $model->isPrivate = false;
-        $model->media = 5132;
-        $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/dd4c00ec38e64a8cc8340771e555ea62/5B3BD6AB/t51.2885-19/s320x320/14719833_310540259320655_1605122788543168512_a.jpg';
+        $model->media = 5185;
+        $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/893534d61bdc5ea6911593d3ee0a1922/5B6363AB/t51.2885-19/s320x320/14719833_310540259320655_1605122788543168512_a.jpg';
         $this->accountModel = $model;
 
         $model = new Post();

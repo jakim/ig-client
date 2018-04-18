@@ -19,7 +19,7 @@ class AccountDetails extends Mapper implements MapperInterface
     {
         return [
             Account::class => [
-                'envelope' => 'graphql.user',
+                'envelope' => 'entry_data.ProfilePage.0.graphql.user',
                 'item' => [
                     'biography' => 'biography',
                     'externalUrl' => 'external_url',

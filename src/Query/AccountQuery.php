@@ -9,7 +9,9 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
+use Jakim\Helper\JsonHelper;
 use jakim\ig\Endpoint;
+use jakim\ig\Url;
 use Jakim\Mapper\AccountDetails;
 use Jakim\Mapper\AccountMedia;
 use Jakim\Model\Account;
@@ -32,12 +34,22 @@ class AccountQuery extends Query
 
     public function findOne(string $username): Account
     {
-        $url = Endpoint::accountDetails($username);
+        $url = Url::account($username);
         $data = $this->fetchContentAsArray($url);
 
         $data = $this->accountDetailsMapper->normalizeData(Account::class, $data);
 
         return $this->accountDetailsMapper->populate(Account::class, $data);
+    }
+
+    protected function fetchContentAsArray(string $url): ?array
+    {
+        $res = $this->httpClient->get($url);
+        $content = $res->getBody()->getContents();
+
+        preg_match('/\_sharedData \= (.*?)\;\<\/script\>/', $content, $matches);
+
+        return JsonHelper::decode($matches['1']);
     }
 
     /**
