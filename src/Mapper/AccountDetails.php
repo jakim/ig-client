@@ -18,7 +18,7 @@ class AccountDetails extends MediaDetails
     {
         $class = Post::class;
         $postMap = ArrayHelper::getValue(parent::map(), "$class.item");
-        array_walk($postMap, function (&$item) {
+        array_walk($postMap, function(&$item) {
             $item = "node.{$item}";
         });
 

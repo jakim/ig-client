@@ -10,6 +10,7 @@ namespace Jakim\Mapper;
 
 use Jakim\Base\Mapper;
 use Jakim\Contract\MapperInterface;
+use Jakim\Model\Account;
 use Jakim\Model\Post;
 
 class MediaDetails extends Mapper implements MapperInterface
@@ -28,6 +29,19 @@ class MediaDetails extends Mapper implements MapperInterface
                     'comments' => 'edge_media_to_comment.count',
                     'takenAt' => 'taken_at_timestamp',
                     'isVideo' => 'is_video',
+                ],
+                'relations' => [
+                    'account' => Account::class,
+                ],
+            ],
+            Account::class => [
+                'envelope' => 'owner', //related to parent map
+                'item' => [
+                    'id' => 'id',
+                    'username' => 'username',
+                    'profilePicUrl' => 'profile_pic_url',
+                    'fullName' => 'full_name',
+                    'isPrivate' => 'is_private',
                 ],
             ],
         ];

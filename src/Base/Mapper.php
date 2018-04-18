@@ -29,7 +29,7 @@ abstract class Mapper
         return $data;
     }
 
-    public function populate(string $class, array $data)
+    public function populate(string $class, array $data, $relations = false)
     {
         $itemMap = ArrayHelper::getValue($this->map(), "$class.item", []);
 
@@ -38,7 +38,25 @@ abstract class Mapper
             $model->$to = ArrayHelper::getValue($data, $from);
         }
 
+        if ($relations) {
+            $this->populateRelations($model, $data);
+        }
+
         return $model;
+    }
+
+    /**
+     * @param array $data
+     * @param $model
+     */
+    private function populateRelations($model, array $data): void
+    {
+        $class = get_class($model);
+        $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations", []);
+        foreach ($relationsMap as $to => $class) {
+            $relationData = $this->normalizeData($class, $data);
+            $model->$to = $this->populate($class, $relationData);
+        }
     }
 
 }
