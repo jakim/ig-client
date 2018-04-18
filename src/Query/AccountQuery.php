@@ -86,7 +86,7 @@ class AccountQuery extends Query
             $url = Endpoint::accountMedia($account->id, $this->postsPerPage, [
                 'variables' => ['after' => $nextPage],
             ]);
-            $data = $this->fetchContentAsArray($url);
+            $data = parent::fetchContentAsArray($url);
 
             $nextPage = $this->accountMediaMapper->nextPage($data);
 
