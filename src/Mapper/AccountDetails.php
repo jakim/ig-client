@@ -24,7 +24,7 @@ class AccountDetails extends MediaDetails
 
         return [
             Account::class => [
-                'envelope' => 'graphql.user',
+                'envelope' => 'entry_data.ProfilePage.0.graphql.user',
                 'item' => [
                     'biography' => 'biography',
                     'externalUrl' => 'external_url',
@@ -39,7 +39,7 @@ class AccountDetails extends MediaDetails
                 ],
             ],
             Post::class => [
-                'envelope' => 'graphql.user.edge_owner_to_timeline_media.edges',
+                'envelope' => 'entry_data.ProfilePage.0.graphql.user.edge_owner_to_timeline_media.edges',
                 'item' => $postMap,
             ],
         ];
