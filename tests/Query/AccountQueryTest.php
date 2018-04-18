@@ -128,14 +128,15 @@ class AccountQueryTest extends TestCase
         $this->accountModel = $model;
 
         $model = new Post();
-        $model->id = '1735046366533360191';
-        $model->caption = 'Video by @paulrabil';
-        $model->shortcode = 'BgUH3pKDZo_';
-        $model->takenAt = 1521053724;
-        $model->comments = 3431;
-        $model->likes = 196733;
-        $model->isVideo = true;
-        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/21b0b63bca8c47bb6e2f264dc6da2e5c/5AAC5C7C/t51.2885-15/e15/28763547_142668606559355_4973623294713397248_n.jpg';
+        $model->id = '1759843644305389143';
+        $model->caption = 'Photo by @turtledove.a
+“This ‘Where the Wild Things Are’ costume has been in our family for years,” says Turtle Williams (@turtledove.a), who captured her daughter bounding through the frame. “I was waiting for my usually wild dogs to do something crazy, but it was too hot to have fun. So I did the best I could with three wild-ish things.” #WHPwildthing';
+        $model->shortcode = 'BhsOHhvDTZX';
+        $model->takenAt = 1524009732;
+        $model->comments = 3150;
+        $model->likes = 485229;
+        $model->isVideo = false;
+        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/b68c74b62903e6c75596bc24478f0c83/5B656B21/t51.2885-15/e35/30079662_224475171441032_2091459252777385984_n.jpg';
         $this->lastPostModel = $model;
 
         $model = new Post();

@@ -42,16 +42,6 @@ class AccountQuery extends Query
         return $this->accountDetailsMapper->populate(Account::class, $data);
     }
 
-    protected function fetchContentAsArray(string $url): ?array
-    {
-        $res = $this->httpClient->get($url);
-        $content = $res->getBody()->getContents();
-
-        preg_match('/\_sharedData \= (.*?)\;\<\/script\>/', $content, $matches);
-
-        return JsonHelper::decode($matches['1']);
-    }
-
     /**
      * @param string $username
      * @param int $limit Max 12, for more see findPosts()
@@ -61,7 +51,7 @@ class AccountQuery extends Query
      */
     public function findLastPosts(string $username, int $limit = 12)
     {
-        $url = Endpoint::accountDetails($username);
+        $url = Url::account($username);
         $data = $this->fetchContentAsArray($url);
 
         $items = $this->accountDetailsMapper->normalizeData(Post::class, $data);
@@ -111,5 +101,15 @@ class AccountQuery extends Query
                 }
             }
         }
+    }
+
+    protected function fetchContentAsArray(string $url): ?array
+    {
+        $res = $this->httpClient->get($url);
+        $content = $res->getBody()->getContents();
+
+        preg_match('/\_sharedData \= (.*?)\;\<\/script\>/s', $content, $matches);
+
+        return JsonHelper::decode($matches['1']);
     }
 }
