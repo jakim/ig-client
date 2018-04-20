@@ -1,0 +1,38 @@
+{
+  "user": {
+    "pk": 198945880,
+    "username": "schwarzenegger",
+    "full_name": "Arnold Schwarzenegger",
+    "is_private": false,
+    "profile_pic_url": "https://scontent-waw1-1.cdninstagram.com/vp/095905a57782bb9eb52f1de31f60f5bb/5B624525/t51.2885-19/s150x150/12964988_243704659317412_177347800_a.jpg",
+    "is_verified": true,
+    "has_anonymous_profile_picture": false,
+    "media_count": 581,
+    "follower_count": 13960923,
+    "following_count": 43,
+    "biography": "Former Mr. Olympia, Conan, Terminator, and Governor of California. I killed the Predator. I told you I'd be back.",
+    "external_url": "http://omaze.com/Arnold",
+    "external_lynx_url": "https://l.instagram.com/?u=http%3A%2F%2Fomaze.com%2FArnold\u0026e=ATMYo0mouzxgpZE0Ms8LwrycLFIvKw565Zwkgacw9GDLWMT2_J67y5Wxno0-ffkJQQUxx02b",
+    "usertags_count": 258673,
+    "hd_profile_pic_versions": [
+      {
+        "width": 320,
+        "height": 320,
+        "url": "https://scontent-waw1-1.cdninstagram.com/vp/1ab9d7364125fab224b067a26386b4f9/5B665B83/t51.2885-19/s320x320/12964988_243704659317412_177347800_a.jpg"
+      },
+      {
+        "width": 640,
+        "height": 640,
+        "url": "https://scontent-waw1-1.cdninstagram.com/vp/b30343fc3254a46d1c7dc57138a8afb2/5B524581/t51.2885-19/s640x640/12964988_243704659317412_177347800_a.jpg"
+      }
+    ],
+    "hd_profile_pic_url_info": {
+      "url": "https://scontent-waw1-1.cdninstagram.com/vp/3403233dbc8d59f3bd1f0527750811f1/5B51F1FF/t51.2885-19/12964988_243704659317412_177347800_a.jpg",
+      "width": 733,
+      "height": 733
+    },
+    "has_highlight_reels": false,
+    "auto_expand_chaining": false
+  },
+  "status": "ok"
+}

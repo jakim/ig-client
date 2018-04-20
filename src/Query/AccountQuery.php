@@ -13,6 +13,7 @@ use Jakim\Helper\JsonHelper;
 use jakim\ig\Endpoint;
 use jakim\ig\Url;
 use Jakim\Mapper\AccountDetails;
+use Jakim\Mapper\AccountInfo;
 use Jakim\Mapper\AccountMedia;
 use Jakim\Model\Account;
 use Jakim\Model\Post;
@@ -24,15 +25,30 @@ class AccountQuery extends Query
 
     protected $accountDetailsMapper;
     protected $accountMediaMapper;
+    protected $accountInfoMapper;
 
-    public function __construct($httpClient, AccountDetails $accountDetailsMapper = null, AccountMedia $accountMediaMapper = null)
+    public function __construct($httpClient, AccountDetails $accountDetailsMapper = null, AccountMedia $accountMediaMapper = null, AccountInfo $accountInfoMapper = null)
     {
         parent::__construct($httpClient);
         $this->accountDetailsMapper = $accountDetailsMapper ?? new AccountDetails();
         $this->accountMediaMapper = $accountMediaMapper ?? new AccountMedia();
+        $this->accountInfoMapper = $accountInfoMapper ?? new AccountInfo();
     }
 
-    public function findOne(string $username): Account
+    /**
+     * @param mixed $ident username or account id
+     * @return \Jakim\Model\Account
+     */
+    public function findOne($ident): Account
+    {
+        if (is_numeric($ident)) {
+            return $this->findOneById($ident);
+        }
+
+        return $this->findOneByUsername($ident);
+    }
+
+    public function findOneByUsername(string $username)
     {
         $url = Url::account($username);
         $data = $this->fetchContentAsArray($url);
@@ -40,6 +56,16 @@ class AccountQuery extends Query
         $data = $this->accountDetailsMapper->normalizeData(Account::class, $data);
 
         return $this->accountDetailsMapper->populate(Account::class, $data);
+    }
+
+    public function findOneById($accountId)
+    {
+        $url = Endpoint::accountInfo($accountId);
+        $data = parent::fetchContentAsArray($url);
+
+        $data = $this->accountInfoMapper->normalizeData(Account::class, $data);
+
+        return $this->accountInfoMapper->populate(Account::class, $data);
     }
 
     /**

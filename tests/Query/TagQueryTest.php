@@ -5,7 +5,7 @@
  * Date: 16.03.2018
  */
 
-namespace Jakim\Query;
+namespace Query;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -13,6 +13,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Jakim\Model\Post;
 use Jakim\Model\Tag;
+use Jakim\Query\TagQuery;
 use PHPUnit\Framework\TestCase;
 
 class TagQueryTest extends TestCase

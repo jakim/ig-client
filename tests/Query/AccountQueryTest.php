@@ -17,8 +17,10 @@ use PHPUnit\Framework\TestCase;
 
 class AccountQueryTest extends TestCase
 {
-    protected $accountData;
-    protected $accountModel;
+    protected $accountInfo;
+    protected $accountInfoModel;
+    protected $accountDetails;
+    protected $accountDetailsModel;
     protected $lastPostModel;
 
     protected $accountMediaPage1Data;
@@ -28,16 +30,40 @@ class AccountQueryTest extends TestCase
 
     public function testFindOne()
     {
-        $query = new AccountQuery($this->httpClient([$this->accountData]));
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
         $account = $query->findOne('instagram');
 
         $this->assertInstanceOf(Account::class, $account);
-        $this->assertEquals($this->accountModel, $account);
+        $this->assertEquals($this->accountDetailsModel, $account);
+
+        $query = new AccountQuery($this->httpClient([$this->accountInfo]));
+        $account = $query->findOne('198945880');
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals($this->accountInfoModel, $account);
+    }
+
+    public function testFindOneByUsername()
+    {
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
+        $account = $query->findOneByUsername('instagram');
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals($this->accountDetailsModel, $account);
+    }
+
+    public function testFindOneById()
+    {
+        $query = new AccountQuery($this->httpClient([$this->accountInfo]));
+        $account = $query->findOneById('198945880');
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals($this->accountInfoModel, $account);
     }
 
     public function testFindLastPosts()
     {
-        $query = new AccountQuery($this->httpClient([$this->accountData]));
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
         $posts = $query->findLastPosts('instagram', 2);
 
         $this->assertInstanceOf(\Generator::class, $posts);
@@ -50,7 +76,7 @@ class AccountQueryTest extends TestCase
         }
         $this->assertEquals(2, $i);
 
-        $query = new AccountQuery($this->httpClient([$this->accountData]));
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
         $posts = $query->findLastPosts('instagram', 2);
         $this->assertEquals($this->lastPostModel, $posts->current());
     }
@@ -59,7 +85,7 @@ class AccountQueryTest extends TestCase
     {
         // more then 12 posts
         $httpClient = $this->httpClient([
-            $this->accountData,
+            $this->accountDetails,
             $this->accountMediaPage1Data,
             $this->accountMediaPage2Data,
         ]);
@@ -80,7 +106,7 @@ class AccountQueryTest extends TestCase
 
         // less then 12 posts
         $httpClient = $this->httpClient([
-            $this->accountData,
+            $this->accountDetails,
         ]);
         $query = new AccountQuery($httpClient);
         $query->postsPerPage = 12;
@@ -109,9 +135,23 @@ class AccountQueryTest extends TestCase
 
     protected function setUp()
     {
-        $this->accountData = file_get_contents(__DIR__ . '/../_data/account_details.html');
+        $this->accountInfo = file_get_contents(__DIR__ . '/../_data/account_info.json');
+        $this->accountDetails = file_get_contents(__DIR__ . '/../_data/account_details.html');
         $this->accountMediaPage1Data = file_get_contents(__DIR__ . '/../_data/account_media_query_id_page_1.json');
         $this->accountMediaPage2Data = file_get_contents(__DIR__ . '/../_data/account_media_query_id_page_2.json');
+
+        $model = new Account();
+        $model->username = 'schwarzenegger';
+        $model->id = '198945880';
+        $model->biography = 'Former Mr. Olympia, Conan, Terminator, and Governor of California. I killed the Predator. I told you I\'d be back.';
+        $model->externalUrl = 'http://omaze.com/Arnold';
+        $model->followedBy = 13960923;
+        $model->follows = 43;
+        $model->fullName = 'Arnold Schwarzenegger';
+        $model->isPrivate = false;
+        $model->media = 581;
+        $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/3403233dbc8d59f3bd1f0527750811f1/5B51F1FF/t51.2885-19/12964988_243704659317412_177347800_a.jpg';
+        $this->accountInfoModel = $model;
 
         $model = new Account();
         $model->username = 'instagram';
@@ -124,7 +164,7 @@ class AccountQueryTest extends TestCase
         $model->isPrivate = false;
         $model->media = 5185;
         $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/893534d61bdc5ea6911593d3ee0a1922/5B6363AB/t51.2885-19/s320x320/14719833_310540259320655_1605122788543168512_a.jpg';
-        $this->accountModel = $model;
+        $this->accountDetailsModel = $model;
 
         $model = new Post();
         $model->id = '1759843644305389143';
