@@ -20,6 +20,13 @@ class Post
     public $comments;
 
     // related
-    public $location;
+    /**
+     * @var \Jakim\Model\Account|null
+     */
     public $account;
+
+    /**
+     * @var \Jakim\Model\Location|null
+     */
+    public $location;
 }
