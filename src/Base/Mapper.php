@@ -55,7 +55,9 @@ abstract class Mapper
         $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations", []);
         foreach ($relationsMap as $to => $class) {
             $relationData = $this->normalizeData($class, $data);
-            $model->$to = $this->populate($class, $relationData);
+            if ($relationData) {
+                $model->$to = $this->populate($class, $relationData);
+            }
         }
     }
 
