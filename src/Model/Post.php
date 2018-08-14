@@ -19,5 +19,7 @@ class Post
     public $likes;
     public $comments;
 
+    // related
+    public $location;
     public $account;
 }

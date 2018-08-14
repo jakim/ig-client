@@ -11,6 +11,7 @@ namespace Jakim\Mapper;
 use Jakim\Base\Mapper;
 use Jakim\Contract\MapperInterface;
 use Jakim\Model\Account;
+use Jakim\Model\Location;
 use Jakim\Model\Post;
 
 class MediaDetails extends Mapper implements MapperInterface
@@ -32,6 +33,7 @@ class MediaDetails extends Mapper implements MapperInterface
                 ],
                 'relations' => [
                     'account' => Account::class,
+                    'location' => Location::class,
                 ],
             ],
             Account::class => [
@@ -42,6 +44,15 @@ class MediaDetails extends Mapper implements MapperInterface
                     'profilePicUrl' => 'profile_pic_url',
                     'fullName' => 'full_name',
                     'isPrivate' => 'is_private',
+                ],
+            ],
+            Location::class => [
+                'envelope' => 'location',
+                'item' => [
+                    'id' => 'id',
+                    'hasPublicPage' => 'has_public_page',
+                    'name' => 'name',
+                    'slug' => 'slug',
                 ],
             ],
         ];

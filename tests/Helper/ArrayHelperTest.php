@@ -5,9 +5,8 @@
  * Date: 17.03.2018
  */
 
-namespace Helper;
+namespace Jakim\Helper;
 
-use Jakim\Helper\ArrayHelper;
 use PHPUnit\Framework\TestCase;
 
 class ArrayHelperTest extends TestCase
