@@ -28,6 +28,8 @@ class PostQuery extends Query
         $url = Endpoint::mediaDetails($shortCode);
         $data = $this->fetchContentAsArray($url);
 
+        $this->throwEmptyContentExceptionIfEmpty($data);
+
         $data = $this->mediaDetailsMapper->normalizeData(Post::class, $data);
 
         return $this->mediaDetailsMapper->populate(Post::class, $data, $relations);

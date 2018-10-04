@@ -29,6 +29,8 @@ class TagQuery extends Query
         $url = Endpoint::exploreTags($tagName);
         $data = $this->fetchContentAsArray($url);
 
+        $this->throwEmptyContentExceptionIfEmpty($data);
+
         $data = $this->exploreTagsMapper->normalizeData(Tag::class, $data);
 
         return $this->exploreTagsMapper->populate(Tag::class, $data);
@@ -38,6 +40,8 @@ class TagQuery extends Query
     {
         $url = Endpoint::exploreTags($tagName);
         $data = $this->fetchContentAsArray($url);
+
+        $this->throwEmptyContentExceptionIfEmpty($data);
 
         $items = $this->exploreTagsMapper->normalizeData(Post::class, $data);
         foreach ($items as $item) {

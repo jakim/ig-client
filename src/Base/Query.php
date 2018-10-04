@@ -8,6 +8,7 @@
 namespace Jakim\Base;
 
 
+use Jakim\Exception\EmptyContentException;
 use Jakim\Helper\JsonHelper;
 
 abstract class Query
@@ -30,5 +31,12 @@ abstract class Query
         $content = $res->getBody()->getContents();
 
         return JsonHelper::decode($content);
+    }
+
+    protected function throwEmptyContentExceptionIfEmpty($data)
+    {
+        if (empty($data)) {
+            throw new EmptyContentException();
+        }
     }
 }

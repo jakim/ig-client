@@ -50,6 +50,8 @@ class AccountQuery extends Query
         $url = Url::account($username);
         $data = $this->fetchContentAsArray($url);
 
+        $this->throwEmptyContentExceptionIfEmpty($data);
+
         $data = $this->accountDetailsMapper->normalizeData(Account::class, $data);
 
         return $this->accountDetailsMapper->populate(Account::class, $data);
@@ -59,6 +61,8 @@ class AccountQuery extends Query
     {
         $url = Endpoint::accountInfo($accountId);
         $data = parent::fetchContentAsArray($url);
+
+        $this->throwEmptyContentExceptionIfEmpty($data);
 
         $data = $this->accountInfoMapper->normalizeData(Account::class, $data);
 
@@ -70,12 +74,15 @@ class AccountQuery extends Query
      * @param int $limit Max 12, for more see findPosts()
      * @return \Generator
      *
+     * @throws \Jakim\Exception\EmptyContentException
      * @see \Jakim\Query\AccountQuery::findPosts
      */
     public function findLastPosts(string $username, int $limit = 12)
     {
         $url = Url::account($username);
         $data = $this->fetchContentAsArray($url);
+
+        $this->throwEmptyContentExceptionIfEmpty($data);
 
         $items = $this->accountDetailsMapper->normalizeData(Post::class, $data);
 
@@ -96,6 +103,7 @@ class AccountQuery extends Query
      * @param int $limit
      * @return \Generator
      *
+     * @throws \Jakim\Exception\EmptyContentException
      * @deprecated
      */
     public function findPosts(string $username, int $limit = 100)
