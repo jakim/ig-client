@@ -54,6 +54,7 @@ class PostQueryTest extends TestCase
         $post->comments = 8;
         $post->takenAt = 1494779009;
         $post->likes = 102;
+        $post->typename = 'GraphImage';
 
         $account = new Account();
         $account->id = '3666715406';

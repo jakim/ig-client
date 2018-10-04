@@ -30,6 +30,9 @@ class MediaDetails extends Mapper implements MapperInterface
                     'comments' => 'edge_media_to_comment.count',
                     'takenAt' => 'taken_at_timestamp',
                     'isVideo' => 'is_video',
+                    'videoViews' => 'video_view_count',
+                    'videoUrl' => 'video_url',
+                    'typename' => '__typename',
                 ],
                 'relations' => [
                     'account' => Account::class,

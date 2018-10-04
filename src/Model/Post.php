@@ -14,10 +14,13 @@ class Post
     public $shortcode;
     public $url;
     public $isVideo;
+    public $videoViews;
+    public $videoUrl;
     public $caption;
     public $takenAt;
     public $likes;
     public $comments;
+    public $typename; //GraphImage,GraphVideo,GraphSidecar
 
     // related
     /**

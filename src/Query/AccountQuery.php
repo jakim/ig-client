@@ -20,9 +20,6 @@ use Jakim\Model\Post;
 
 class AccountQuery extends Query
 {
-    const MAX_POSTS_PER_PAGE = 100;
-    public $postsPerPage = 100;
-
     protected $accountDetailsMapper;
     protected $accountMediaMapper;
     protected $accountInfoMapper;
@@ -94,39 +91,16 @@ class AccountQuery extends Query
         }
     }
 
+    /**
+     * @param string $username
+     * @param int $limit
+     * @return \Generator
+     *
+     * @deprecated
+     */
     public function findPosts(string $username, int $limit = 100)
     {
-        if ($limit <= 12) {
-            yield from $this->findLastPosts($username, $limit);
-
-            return;
-        }
-
-        $account = $this->findOne($username);
-
-        $n = 0;
-        $nextPage = '';
-        $this->postsPerPage = (int)$this->postsPerPage > self::MAX_POSTS_PER_PAGE ? self::MAX_POSTS_PER_PAGE : $this->postsPerPage;
-
-        while ($nextPage !== null) {
-            $url = Endpoint::accountMedia($account->id, $this->postsPerPage, [
-                'variables' => ['after' => $nextPage],
-            ]);
-            $data = parent::fetchContentAsArray($url);
-
-            $nextPage = $this->accountMediaMapper->nextPage($data);
-
-            $items = $this->accountMediaMapper->normalizeData(Post::class, $data);
-
-            foreach ($items as $item) {
-
-                yield $this->accountMediaMapper->populate(Post::class, $item);
-
-                if (++$n >= $limit) {
-                    break 2;
-                }
-            }
-        }
+        yield from $this->findLastPosts($username, $limit);
     }
 
     protected function fetchContentAsArray(string $url): ?array

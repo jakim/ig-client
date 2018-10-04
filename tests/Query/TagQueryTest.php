@@ -24,20 +24,20 @@ class TagQueryTest extends TestCase
     public function testFindOne()
     {
         $query = new TagQuery($this->httpClient([$this->tagData]));
-        $tag = $query->findOne('cojarobie');
+        $tag = $query->findOne('aktywnemazury');
         $this->assertEquals($this->tagModel, $tag);
     }
 
     public function testFindTopPosts()
     {
         $query = new TagQuery($this->httpClient([$this->tagData]));
-        $posts = $query->findTopPosts('cojarobie');
+        $posts = $query->findTopPosts('aktywnemazury');
 
         $this->assertInstanceOf(\Generator::class, $posts);
         $this->assertContainsOnlyInstancesOf(Post::class, $posts);
 
         $query = new TagQuery($this->httpClient([$this->tagData]));
-        $posts = $query->findTopPosts('cojarobie');
+        $posts = $query->findTopPosts('aktywnemazury');
         $this->assertEquals($this->firstPostModel, $posts->current());
     }
 
@@ -56,26 +56,28 @@ class TagQueryTest extends TestCase
         $this->tagData = file_get_contents(__DIR__ . '/../_data/explore_tags.json');
 
         $model = new Tag();
-        $model->name = 'cojarobie';
-        $model->media = 4202;
+        $model->name = 'aktywnemazury';
+        $model->media = 16336;
         $model->topPostsOnly = false;
-        $model->likes = 632;
-        $model->minLikes = 9;
-        $model->maxLikes = 424;
-        $model->comments = 16;
+        $model->likes = 1254;
+        $model->minLikes = 64;
+        $model->maxLikes = 336;
+        $model->comments = 44;
         $model->minComments = 0;
-        $model->maxComments = 8;
+        $model->maxComments = 25;
         $this->tagModel = $model;
 
         $model = new Post();
-        $model->id = '1700840133324304245';
-        $model->caption = 'Wtf #cojarobie #niepytaj #czemu #niema #mema';
-        $model->shortcode = 'BeamRb-he91';
-        $model->comments = 3;
-        $model->takenAt = 1516976081;
-        $model->url = 'https://instagram.fhen1-1.fna.fbcdn.net/vp/10bbc2e9b8b9e3f9acdc3af1dc708001/5AAEDBEA/t51.2885-15/e35/26869160_1722475194439887_5234250414269923328_n.jpg';
-        $model->likes = 20;
-        $model->isVideo = true;
+        $model->id = '1868727993151374809';
+        $model->caption = '#fotozakreceni #landscapes #mazury #pieknemazury #mazurskiejeziora #aktywnemazury #magicofpoland #landscape #landscapephotography #landscapeporn #mazurywonderofnature #mazurycudnatury #photography #road #krajobraz #nature #viadernypl #earthescope';
+        $model->shortcode = 'BnvDjV1ncXZ';
+        $model->comments = 2;
+        $model->takenAt = 1536989758;
+        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/768fce07a62cc3138d397da2085fdfee/5C5C6A31/t51.2885-15/e35/41192720_311098896109012_3099403454891343286_n.jpg';
+        $model->likes = 123;
+        $model->isVideo = false;
+        $model->videoViews = null;
+        $model->typename = 'GraphImage';
         $this->firstPostModel = $model;
     }
 }

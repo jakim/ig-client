@@ -81,48 +81,6 @@ class AccountQueryTest extends TestCase
         $this->assertEquals($this->lastPostModel, $posts->current());
     }
 
-    public function testFindPosts()
-    {
-        // more then 12 posts
-        $httpClient = $this->httpClient([
-            $this->accountDetails,
-            $this->accountMediaPage1Data,
-            $this->accountMediaPage2Data,
-        ]);
-        $query = new AccountQuery($httpClient);
-        $query->postsPerPage = 12;
-
-        $generator = $query->findPosts('instagram', 23);
-        $this->assertInstanceOf(\Generator::class, $generator);
-
-        $posts = [];
-        foreach ($generator as $post) {
-            $this->assertInstanceOf(Post::class, $post);
-            $posts[] = $post;
-        }
-        $this->assertEquals($this->mediaFirstModel, $posts['0']);
-        $this->assertEquals($this->mediaLastModel, end($posts));
-        $this->assertCount(23, $posts);
-
-        // less then 12 posts
-        $httpClient = $this->httpClient([
-            $this->accountDetails,
-        ]);
-        $query = new AccountQuery($httpClient);
-        $query->postsPerPage = 12;
-
-        $generator = $query->findPosts('instagram', 10);
-        $this->assertInstanceOf(\Generator::class, $generator);
-
-        $posts = [];
-        foreach ($generator as $post) {
-            $this->assertInstanceOf(Post::class, $post);
-            $posts[] = $post;
-        }
-        $this->assertCount(10, $posts);
-
-    }
-
     protected function httpClient(array $responses = ['{}'])
     {
         $mock = new MockHandler(array_map(function ($response) {
@@ -167,15 +125,16 @@ class AccountQueryTest extends TestCase
         $this->accountDetailsModel = $model;
 
         $model = new Post();
-        $model->id = '1759843644305389143';
-        $model->caption = 'Photo by @turtledove.a
-“This ‘Where the Wild Things Are’ costume has been in our family for years,” says Turtle Williams (@turtledove.a), who captured her daughter bounding through the frame. “I was waiting for my usually wild dogs to do something crazy, but it was too hot to have fun. So I did the best I could with three wild-ish things.” #WHPwildthing';
-        $model->shortcode = 'BhsOHhvDTZX';
-        $model->takenAt = 1524009732;
-        $model->comments = 3150;
-        $model->likes = 485229;
-        $model->isVideo = false;
-        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/b68c74b62903e6c75596bc24478f0c83/5B656B21/t51.2885-15/e35/30079662_224475171441032_2091459252777385984_n.jpg';
+        $model->id = '1878604801479471730';
+        $model->caption = 'If you really do what you love';
+        $model->shortcode = 'BoSJR0ZhvJy';
+        $model->takenAt = 1538167222;
+        $model->comments = 4440;
+        $model->likes = 439985;
+        $model->isVideo = true;
+        $model->videoViews = 3933378;
+        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/49024ded4252035fc732a1c65f1c876f/5BB8A70D/t51.2885-15/e15/41949781_268245540489087_7381056827079503311_n.jpg';
+        $model->typename = 'GraphVideo';
         $this->lastPostModel = $model;
 
         $model = new Post();
