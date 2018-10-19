@@ -21,12 +21,8 @@ class AccountQueryTest extends TestCase
     protected $accountInfoModel;
     protected $accountDetails;
     protected $accountDetailsModel;
-    protected $lastPostModel;
 
-    protected $accountMediaPage1Data;
-    protected $accountMediaPage2Data;
     protected $mediaFirstModel;
-    protected $mediaLastModel;
 
     public function testFindOne()
     {
@@ -78,7 +74,7 @@ class AccountQueryTest extends TestCase
 
         $query = new AccountQuery($this->httpClient([$this->accountDetails]));
         $posts = $query->findLastPosts('instagram', 2);
-        $this->assertEquals($this->lastPostModel, $posts->current());
+        $this->assertEquals($this->mediaFirstModel, $posts->current());
     }
 
     protected function httpClient(array $responses = ['{}'])
@@ -95,8 +91,6 @@ class AccountQueryTest extends TestCase
     {
         $this->accountInfo = file_get_contents(__DIR__ . '/../_data/account_info.json');
         $this->accountDetails = file_get_contents(__DIR__ . '/../_data/account_details.html');
-        $this->accountMediaPage1Data = file_get_contents(__DIR__ . '/../_data/account_media_query_id_page_1.json');
-        $this->accountMediaPage2Data = file_get_contents(__DIR__ . '/../_data/account_media_query_id_page_2.json');
 
         $model = new Account();
         $model->username = 'schwarzenegger';
@@ -131,41 +125,16 @@ class AccountQueryTest extends TestCase
         $this->accountDetailsModel = $model;
 
         $model = new Post();
-        $model->id = '1892305037402033264';
-        $model->caption = 'If you really do what you love';
-        $model->shortcode = 'BoSJR0ZhvJy';
-        $model->takenAt = 1538167222;
-        $model->comments = 4440;
-        $model->likes = 439985;
-        $model->isVideo = true;
-        $model->videoViews = 3933378;
-        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/49024ded4252035fc732a1c65f1c876f/5BB8A70D/t51.2885-15/e15/41949781_268245540489087_7381056827079503311_n.jpg';
-        $model->typename = 'GraphVideo';
-        $this->lastPostModel = $model;
-
-        $model = new Post();
-        $model->id = '1736561353911177111';
-        $model->caption = 'Featured photo by @frederic_vasquez';
-        $model->shortcode = 'BgZgVnGjA-X';
-        $model->takenAt = 1521234266;
-        $model->comments = 6437;
-        $model->likes = 688335;
+        $model->id = '1893729035025305076';
+        $model->caption = 'Tap the link in our bio for details on the CrossFit Anatomy Online Course.';
+        $model->shortcode = 'BpH4IYhhs30';
+        $model->takenAt = 1539970114;
+        $model->comments = 17;
+        $model->likes = 880;
         $model->isVideo = false;
-        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/f8ca367e3e2d36867674625a085a2506/5B452EC2/t51.2885-15/e35/28754222_155982595090677_177797884979183616_n.jpg';
+        $model->typename = 'GraphImage';
+        $model->url = 'https://instagram.fphx1-3.fna.fbcdn.net/vp/4cba95fd75eafd96922603d5b238c1a0/5C87E45B/t51.2885-15/e35/43269938_1925477977548595_6860073546614294782_n.jpg';
         $this->mediaFirstModel = $model;
-
-        $model = new Post();
-        $model->id = '1726537492972684257';
-        $model->caption = 'Video by @negrito.the.kitcat';
-        $model->shortcode = 'Bf15LPIB8Ph';
-        $model->takenAt = 1520039394;
-        $model->comments = 17079;
-        $model->likes = 854686;
-        $model->isVideo = true;
-        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/af659e60dd4d09ae8b929a1cc0e884a6/5AB093B1/t51.2885-15/e15/28430338_1808422849181442_4008413907008880640_n.jpg';
-        $this->mediaLastModel = $model;
-
-
     }
 
 }

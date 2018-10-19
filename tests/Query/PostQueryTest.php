@@ -20,7 +20,6 @@ class PostQueryTest extends TestCase
 {
     protected $postData;
     protected $postModel;
-    protected $postWithLocationData;
 
     public function testFindOne()
     {

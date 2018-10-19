@@ -89,7 +89,6 @@ class AccountQuery extends Query
         $n = 0;
         foreach ($items as $item) {
             $model = $this->accountDetailsMapper->populate(Post::class, $item);
-            print_r($model);
             yield $model;
 
             if (++$n >= $limit) {
