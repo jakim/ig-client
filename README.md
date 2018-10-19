@@ -1,7 +1,3 @@
-**NOTE:**
-
-**2018.04.12 Instagram introduced a lot of changes and blocked public access, not all endpoints work.**
-
 # IG Client
 Instagram public, web api client
 # Version
