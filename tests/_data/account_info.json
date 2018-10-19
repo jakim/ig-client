@@ -1,38 +1,43 @@
 {
   "user": {
-    "pk": 198945880,
+    "pk": "198945880",
     "username": "schwarzenegger",
     "full_name": "Arnold Schwarzenegger",
     "is_private": false,
-    "profile_pic_url": "https://scontent-waw1-1.cdninstagram.com/vp/095905a57782bb9eb52f1de31f60f5bb/5B624525/t51.2885-19/s150x150/12964988_243704659317412_177347800_a.jpg",
+    "profile_pic_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/cacbbe6301c4d2e8b1b0e5bd20947de7/5C4F9325/t51.2885-19/s150x150/12964988_243704659317412_177347800_a.jpg",
     "is_verified": true,
     "has_anonymous_profile_picture": false,
-    "media_count": 581,
-    "follower_count": 13960923,
-    "following_count": 43,
+    "media_count": 629,
+    "follower_count": 15297107,
+    "following_count": 57,
+    "following_tag_count": 0,
     "biography": "Former Mr. Olympia, Conan, Terminator, and Governor of California. I killed the Predator. I told you I'd be back.",
-    "external_url": "http://omaze.com/Arnold",
-    "external_lynx_url": "https://l.instagram.com/?u=http%3A%2F%2Fomaze.com%2FArnold\u0026e=ATMYo0mouzxgpZE0Ms8LwrycLFIvKw565Zwkgacw9GDLWMT2_J67y5Wxno0-ffkJQQUxx02b",
-    "usertags_count": 258673,
+    "external_url": "https://www.menshealth.com/entertainment/a23621596/arnold-schwarzenegger-bodybuilding-interview/",
+    "external_lynx_url": "https://l.instagram.com/?u=https%3A%2F%2Fwww.menshealth.com%2Fentertainment%2Fa23621596%2Farnold-schwarzenegger-bodybuilding-interview%2F\u0026e=ATODsvTolWXCK4QnBTQoPCwT63bLF3_gCghLjM7666T09Hd2bnTIBNwHYSr-v4nh2cWzeUZL",
+    "reel_auto_archive": "on",
+    "usertags_count": 293449,
+    "is_interest_account": true,
     "hd_profile_pic_versions": [
       {
         "width": 320,
         "height": 320,
-        "url": "https://scontent-waw1-1.cdninstagram.com/vp/1ab9d7364125fab224b067a26386b4f9/5B665B83/t51.2885-19/s320x320/12964988_243704659317412_177347800_a.jpg"
+        "url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/5294f1fbf88d0a51d58f5acf0b388aef/5C53A983/t51.2885-19/s320x320/12964988_243704659317412_177347800_a.jpg"
       },
       {
         "width": 640,
         "height": 640,
-        "url": "https://scontent-waw1-1.cdninstagram.com/vp/b30343fc3254a46d1c7dc57138a8afb2/5B524581/t51.2885-19/s640x640/12964988_243704659317412_177347800_a.jpg"
+        "url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/0d9c79d736368a84e43223914d5a87d0/5C672081/t51.2885-19/s640x640/12964988_243704659317412_177347800_a.jpg"
       }
     ],
     "hd_profile_pic_url_info": {
-      "url": "https://scontent-waw1-1.cdninstagram.com/vp/3403233dbc8d59f3bd1f0527750811f1/5B51F1FF/t51.2885-19/12964988_243704659317412_177347800_a.jpg",
+      "url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/f0fa95c44a90f043dae6dd2ece9cbbef/5C66CCFF/t51.2885-19/12964988_243704659317412_177347800_a.jpg",
       "width": 733,
       "height": 733
     },
-    "has_highlight_reels": false,
-    "auto_expand_chaining": false
+    "has_highlight_reels": true,
+    "is_potential_business": true,
+    "auto_expand_chaining": false,
+    "highlight_reshare_disabled": false
   },
   "status": "ok"
 }

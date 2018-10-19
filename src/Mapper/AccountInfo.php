@@ -36,6 +36,7 @@ class AccountInfo extends Mapper implements MapperInterface
                     'profilePicUrl' => 'hd_profile_pic_url_info.url',
                     'username' => 'username',
                     'media' => 'media_count',
+                    'isVerified' => 'is_verified',
                 ],
             ],
         ];

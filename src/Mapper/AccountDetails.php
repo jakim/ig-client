@@ -18,7 +18,7 @@ class AccountDetails extends MediaDetails
     {
         $class = Post::class;
         $postMap = ArrayHelper::getValue(parent::map(), "$class.item");
-        array_walk($postMap, function(&$item) {
+        array_walk($postMap, function (&$item) {
             $item = "node.{$item}";
         });
 
@@ -36,6 +36,9 @@ class AccountDetails extends MediaDetails
                     'profilePicUrl' => 'profile_pic_url_hd',
                     'username' => 'username',
                     'media' => 'edge_owner_to_timeline_media.count',
+                    'isVerified' => 'is_verified',
+                    'isBusiness' => 'is_business_account',
+                    'businessCategory' => 'business_category_name',
                 ],
             ],
             Post::class => [

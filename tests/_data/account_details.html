@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl" class="no-js not-logged-in client-root">
 <head>
@@ -5,25 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>
-        Instagram (@instagram) • Zdjęcia i filmy na Instagramie
+        CrossFit (@crossfit) • Zdjęcia i filmy na Instagramie
     </title>
 
 
     <meta name="robots" content="noimageindex, noarchive">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
-    <meta id="viewport" name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
-
-
+    <meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover"
+          id="viewport" name="viewport">
     <link rel="manifest" href="/data/manifest.json">
 
 
     <link href="https://graph.instagram.com" rel="preconnect" crossorigin>
 
 
-    <link rel="preload" href="/static/bundles/base/ProfilePageContainer.js/257daa16d8a1.js" as="script"
-          type="text/javascript" crossorigin="anonymous"/>
+    <link as="script" crossorigin="anonymous" href="/static/bundles/base/ProfilePageContainer.js/394c95edd99e.js"
+          rel="preload" type="text/javascript"/>
+
 
     <script type="text/javascript">
         (function () {
@@ -33,6 +33,78 @@
             docElement.className = className.replace(classRE, '$1js$2');
         })();
     </script>
+    <script type="text/javascript">
+
+        /*
+         Copyright 2018 Google Inc. All Rights Reserved.
+         Licensed under the Apache License, Version 2.0 (the "License");
+         you may not use this file except in compliance with the License.
+         You may obtain a copy of the License at
+
+             http://www.apache.org/licenses/LICENSE-2.0
+
+         Unless required by applicable law or agreed to in writing, software
+         distributed under the License is distributed on an "AS IS" BASIS,
+         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+         See the License for the specific language governing permissions and
+         limitations under the License.
+        */
+
+        (function () {
+            function g(a, c) {
+                b || (b = a, f = c, h.forEach(function (a) {
+                    removeEventListener(a, l, e)
+                }), m())
+            }
+
+            function m() {
+                b && f && 0 < d.length && (d.forEach(function (a) {
+                    a(b, f)
+                }), d = [])
+            }
+
+            function n(a, c) {
+                function k() {
+                    g(a, c);
+                    d()
+                }
+
+                function b() {
+                    d()
+                }
+
+                function d() {
+                    removeEventListener("pointerup", k, e);
+                    removeEventListener("pointercancel", b, e)
+                }
+
+                addEventListener("pointerup", k, e);
+                addEventListener("pointercancel", b, e)
+            }
+
+            function l(a) {
+                if (a.cancelable) {
+                    var c = performance.now(), b = a.timeStamp;
+                    b > c && (c = +new Date);
+                    c -= b;
+                    "pointerdown" == a.type ? n(c,
+                        a) : g(c, a)
+                }
+            }
+
+            var e = {passive: !0, capture: !0}, h = ["click", "mousedown", "keydown", "touchstart", "pointerdown"], b,
+                f, d = [];
+            h.forEach(function (a) {
+                addEventListener(a, l, e)
+            });
+            window.perfMetrics = window.perfMetrics || {};
+            window.perfMetrics.onFirstInputDelay = function (a) {
+                d.push(a);
+                m()
+            }
+        })();
+    </script>
+
     <script type="text/javascript">
         (function () {
             if ('PerformanceObserver' in window && 'PerformancePaintTiming' in window) {
@@ -53,643 +125,744 @@
                 });
                 return false;
             };
+            window.__initialData = {
+                pending: true,
+                waiting: []
+            };
+
+            function notifyLoaded(item, data) {
+                item.pending = false;
+                item.data = data;
+                for (var i = 0; i < item.waiting.length; ++i) {
+                    item.waiting[i].resolve(item.data);
+                }
+                item.waiting = [];
+            }
+
+            function notifyError(item, msg) {
+                item.pending = false;
+                item.error = new Error(msg);
+                for (var i = 0; i < item.waiting.length; ++i) {
+                    item.waiting[i].reject(item.error);
+                }
+                item.waiting = [];
+            }
+
+            window.__initialDataLoaded = function (initialData) {
+                notifyLoaded(window.__initialData, initialData);
+            };
+            window.__initialDataError = function (msg) {
+                notifyError(window.__initialData, msg);
+            };
+            window.__additionalData = {};
+            window.__pendingAdditionalData = function (paths) {
+                for (var i = 0; i < paths.length; ++i) {
+                    window.__additionalData[paths[i]] = {
+                        pending: true,
+                        waiting: []
+                    };
+                }
+            };
+            window.__additionalDataLoaded = function (path, data) {
+                if (path in window.__additionalData) {
+                    notifyLoaded(window.__additionalData[path], data);
+                } else {
+                    console.error('Unexpected additional data loaded "' + path + '"');
+                }
+            };
+            window.__additionalDataError = function (path, msg) {
+                if (path in window.__additionalData) {
+                    notifyError(window.__additionalData[path], msg);
+                } else {
+                    console.error('Unexpected additional data encountered an error "' + path + '": ' + msg);
+                }
+            };
         })();
     </script>
 
-    <link rel="apple-touch-icon-precomposed" sizes="76x76"
-          href="/static/images/ico/apple-touch-icon-76x76-precomposed.png/932e4d9af891.png">
-    <link rel="apple-touch-icon-precomposed" sizes="120x120"
-          href="/static/images/ico/apple-touch-icon-120x120-precomposed.png/004705c9353f.png">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152"
-          href="/static/images/ico/apple-touch-icon-152x152-precomposed.png/82467bc9bcce.png">
-    <link rel="apple-touch-icon-precomposed" sizes="167x167"
-          href="/static/images/ico/apple-touch-icon-167x167-precomposed.png/515cb4eeeeee.png">
-    <link rel="apple-touch-icon-precomposed" sizes="180x180"
-          href="/static/images/ico/apple-touch-icon-180x180-precomposed.png/94fd767f257b.png">
+    <link href="/static/images/ico/apple-touch-icon-76x76-precomposed.png/4272e394f5ad.png"
+          rel="apple-touch-icon-precomposed" sizes="76x76">
+    <link href="/static/images/ico/apple-touch-icon-120x120-precomposed.png/02ba5abf9861.png"
+          rel="apple-touch-icon-precomposed" sizes="120x120">
+    <link href="/static/images/ico/apple-touch-icon-152x152-precomposed.png/419a6f9c7454.png"
+          rel="apple-touch-icon-precomposed" sizes="152x152">
+    <link href="/static/images/ico/apple-touch-icon-167x167-precomposed.png/a24e58112f06.png"
+          rel="apple-touch-icon-precomposed" sizes="167x167">
+    <link href="/static/images/ico/apple-touch-icon-180x180-precomposed.png/85a358fb3b7d.png"
+          rel="apple-touch-icon-precomposed" sizes="180x180">
 
-    <link rel="icon" sizes="192x192" href="/static/images/ico/favicon-192.png/b407fa101800.png">
-
-
-    <link rel="mask-icon" href="/static/images/ico/favicon.svg/9d8680ab8a3c.svg" color="#262626">
-
-    <link rel="shortcut icon" type="image/x-icon" href="/static/images/ico/favicon.ico/dfa85bb1fd63.ico">
+    <link href="/static/images/ico/favicon-192.png/68d99ba29cc8.png" rel="icon" sizes="192x192">
 
 
-    <link rel="alternate" href="android-app://com.instagram.android/https/instagram.com/_u/instagram/"/>
+    <link color="#262626" href="/static/images/ico/favicon.svg/fc72dd4bfde8.svg" rel="mask-icon">
 
-    <meta property="al:ios:app_name" content="Instagram"/>
-    <meta property="al:ios:app_store_id" content="389801252"/>
-    <meta property="al:ios:url" content="instagram://user?username=instagram"/>
-    <meta property="al:android:app_name" content="Instagram"/>
-    <meta property="al:android:package" content="com.instagram.android"/>
-    <meta property="al:android:url" content="https://www.instagram.com/_u/instagram/"/>
-    <link rel="canonical" href="https://www.instagram.com/instagram/"/>
-    <meta content="Obserwujący: 234.3 mln, obserwowani: 184, posty: 5,185 – zobacz zdjęcia i filmy zamieszczone przez Instagram (@instagram) na Instagramie"
+    <link href="/static/images/ico/favicon.ico/36b3ee2d91ed.ico" rel="shortcut icon" type="image/x-icon">
+
+
+    <link href="android-app://com.instagram.android/https/instagram.com/_u/crossfit/" rel="alternate"/>
+
+
+    <meta content="Instagram" property="al:ios:app_name"/>
+    <meta content="389801252" property="al:ios:app_store_id"/>
+    <meta content="instagram://user?username=crossfit" property="al:ios:url"/>
+    <meta content="Instagram" property="al:android:app_name"/>
+    <meta content="com.instagram.android" property="al:android:package"/>
+    <meta content="https://www.instagram.com/_u/crossfit/" property="al:android:url"/>
+
+    <link href="https://www.instagram.com/crossfit/" rel="canonical"/>
+    <meta content="Obserwujący: 2.6 mln, obserwowani: 1,318, posty: 9,402 – zobacz zdjęcia i filmy zamieszczone przez CrossFit (@crossfit) na Instagramie"
           name="description"/>
-    <meta property="og:type" content="profile"/>
-    <meta property="og:image"
-          content="https://scontent-waw1-1.cdninstagram.com/vp/295f9e76d3c26fdf613d7856e7b43348/5B4F495B/t51.2885-19/s150x150/14719833_310540259320655_1605122788543168512_a.jpg"/>
-    <meta property="og:title" content="Instagram (@instagram) • Zdjęcia i filmy na Instagramie"/>
-    <meta property="og:description"
-          content="Obserwujący: 234.3 mln, obserwowani: 184, posty: 5,185 – zobacz zdjęcia i filmy zamieszczone przez Instagram (@instagram) na Instagramie"/>
-    <meta property="og:url" content="https://www.instagram.com/instagram/"/>
 
-    <link rel="alternate" href="https://www.instagram.com/instagram/" hreflang="x-default"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=en" hreflang="en"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=fr" hreflang="fr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=it" hreflang="it"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=de" hreflang="de"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es" hreflang="es"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=zh-cn" hreflang="zh-cn"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=zh-tw" hreflang="zh-tw"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ja" hreflang="ja"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ko" hreflang="ko"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=pt" hreflang="pt"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=pt-br" hreflang="pt-br"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=af" hreflang="af"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=cs" hreflang="cs"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=da" hreflang="da"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=el" hreflang="el"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=fi" hreflang="fi"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=hr" hreflang="hr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=hu" hreflang="hu"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=id" hreflang="id"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ms" hreflang="ms"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=nb" hreflang="nb"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=nl" hreflang="nl"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=pl" hreflang="pl"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ru" hreflang="ru"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=sk" hreflang="sk"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=sv" hreflang="sv"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=th" hreflang="th"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=tl" hreflang="tl"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=tr" hreflang="tr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=hi" hreflang="hi"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=bn" hreflang="bn"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=gu" hreflang="gu"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=kn" hreflang="kn"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ml" hreflang="ml"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=mr" hreflang="mr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=pa" hreflang="pa"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ta" hreflang="ta"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=te" hreflang="te"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ne" hreflang="ne"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=si" hreflang="si"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ur" hreflang="ur"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=vi" hreflang="vi"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=bg" hreflang="bg"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=fr-ca" hreflang="fr-ca"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=ro" hreflang="ro"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=sr" hreflang="sr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=uk" hreflang="uk"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=zh-hk" hreflang="zh-hk"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-py"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-hn"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-pe"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-ar"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-gt"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-bo"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-cu"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-ve"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-pa"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-cr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-ec"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-sv"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-uy"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-ni"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-mx"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-pr"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-cl"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-co"/>
-    <link rel="alternate" href="https://www.instagram.com/instagram/?hl=es-la" hreflang="es-do"/>
+    <meta content="profile" property="og:type"/>
+    <meta content="https://instagram.fphx1-3.fna.fbcdn.net/vp/fbe68f97cd10651fb2b8a6f1bc7c923c/5C40E1BF/t51.2885-19/s150x150/10723747_996967810364381_270381264_a.jpg"
+          property="og:image"/>
+    <meta content="CrossFit (@crossfit) • Zdjęcia i filmy na Instagramie" property="og:title"/>
+    <meta content="Obserwujący: 2.6 mln, obserwowani: 1,318, posty: 9,402 – zobacz zdjęcia i filmy zamieszczone przez CrossFit (@crossfit) na Instagramie"
+          property="og:description"/>
+    <meta content="https://www.instagram.com/crossfit/" property="og:url"/>
 
+
+    <script type="application/ld+json">
+        {
+            "@context": "http:\/\/schema.org",
+            "@type": "Organization",
+            "name": "CrossFit",
+            "alternateName": "@crossfit",
+            "description": "The official Instagram page for #CrossFit. Links \ud83d\udc47",
+            "url": "https:\/\/linktr.ee\/crossfit",
+            "mainEntityofPage": {
+                "@type": "ProfilePage",
+                "@id": "https:\/\/www.instagram.com\/crossfit\/",
+                "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "http:\/\/schema.org\/FollowAction",
+                    "userInteractionCount": "2600232"
+                }
+            },
+            "image": "https:\/\/www.instagram.com\/static\/images\/ico\/favicon-200.png\/ab6eff595bb1.png",
+            "email": "customerservice@crossfit.com"
+        }
+    </script>
+
+    <link href="https://www.instagram.com/crossfit/" hreflang="x-default" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=en" hreflang="en" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=fr" hreflang="fr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=it" hreflang="it" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=de" hreflang="de" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es" hreflang="es" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=zh-cn" hreflang="zh-cn" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=zh-tw" hreflang="zh-tw" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ja" hreflang="ja" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ko" hreflang="ko" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=pt" hreflang="pt" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=pt-br" hreflang="pt-br" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=af" hreflang="af" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=cs" hreflang="cs" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=da" hreflang="da" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=el" hreflang="el" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=fi" hreflang="fi" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=hr" hreflang="hr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=hu" hreflang="hu" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=id" hreflang="id" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ms" hreflang="ms" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=nb" hreflang="nb" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=nl" hreflang="nl" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=pl" hreflang="pl" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ru" hreflang="ru" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=sk" hreflang="sk" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=sv" hreflang="sv" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=th" hreflang="th" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=tl" hreflang="tl" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=tr" hreflang="tr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=hi" hreflang="hi" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=bn" hreflang="bn" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=gu" hreflang="gu" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=kn" hreflang="kn" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ml" hreflang="ml" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=mr" hreflang="mr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=pa" hreflang="pa" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ta" hreflang="ta" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=te" hreflang="te" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ne" hreflang="ne" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=si" hreflang="si" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ur" hreflang="ur" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=vi" hreflang="vi" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=bg" hreflang="bg" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=fr-ca" hreflang="fr-ca" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=ro" hreflang="ro" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=sr" hreflang="sr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=uk" hreflang="uk" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=zh-hk" hreflang="zh-hk" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-co" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-sv" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-pr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-cu" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-hn" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-py" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-ar" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-cl" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-bo" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-uy" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-ec" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-ni" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-ve" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-pa" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-mx" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-cr" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-gt" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-pe" rel="alternate"/>
+    <link href="https://www.instagram.com/crossfit/?hl=es-la" hreflang="es-do" rel="alternate"/>
 </head>
 <body class="">
 
-<span id="react-root"></span>
+<span id="react-root"><svg height="50" style="position:absolute;top:50%;left:50%;margin:-25px 0 0 -25px;fill:#c7c7c7"
+                           viewBox="0 0 50 50" width="50"><path
+        d="M25 1c-6.52 0-7.34.03-9.9.14-2.55.12-4.3.53-5.82 1.12a11.76 11.76 0 0 0-4.25 2.77 11.76 11.76 0 0 0-2.77 4.25c-.6 1.52-1 3.27-1.12 5.82C1.03 17.66 1 18.48 1 25c0 6.5.03 7.33.14 9.88.12 2.56.53 4.3 1.12 5.83a11.76 11.76 0 0 0 2.77 4.25 11.76 11.76 0 0 0 4.25 2.77c1.52.59 3.27 1 5.82 1.11 2.56.12 3.38.14 9.9.14 6.5 0 7.33-.02 9.88-.14 2.56-.12 4.3-.52 5.83-1.11a11.76 11.76 0 0 0 4.25-2.77 11.76 11.76 0 0 0 2.77-4.25c.59-1.53 1-3.27 1.11-5.83.12-2.55.14-3.37.14-9.89 0-6.51-.02-7.33-.14-9.89-.12-2.55-.52-4.3-1.11-5.82a11.76 11.76 0 0 0-2.77-4.25 11.76 11.76 0 0 0-4.25-2.77c-1.53-.6-3.27-1-5.83-1.12A170.2 170.2 0 0 0 25 1zm0 4.32c6.4 0 7.16.03 9.69.14 2.34.11 3.6.5 4.45.83 1.12.43 1.92.95 2.76 1.8a7.43 7.43 0 0 1 1.8 2.75c.32.85.72 2.12.82 4.46.12 2.53.14 3.29.14 9.7 0 6.4-.02 7.16-.14 9.69-.1 2.34-.5 3.6-.82 4.45a7.43 7.43 0 0 1-1.8 2.76 7.43 7.43 0 0 1-2.76 1.8c-.84.32-2.11.72-4.45.82-2.53.12-3.3.14-9.7.14-6.4 0-7.16-.02-9.7-.14-2.33-.1-3.6-.5-4.45-.82a7.43 7.43 0 0 1-2.76-1.8 7.43 7.43 0 0 1-1.8-2.76c-.32-.84-.71-2.11-.82-4.45a166.5 166.5 0 0 1-.14-9.7c0-6.4.03-7.16.14-9.7.11-2.33.5-3.6.83-4.45a7.43 7.43 0 0 1 1.8-2.76 7.43 7.43 0 0 1 2.75-1.8c.85-.32 2.12-.71 4.46-.82 2.53-.11 3.29-.14 9.7-.14zm0 7.35a12.32 12.32 0 1 0 0 24.64 12.32 12.32 0 0 0 0-24.64zM25 33a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm15.68-20.8a2.88 2.88 0 1 0-5.76 0 2.88 2.88 0 0 0 5.76 0z"/></svg></span>
 
 
 <script type="text/javascript">window._sharedData = {
     "activity_counts": null,
-    "config": {"csrf_token": "aHqz8zcTuZGe3XQUFY94uSjhUljblopt", "viewer": null},
+    "config": {"csrf_token": "qDUlhg1fQYxcwIPw88VstycwL8aQ7WAP", "viewer": null, "viewerId": null},
     "supports_es6": true,
-    "country_code": "PL",
+    "country_code": "US",
     "language_code": "pl",
     "locale": "pl_PL",
     "entry_data": {
         "ProfilePage": [{
-            "logging_page_id": "profilePage_25025320",
+            "logging_page_id": "profilePage_255768340",
             "show_suggested_profiles": false,
             "graphql": {
                 "user": {
-                    "biography": "Discovering \u2014 and telling \u2014 stories from around the world. Founded in 2010 by @kevin and @mikeyk.",
+                    "biography": "The official Instagram page for #CrossFit. Links",
                     "blocked_by_viewer": false,
                     "country_block": false,
-                    "external_url": null,
-                    "external_url_linkshimmed": null,
-                    "edge_followed_by": {"count": 234321415},
+                    "external_url": "https://linktr.ee/crossfit",
+                    "external_url_linkshimmed": "https://l.instagram.com/?u=https%3A%2F%2Flinktr.ee%2Fcrossfit\u0026e=ATP5O2oiYRgBtmoY1U1T2Q5MqbvlpNhhByGqGNohOJPgCEvzj8SyoG3LZud_65NNXGGqWpff",
+                    "edge_followed_by": {"count": 2600232},
                     "followed_by_viewer": false,
-                    "edge_follow": {"count": 184},
+                    "edge_follow": {"count": 1318},
                     "follows_viewer": false,
-                    "full_name": "Instagram",
+                    "full_name": "CrossFit",
+                    "has_channel": false,
                     "has_blocked_viewer": false,
-                    "has_highlight_reel": true,
+                    "highlight_reel_count": 27,
                     "has_requested_viewer": false,
-                    "id": "25025320",
+                    "id": "255768340",
+                    "is_business_account": true,
+                    "is_joined_recently": false,
+                    "business_category_name": "Publishers",
+                    "business_email": "customerservice@crossfit.com",
+                    "business_phone_number": "",
+                    "business_address_json": "{\"street_address\": \"\", \"zip_code\": \"\", \"city_name\": \"\", \"region_name\": \"\", \"country_code\": \"\"}",
                     "is_private": false,
                     "is_verified": true,
-                    "mutual_followers": null,
-                    "profile_pic_url": "https://scontent-waw1-1.cdninstagram.com/vp/295f9e76d3c26fdf613d7856e7b43348/5B4F495B/t51.2885-19/s150x150/14719833_310540259320655_1605122788543168512_a.jpg",
-                    "profile_pic_url_hd": "https://scontent-waw1-1.cdninstagram.com/vp/893534d61bdc5ea6911593d3ee0a1922/5B6363AB/t51.2885-19/s320x320/14719833_310540259320655_1605122788543168512_a.jpg",
+                    "edge_mutual_followed_by": {"count": 0, "edges": []},
+                    "profile_pic_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/fbe68f97cd10651fb2b8a6f1bc7c923c/5C40E1BF/t51.2885-19/s150x150/10723747_996967810364381_270381264_a.jpg",
+                    "profile_pic_url_hd": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6ce20f16cd5d48cd576de10301235c03/5C87C219/t51.2885-19/s320x320/10723747_996967810364381_270381264_a.jpg",
                     "requested_by_viewer": false,
-                    "username": "instagram",
+                    "username": "crossfit",
                     "connected_fb_page": null,
                     "edge_owner_to_timeline_media": {
-                        "count": 5185,
+                        "count": 9402,
                         "page_info": {
                             "has_next_page": true,
-                            "end_cursor": "AQBh0RKfuVd3x7tAX40sFY8y5bA8SSUdvo2csDWTy8aJ0uLFihbyPM8ADFrKgc8IOTIeBn5bsj_vd0wZY6YkZ1C2-pxl4PRL0FUSTgA1KgAoxg"
+                            "end_cursor": "QVFCUThnRkJnZ2xoRXVDRktHM2U0MDk0cGJSVFFxd1FzZ0JPcElfVW9yWUlSZHZRLV9TODdmakhXMEEtSVZXYjdocEU1TkVsaTdkczNCQW0wd0VuQXZVeA=="
                         },
                         "edges": [{
                             "node": {
-                                "__typename": "GraphVideo",
-                                "id": "1878604801479471730",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "If you really do what you love"}}]},
-                                "shortcode": "BoSJR0ZhvJy",
-                                "edge_media_to_comment": {"count": 4440},
+                                "__typename": "GraphImage",
+                                "id": "1893729035025305076",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "Tap the link in our bio for details on the CrossFit Anatomy Online Course.\n-\nVia @crossfitshowlow: Enjoyed learning why we move the way we move. From levers to planes of motion, muscles and joints it makes sense when I see it on the fitness floor. As a coach that\u2019s what gives me my why of coaching and correcting and coaching and more correcting. \ud83c\udfcb\ud83c\udffc\u200d\u2642\ufe0f #crossfitanatomy #crossfitshowlow #crossfit"}}]},
+                                "shortcode": "BpH4IYhhs30",
+                                "edge_media_to_comment": {"count": 17},
                                 "comments_disabled": false,
-                                "taken_at_timestamp": 1538167222,
-                                "dimensions": {"height": 935, "width": 750},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/49024ded4252035fc732a1c65f1c876f/5BB8A70D/t51.2885-15/e15/41949781_268245540489087_7381056827079503311_n.jpg",
-                                "edge_liked_by": {"count": 439985},
-                                "edge_media_preview_like": {"count": 439985},
+                                "taken_at_timestamp": 1539970114,
+                                "dimensions": {"height": 1080, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/4cba95fd75eafd96922603d5b238c1a0/5C87E45B/t51.2885-15/e35/43269938_1925477977548595_6860073546614294782_n.jpg",
+                                "edge_liked_by": {"count": 880},
+                                "edge_media_preview_like": {"count": 880},
                                 "gating_info": null,
-                                "media_preview": "ACEqprMsv+sGG/vD+oqQrgccis5TVyAljjOAOaNg3I3WmbatOADjOevPSoytAbEO2ipMGigCqKtwfKT9B/jSrAPapTH5alhyePyzU3KSEbBJ9qtS22xC+cgVWTBzu/vN/T/Cp2lWQbMsw9sf54pDKeBRU3lp6N/n8aKdxWKAkxTnuG6DIquO1JL1piJjPnj15/8A1e1SLdbfl6D+VUBT6AL32o+o/P8A+tRWdRRYLn//2Q==",
-                                "owner": {"id": "25025320", "username": "instagram"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/45bfce66441c0e612338da5bb918f63a/5BB80BE2/t51.2885-15/e15/c0.89.720.720/s640x640/41949781_268245540489087_7381056827079503311_n.jpg",
+                                "media_preview": "ACoq3vJk/wCejfkv+FNaN1BJkYADJ4X/AAqzTScjBBwfp/jQBU8+LGTKfXqM/ljP4YzT0BlG5JWK/Rf8KPssf939FqZF2DAB/T+lADPJk/56N+S/4UeTJ/z0b8l/wqcHPtS0ANLAdajkAfHzFcHscZ46GnuxXpzSqwYZH+H86AK3l5wd7A4x1Hv7dfyp6IEOd7NjsTx/Kh7lEJBzkf7JP8hU4OeaAE3g96dSZHSloAjJVu4/OlDKO4/OofIj/ur/AN8j/Ck8iP8AuL/3yP8ACgCYoGOaduA7iq/lqMAAfkKBBH/dX8h/hQBMNg5G0H8KdvX1H51B5Ef91fyH+FHkR/3V/wC+R/hQB//Z",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/ef8da98c8210556e8f17a2bbde174363/5C4F61E1/t51.2885-15/sh0.08/e35/s640x640/43269938_1925477977548595_6860073546614294782_n.jpg",
                                 "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/7a49ef9be480df617664cd85bc403319/5BB82EFD/t51.2885-15/e15/c0.89.720.720/s150x150/41949781_268245540489087_7381056827079503311_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/f5a5d0feb53c6a3e18f55b9ded6ef124/5C4BDF64/t51.2885-15/e35/s150x150/43269938_1925477977548595_6860073546614294782_n.jpg",
                                     "config_width": 150,
                                     "config_height": 150
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/ad95bed8a7a90080b3d49f3997917084/5BB88577/t51.2885-15/e15/c0.89.720.720/s240x240/41949781_268245540489087_7381056827079503311_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/8c7ea4e6afc70bc432ea4f40ed38ea7f/5C503162/t51.2885-15/e35/s240x240/43269938_1925477977548595_6860073546614294782_n.jpg",
                                     "config_width": 240,
                                     "config_height": 240
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/7e14e98c82a07134592deac1a320ead7/5BB8880D/t51.2885-15/e15/c0.89.720.720/s320x320/41949781_268245540489087_7381056827079503311_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6ac70a5eb08117f501b31e7b54e62681/5C436F1C/t51.2885-15/e35/s320x320/43269938_1925477977548595_6860073546614294782_n.jpg",
                                     "config_width": 320,
                                     "config_height": 320
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/f13922e8600c3802e35468b3c03034b3/5BB81657/t51.2885-15/e15/c0.89.720.720/s480x480/41949781_268245540489087_7381056827079503311_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/2a8001bb83870e0f183868adf4d801d7/5C871B5B/t51.2885-15/e35/s480x480/43269938_1925477977548595_6860073546614294782_n.jpg",
                                     "config_width": 480,
                                     "config_height": 480
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/45bfce66441c0e612338da5bb918f63a/5BB80BE2/t51.2885-15/e15/c0.89.720.720/s640x640/41949781_268245540489087_7381056827079503311_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/ef8da98c8210556e8f17a2bbde174363/5C4F61E1/t51.2885-15/sh0.08/e35/s640x640/43269938_1925477977548595_6860073546614294782_n.jpg",
+                                    "config_width": 640,
+                                    "config_height": 640
+                                }],
+                                "is_video": false,
+                                "accessibility_caption": null
+                            }
+                        }, {
+                            "node": {
+                                "__typename": "GraphVideo",
+                                "id": "1893659745861469424",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "Check out other CrossFit exercises and demos at CrossFit.com/exercisedemos or tap the link in our bio. @CrossFitTraining #CrossFit #CrossFitTraining"}}]},
+                                "shortcode": "BpHoYF9h4Tw",
+                                "edge_media_to_comment": {"count": 22},
+                                "comments_disabled": false,
+                                "taken_at_timestamp": 1539962372,
+                                "dimensions": {"height": 607, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/2925311ee3c393aa356f64f4c01746fe/5BCD02B8/t51.2885-15/fr/e15/s1080x1080/43129915_312517579344444_629514864885339178_n.jpg",
+                                "edge_liked_by": {"count": 3767},
+                                "edge_media_preview_like": {"count": 3767},
+                                "gating_info": null,
+                                "media_preview": "ACoX6Rvriotr/wB/9BUjUygA2Of4/wBBVSaC4aSMo/yKct2z7YHUdvarv5U4UAVPtDvIqxgFR/rD/d9vr+f4VdrM0+VXeXB/i6HqOtadJDas7DSM0m2iimINtOAxRRQBVgiKMWKBSxPTGevOenXr/PmrdFFAH//Z",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/de0d8bdb7d1c3032c7154df85ae47e63/5BCD0912/t51.2885-15/e15/c236.0.607.607/43129915_312517579344444_629514864885339178_n.jpg",
+                                "thumbnail_resources": [{
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/32632762b638f89e6770048bcb63450f/5BCC88F5/t51.2885-15/e15/c236.0.607.607/s150x150/43129915_312517579344444_629514864885339178_n.jpg",
+                                    "config_width": 150,
+                                    "config_height": 150
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/dfd3c3ec0d7e26efcd000c313aeb4707/5BCD0980/t51.2885-15/e15/c236.0.607.607/s240x240/43129915_312517579344444_629514864885339178_n.jpg",
+                                    "config_width": 240,
+                                    "config_height": 240
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/0719b6a3fcb810e3d0f248358045d850/5BCCC238/t51.2885-15/e15/c236.0.607.607/s320x320/43129915_312517579344444_629514864885339178_n.jpg",
+                                    "config_width": 320,
+                                    "config_height": 320
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/58258be079f1be77bc072f13669c1288/5BCC83A4/t51.2885-15/e15/c236.0.607.607/s480x480/43129915_312517579344444_629514864885339178_n.jpg",
+                                    "config_width": 480,
+                                    "config_height": 480
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/de0d8bdb7d1c3032c7154df85ae47e63/5BCD0912/t51.2885-15/e15/c236.0.607.607/43129915_312517579344444_629514864885339178_n.jpg",
                                     "config_width": 640,
                                     "config_height": 640
                                 }],
                                 "is_video": true,
-                                "video_view_count": 3933378
+                                "video_view_count": 54721
                             }
                         }, {
                             "node": {
-                                "__typename": "GraphImage",
-                                "id": "1759815504761413041",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @rizkidarmoh\nWhy did the chicken go up the stairs? To get to the other side. #WHPwildthing"}}]},
-                                "shortcode": "BhsHuCvh12x",
-                                "edge_media_to_comment": {"count": 3223},
+                                "__typename": "GraphVideo",
+                                "id": "1893611012494909318",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "Squad \u2764\ufe0f\nVia @CrossFitPortRoyal | #CrossFit"}}]},
+                                "shortcode": "BpHdS7eht-G",
+                                "edge_media_to_comment": {"count": 14},
                                 "comments_disabled": false,
-                                "taken_at_timestamp": 1524006377,
-                                "dimensions": {"height": 1350, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/10dbb10af0beec27958fac1f24d7e0ed/5B6C289C/t51.2885-15/e35/30086057_2041041862774640_8479330405214846976_n.jpg",
-                                "edge_liked_by": {"count": 585792},
-                                "edge_media_preview_like": {"count": 585792},
+                                "taken_at_timestamp": 1539956061,
+                                "dimensions": {"height": 640, "width": 640},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/47d7b5da857ec3f636458c12d3be70ad/5BCC995A/t51.2885-15/e15/43521354_2116795441894296_7544903998379880142_n.jpg",
+                                "edge_liked_by": {"count": 2715},
+                                "edge_media_preview_like": {"count": 2715},
                                 "gating_info": null,
-                                "media_preview": "ACEqkxSEVP5bDqKaVrpucdrEGKXFS7aciAnBOKLgQ4oq95UfrRS5iuV+X3lS3haJTglhubg+gOOPf+ftVmEB1DHP/wCriqtvfAkjBwSTwMnOcmqkt4JCXUlD7E8/UdM+/wCdZOXY2Ub7m9sVhhRmq5U56Vlrq21uRkcZ/wD1VImsjPzDAOf/AK3NFwcbml5De1FV/wC1rf1P5H/GinzByI5xiy/dP4j9abvIUL27+/1qxc8SDFUzyeazNQY88U3NO/wphoELmikooA//2Q==",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/26748fc2693b7b183112c8fc0c9a0c8b/5B57969F/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30086057_2041041862774640_8479330405214846976_n.jpg",
+                                "media_preview": "ACoqoXsivtKHdjOcVTjkbPBKj1B6CpXuXc9QMcHCgDjv0xUSkKd45x69PypgWGU7tu/c34/zpZpZI22yE5+vFNaRZsY+U/rn2/zxVd3ZWw3PfnkUh2H+bnvS7j61N5LHB3fkB+lO8hv75/IUWEJetwB9TVFQBHnuT+grQuAeDjOOtZrtuOAMD0oAfGpbPboAfcn/AAzU0sWxQnUqSQfY/wD16SMlFwO5yf8APtUwfcefQ/j7UDLigABfQCl4quCKf5lMQ0yn2p2xWGcVEOtWqQFfyxQsbNyAD/wIcc4GfTNSt1pmKYAInX5iAMc8sPr2pd5bnjnnpQRVB2IY8nqaAP/Z",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/47d7b5da857ec3f636458c12d3be70ad/5BCC995A/t51.2885-15/e15/43521354_2116795441894296_7544903998379880142_n.jpg",
                                 "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/2d1319cf1e2cebe69d8578e83ece5619/5B6CA63B/t51.2885-15/s150x150/e35/c0.135.1080.1080/30086057_2041041862774640_8479330405214846976_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6bdaf92d0a5625e0321a2a6504059f95/5BCC7671/t51.2885-15/e15/s150x150/43521354_2116795441894296_7544903998379880142_n.jpg",
                                     "config_width": 150,
                                     "config_height": 150
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/2d421ea1af52d69842eb21d0e5400568/5B66FACB/t51.2885-15/s240x240/e35/c0.135.1080.1080/30086057_2041041862774640_8479330405214846976_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/3a4282e63e32736ca6caf65ae58c44f9/5BCCE3B7/t51.2885-15/e15/s240x240/43521354_2116795441894296_7544903998379880142_n.jpg",
                                     "config_width": 240,
                                     "config_height": 240
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/09306fa8f42f043e007187f64336cf9a/5B595CCA/t51.2885-15/s320x320/e35/c0.135.1080.1080/30086057_2041041862774640_8479330405214846976_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/952cd05f1a3c9de59e869019d506a0b8/5BCCFC49/t51.2885-15/e15/s320x320/43521354_2116795441894296_7544903998379880142_n.jpg",
                                     "config_width": 320,
                                     "config_height": 320
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/54bf29ed4b307652b9b0d6cbf2b541a5/5B62B7E7/t51.2885-15/s480x480/e35/c0.135.1080.1080/30086057_2041041862774640_8479330405214846976_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/55392fa0107903448ecff1aa6f04b87a/5BCC8DCE/t51.2885-15/e15/s480x480/43521354_2116795441894296_7544903998379880142_n.jpg",
                                     "config_width": 480,
                                     "config_height": 480
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/26748fc2693b7b183112c8fc0c9a0c8b/5B57969F/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30086057_2041041862774640_8479330405214846976_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/47d7b5da857ec3f636458c12d3be70ad/5BCC995A/t51.2885-15/e15/43521354_2116795441894296_7544903998379880142_n.jpg",
                                     "config_width": 640,
                                     "config_height": 640
                                 }],
-                                "is_video": false
+                                "is_video": true,
+                                "video_view_count": 46141
                             }
                         }, {
                             "node": {
-                                "__typename": "GraphImage",
-                                "id": "1759785687278133083",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo illustration by @karencantuq\nAfter a few weeks of sickness, Lily the golden retriever is finally back to her usual antics. \u201cWhen we left the vet, you could see her excitement,\u201d says her human, visual artist Karen Cantu Quintanilla (@karencantuq). \u201cShe ran toward these plants and started playing around, getting all muddy. My heart smiled, watching her being herself.\u201d \ud83d\udc97\ud83d\udc1e\nFollow along to see more of our favorites from last weekend\u2019s hashtag project, #WHPwildthing."}}]},
-                                "shortcode": "BhsA8JDB59b",
-                                "edge_media_to_comment": {"count": 4789},
+                                "__typename": "GraphSidecar",
+                                "id": "1893382316492320583",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "CrossFit founder Greg Glassman (@cfceo) visits with local affiliate owners @gongxd (CrossFit Zhan) and @liang_kong (@crossfit_qiantang) before the @crossfit_china affiliate gathering in Hangzhou, China \ud83c\udde8\ud83c\uddf3 tomorrow. #CrossFit\n\u2022\n@jimi.letchford @sevanmatossian\n\u2022\n\ud83d\udcf7 @michaelishustle, @cftoughasnails"}}]},
+                                "shortcode": "BpGpS9uh-9H",
+                                "edge_media_to_comment": {"count": 15},
                                 "comments_disabled": false,
-                                "taken_at_timestamp": 1524002823,
-                                "dimensions": {"height": 1070, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/e38c381e89e706ef9635e33db6e16dbc/5B68BF71/t51.2885-15/e35/30591615_881741418699920_600203219846561792_n.jpg",
-                                "edge_liked_by": {"count": 976587},
-                                "edge_media_preview_like": {"count": 976587},
+                                "taken_at_timestamp": 1539928782,
+                                "dimensions": {"height": 607, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/9e78fdf8e3cf5d7f257df8d4b66c4b83/5C5DDB2E/t51.2885-15/e35/42927627_246435169366265_258202963654436451_n.jpg",
+                                "edge_liked_by": {"count": 3146},
+                                "edge_media_preview_like": {"count": 3146},
                                 "gating_info": null,
-                                "media_preview": "ACopwc5GR2p/b0+tIGz79h9aVuDjp/jVEAxCgHvSDLDp071ZS0kYbgpZe3H+c1AS68Zxjg8Y/OgWxHtHfjNGB6D86kJ9f8R+FMKj2oC40rn/AOtV+zthK2W5A/z+NUFrTsG+VucAcfXOelIpb2L7XiW7eU25vUnHGegAHpUd7bYXfnLgZycDI9/6d6icNJIJDglOD0HT19z29e1XJY3lhbefnIJP19Pp2oLa7nO5LHH9aXaPSo34PHWk496DMQVqaYvLH6D8ayq1LD7h/wB7+goKRqsilt20Fh3xU+RjH96oW6/hTF6mkWc/OgR2HoSKr5NWbz/XP9R/Sq1Mix//2Q==",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/e4021194863c9a1e6163b424230e6b42/5B74DB5C/t51.2885-15/s640x640/sh0.08/e35/c5.0.1070.1070/30591615_881741418699920_600203219846561792_n.jpg",
+                                "media_preview": null,
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/374a741637cf72c4c5a0e849384aaeb7/5C50711A/t51.2885-15/e35/c236.0.607.607/42927627_246435169366265_258202963654436451_n.jpg",
                                 "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/b9ee955c36d1e94549e6d6a8806afb04/5B5AE620/t51.2885-15/s150x150/e35/c5.0.1070.1070/30591615_881741418699920_600203219846561792_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/7a72dc25f9d906a1aca0feb640bb6904/5C63EF71/t51.2885-15/e35/c236.0.607.607/s150x150/42927627_246435169366265_258202963654436451_n.jpg",
                                     "config_width": 150,
                                     "config_height": 150
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/7536d0c015d090a8f20924285fa837ac/5B700EAB/t51.2885-15/s240x240/e35/c5.0.1070.1070/30591615_881741418699920_600203219846561792_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/94cc57fab3700b7793b32be65786f009/5C88FBC4/t51.2885-15/e35/c236.0.607.607/s240x240/42927627_246435169366265_258202963654436451_n.jpg",
                                     "config_width": 240,
                                     "config_height": 240
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/8bdd37539d2708cf7d06a3c64fd2b3c9/5B4F943F/t51.2885-15/s320x320/e35/c5.0.1070.1070/30591615_881741418699920_600203219846561792_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/0e18a836b24373dd29e1914c11cb3293/5C55E27C/t51.2885-15/e35/c236.0.607.607/s320x320/42927627_246435169366265_258202963654436451_n.jpg",
                                     "config_width": 320,
                                     "config_height": 320
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/724862e04d033055ef290e2ed11d78b7/5B6F8F6A/t51.2885-15/s480x480/e35/c5.0.1070.1070/30591615_881741418699920_600203219846561792_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/3cd5c8306b90e91ed09f7f3b28a03df3/5C519920/t51.2885-15/e35/c236.0.607.607/s480x480/42927627_246435169366265_258202963654436451_n.jpg",
                                     "config_width": 480,
                                     "config_height": 480
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/e4021194863c9a1e6163b424230e6b42/5B74DB5C/t51.2885-15/s640x640/sh0.08/e35/c5.0.1070.1070/30591615_881741418699920_600203219846561792_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/374a741637cf72c4c5a0e849384aaeb7/5C50711A/t51.2885-15/e35/c236.0.607.607/42927627_246435169366265_258202963654436451_n.jpg",
                                     "config_width": 640,
                                     "config_height": 640
                                 }],
-                                "is_video": false
+                                "is_video": false,
+                                "accessibility_caption": null
+                            }
+                        }, {
+                            "node": {
+                                "__typename": "GraphSidecar",
+                                "id": "1893208460376897805",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "Laura Sirbu of @CrossFitAfterburn\n-\nWorkout of the Day\nFriday 181019\nTabata push jerk\nRest 3 minutes\nTabata chest-to-bar pull-up\nRest 3 minutes\nTabata push-up\nRest 3 minutes\nTabata hang power snatch\nThe Tabata interval is 20 seconds of work followed by 10 seconds of rest for 8 intervals.\nMen: 95-lb.\nWomen: 65-lb.\nPost total reps for each exercise to comments.\n-\nSwipe left for scaling options.\n-\n\ud83d\udcf8 @guillecummings | #CrossFit"}}]},
+                                "shortcode": "BpGBxBmh3kN",
+                                "edge_media_to_comment": {"count": 30},
+                                "comments_disabled": false,
+                                "taken_at_timestamp": 1539908057,
+                                "dimensions": {"height": 719, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/d2d7735f3c6bfe398071b3bd10460ad4/5C47EF52/t51.2885-15/e35/43278075_711741535872398_208590155086333787_n.jpg",
+                                "edge_liked_by": {"count": 6089},
+                                "edge_media_preview_like": {"count": 6089},
+                                "gating_info": null,
+                                "media_preview": null,
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/528a02d7cb15509191256ea7daf31fa5/5C8A34B9/t51.2885-15/sh0.08/e35/c180.0.719.719/s640x640/43278075_711741535872398_208590155086333787_n.jpg",
+                                "thumbnail_resources": [{
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6f6a614ade44d6e46ef6e05bde020422/5C58BE0F/t51.2885-15/e35/c180.0.719.719/s150x150/43278075_711741535872398_208590155086333787_n.jpg",
+                                    "config_width": 150,
+                                    "config_height": 150
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/ac143f76955ee1f7998c24c10061278e/5C65FFBA/t51.2885-15/e35/c180.0.719.719/s240x240/43278075_711741535872398_208590155086333787_n.jpg",
+                                    "config_width": 240,
+                                    "config_height": 240
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6f5dacdb17065d8b6b74a7d727d3d3f9/5C4EE602/t51.2885-15/e35/c180.0.719.719/s320x320/43278075_711741535872398_208590155086333787_n.jpg",
+                                    "config_width": 320,
+                                    "config_height": 320
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/abbb96d697a19dbd3d5e1bc6952d09a2/5C5D475E/t51.2885-15/e35/c180.0.719.719/s480x480/43278075_711741535872398_208590155086333787_n.jpg",
+                                    "config_width": 480,
+                                    "config_height": 480
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/528a02d7cb15509191256ea7daf31fa5/5C8A34B9/t51.2885-15/sh0.08/e35/c180.0.719.719/s640x640/43278075_711741535872398_208590155086333787_n.jpg",
+                                    "config_width": 640,
+                                    "config_height": 640
+                                }],
+                                "is_video": false,
+                                "accessibility_caption": null
+                            }
+                        }, {
+                            "node": {
+                                "__typename": "GraphSidecar",
+                                "id": "1893083442913281697",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "\u201cYou tell me you\u2019re not better when we\u2019re done.\u201d\n\u2014CrossFit Founder Greg Glassman during an All-Doctor Level 1 Certificate Course (MDL1) in Aromas, California\n-\n\ud83c\udfa5 @michaelishustle | #CrossFit"}}]},
+                                "shortcode": "BpFlVyBBQah",
+                                "edge_media_to_comment": {"count": 64},
+                                "comments_disabled": false,
+                                "taken_at_timestamp": 1539893154,
+                                "dimensions": {"height": 607, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/876fa26a9298eecc3207160e843328a6/5BCCE059/t51.2885-15/fr/e15/s1080x1080/43914317_248124895877262_3460668398606492556_n.jpg",
+                                "edge_liked_by": {"count": 5068},
+                                "edge_media_preview_like": {"count": 5068},
+                                "gating_info": null,
+                                "media_preview": null,
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/81036a326bc5789455bd143420618389/5BCD0DFE/t51.2885-15/e15/c236.0.607.607/43914317_248124895877262_3460668398606492556_n.jpg",
+                                "thumbnail_resources": [{
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/480f7153b54b63cb04b6b6f91949cf74/5BCC7F8B/t51.2885-15/e15/c236.0.607.607/s150x150/43914317_248124895877262_3460668398606492556_n.jpg",
+                                    "config_width": 150,
+                                    "config_height": 150
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/3031bf9fc0134884932eb42a264d2261/5BCCEB81/t51.2885-15/e15/c236.0.607.607/s240x240/43914317_248124895877262_3460668398606492556_n.jpg",
+                                    "config_width": 240,
+                                    "config_height": 240
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/eb56696a3f9582d8f4dfc240b6b7a47a/5BCCBA3B/t51.2885-15/e15/c236.0.607.607/s320x320/43914317_248124895877262_3460668398606492556_n.jpg",
+                                    "config_width": 320,
+                                    "config_height": 320
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/0d1d914344b852a4545fe4d57e185da5/5BCC8121/t51.2885-15/e15/c236.0.607.607/s480x480/43914317_248124895877262_3460668398606492556_n.jpg",
+                                    "config_width": 480,
+                                    "config_height": 480
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/81036a326bc5789455bd143420618389/5BCD0DFE/t51.2885-15/e15/c236.0.607.607/43914317_248124895877262_3460668398606492556_n.jpg",
+                                    "config_width": 640,
+                                    "config_height": 640
+                                }],
+                                "is_video": false,
+                                "accessibility_caption": null
                             }
                         }, {
                             "node": {
                                 "__typename": "GraphImage",
-                                "id": "1759120917449912387",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @masoudoroudian\nHanging out with a few cool cats in Tehran \ud83d\udc3e #WHPwildthing"}}]},
-                                "shortcode": "Bhppyd5j7BD",
-                                "edge_media_to_comment": {"count": 6511},
+                                "id": "1893017026134729043",
+                                "edge_media_to_caption": {
+                                    "edges": [{
+                                        "node": {"text": "Riley is a 15-year-old gamer who loves Fortnite and Mountain Dew. At a recent physical, he weighed in at 240 lb. at 5 foot 8 and was diagnosed with Type 2 diabetes.\n-\nRiley has no interest in sports and his school doesn\u2019t offer gym class, so his parents signed him up for the teens program at your affiliate. This is his first class, and you can tell he\u2019s nervous and lacks confidence.\n-\nAs you assess his movement during the warm-up\u20143 rounds of 10 jumping jacks, a 10-second plank hold and 10 air squats\u2014you notice that he\u2019s out of breath by his fifth jumping jack, he can\u2019t hold a plank, and his knees cave in when he squats.\n-\nHow would you modify this workout for Riley?\n-\nToday's Workout\n3 rounds of:\u20284 10-m shuttle sprints\u202815 goblet squats (35/26 lb.)\u20284 10-m bear crawls\n-\nHead to Journal.CrossFit.com to see how trainers Stephanie Moore of @CrossFitCBD and Dana Murdock (@danamurdock17) of @SevenValleyCrossFit would modify it. #CrossFit"}
+                                    }]
+                                },
+                                "shortcode": "BpFWPSkhuFT",
+                                "edge_media_to_comment": {"count": 48},
                                 "comments_disabled": false,
-                                "taken_at_timestamp": 1523923576,
+                                "taken_at_timestamp": 1539885236,
+                                "dimensions": {"height": 1287, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/bdcf14b9db8b83fe64705e9d197ae059/5C63B362/t51.2885-15/e35/43529826_132128467753465_570115934789985845_n.jpg",
+                                "edge_liked_by": {"count": 2494},
+                                "edge_media_preview_like": {"count": 2494},
+                                "gating_info": null,
+                                "media_preview": "ACMqzg0ZHMJbAAyCRkjg9PX8/Wmzgv8AcjKYznjt/wDW7+tMDSghB9AMD/Pt+lWUlkUgsfUEY45P3eh6/T2p6C1KPltnbggnipFt2bPKjHqwH5etSu8ytuPrkEgc4689fSpbdtxUnAA6MRkDnp9P5U2lbzErt+Qg0u4IyAvP+0KKstehSQDgAngknHP+ce1FVy+Yua2lmRGIhwR2I/oRVZ5iHZl4BYnHGevT61emlWOASZySNq+/v+A6+/FYXmGpVupTv0LbsXGRk4657f8A16u2zui7UZArcYb/AAwTWSJTjHb0py3BXsDVNpiV0XFEWPmQE9zuYfp2oqubonnaPyoqbjsNgXzQVO44HAGDjnng+5HSrH2ZTnaJMgcZUc89OM4PtWcCR04pd7ep/OpGX/s6E8CT6bV9/f2P0waa8IjUkq4I7kDaOePr+FUtx9TRvY8ZP50ALvPt+QoplFAH/9k=",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/3a9565b47621cf62fc8c393a34cdd3d3/5C8908FC/t51.2885-15/sh0.08/e35/c0.91.949.949/s640x640/43529826_132128467753465_570115934789985845_n.jpg",
+                                "thumbnail_resources": [{
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/b3831dab08ac51b414487651d15b5cc7/5C41EB5D/t51.2885-15/e35/c0.91.949.949/s150x150/43529826_132128467753465_570115934789985845_n.jpg",
+                                    "config_width": 150,
+                                    "config_height": 150
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/e7ea1122300335b40acbb6b1fdcc5f7d/5C4704E8/t51.2885-15/e35/c0.91.949.949/s240x240/43529826_132128467753465_570115934789985845_n.jpg",
+                                    "config_width": 240,
+                                    "config_height": 240
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/ab2fcb573146469d46174c3f5e87b3dd/5C462750/t51.2885-15/e35/c0.91.949.949/s320x320/43529826_132128467753465_570115934789985845_n.jpg",
+                                    "config_width": 320,
+                                    "config_height": 320
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/4389dbd7aabeaedb36944190990517f5/5C4A630C/t51.2885-15/e35/c0.91.949.949/s480x480/43529826_132128467753465_570115934789985845_n.jpg",
+                                    "config_width": 480,
+                                    "config_height": 480
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/3a9565b47621cf62fc8c393a34cdd3d3/5C8908FC/t51.2885-15/sh0.08/e35/c0.91.949.949/s640x640/43529826_132128467753465_570115934789985845_n.jpg",
+                                    "config_width": 640,
+                                    "config_height": 640
+                                }],
+                                "is_video": false,
+                                "accessibility_caption": null
+                            }
+                        }, {
+                            "node": {
+                                "__typename": "GraphImage",
+                                "id": "1892945953326297061",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "Via @crossfittraining: The CrossFit dietary prescription is as follows:\n-\nEat meat and vegetables, nuts and seeds, some fruit, little starch, no sugar. To get to the same endpoint, these are effective nutritional strategies for avoiding heart disease, death and misery:\n-\n\u2705If you could not have harvested it out of your garden or farm and eaten it an hour later, it is not food.\n\u2705Shop around the perimeter of the grocery store, and do not go down the aisles.\n\u2705If it has a food label on it, it is not food. You do not see that on the chicken. It is not on the tomatoes. But it is on the chips and cookies.\n\u2705If it is not perishable, if it says \u201cBest if used before 2019,\u201d it is not food.\n\u2026\n@crossfit #CFTrainingLibrary #CrossFit #CrossFitTraining"}}]},
+                                "shortcode": "BpFGFC3Bu_l",
+                                "edge_media_to_comment": {"count": 187},
+                                "comments_disabled": false,
+                                "taken_at_timestamp": 1539876763,
+                                "dimensions": {"height": 863, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/bace6272b9fdcae905c8fca3e8d8977e/5C414D2A/t51.2885-15/e35/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                "edge_liked_by": {"count": 9268},
+                                "edge_media_preview_like": {"count": 9268},
+                                "gating_info": null,
+                                "media_preview": "ACohqZxQjhzjP+famspOR29agH7pgzfw9AO/t9KzSTNGy4HGcH6f596t/Z5MZCke1LpMSqjXMmM5IBPYDqR7k8fSrR1DPKoWUd84/TH8/wAcA5osurC76GdnseD/AC/wqQKMf/qq5cxhgG6ZGf681Sz9PyqGrFJ3G28fn7udoXGeM9TVe7gCDIzjnr7VLBKbckryWGOfzqOZ3m4YjAOcYwPf35qyS5pxSSI2svc7hzjr2HuOorRWzRMDLHH0/wAP88+prmWTLlm7nOR2+hH+Aq5DfzKyx5LhjjJ6j/gXeqtpfR/mLrpoa1y4UADoOwqgJF9/ypHbcxJ/D6UgxWTdy0rFY0tFFMQiUQf60/jRRSGSr1pTRRQM/9k=",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/ba26686eff8983bdcaaeccde5aeb4919/5C437F81/t51.2885-15/sh0.08/e35/c108.0.863.863/s640x640/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                "thumbnail_resources": [{
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/8cbc6fe93e2cacbf02ab3329c377d7fa/5C8A1BB5/t51.2885-15/e35/c108.0.863.863/s150x150/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                    "config_width": 150,
+                                    "config_height": 150
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/e50daede41a7869baece638f083b6e4b/5C4680B3/t51.2885-15/e35/c108.0.863.863/s240x240/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                    "config_width": 240,
+                                    "config_height": 240
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/f7c5276754849f97f0282d2dc0e69e65/5C4972CD/t51.2885-15/e35/c108.0.863.863/s320x320/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                    "config_width": 320,
+                                    "config_height": 320
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/d6201ebe0df9b12ce24e40df7c1635ea/5C89888A/t51.2885-15/e35/c108.0.863.863/s480x480/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                    "config_width": 480,
+                                    "config_height": 480
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/ba26686eff8983bdcaaeccde5aeb4919/5C437F81/t51.2885-15/sh0.08/e35/c108.0.863.863/s640x640/43913679_1917754915195761_4294378393867631205_n.jpg",
+                                    "config_width": 640,
+                                    "config_height": 640
+                                }],
+                                "is_video": false,
+                                "accessibility_caption": null
+                            }
+                        }, {
+                            "node": {
+                                "__typename": "GraphVideo",
+                                "id": "1892883870211604100",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "\u201cNo big deal but ... my friend and client, Tony, jumped today for the first time in years! Not only did he jump for his first time, but he went on to complete 48 jumping pull-ups in his workout today!\u00a0\ud83c\udf89\ud83c\udf89\ud83c\udf89\u00a0I can\u2019t even begin to express how proud I am to see this man regain more and more of his functional independence and improve his quality of life! Keep crushing it Tony!\u00a0\ud83d\udda4\ud83d\udcaa\ud83c\udffc\u00a0You\u2019ve got all the support in the world!\n-\nToday Tony completed:\nFor time:\n12 x jumping pull-ups\n12 x box step-ups\n12 x push-ups\n250-m ski\n-\nHe did this 4 times, only his ski increased each round from 250 to 500 to 750 to 1,000 meters. He did this is 22:52! Freaking. Nice. Job. Tony! (literally\u00a0\ud83d\ude02\ud83d\ude02\ud83d\ude1c\ud83d\ude1c)\u201c\n-\nVia Brittany Perkins of @utecrossfit | #CrossFit"}}]},
+                                "shortcode": "BpE39ndB36E",
+                                "edge_media_to_comment": {"count": 760},
+                                "comments_disabled": false,
+                                "taken_at_timestamp": 1539869421,
+                                "dimensions": {"height": 612, "width": 612},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6a225c88f113769b8c6c3fbf6f2b130f/5BCC6D6A/t51.2885-15/e15/43096020_249495532406234_195797544655642780_n.jpg",
+                                "edge_liked_by": {"count": 31759},
+                                "edge_media_preview_like": {"count": 31759},
+                                "gating_info": null,
+                                "media_preview": "ACoqtXU4EkSx4JLE5B/DGPfNWIwBK4bkkKdwHHI6fp361kDHm25AAOFz7nPU+vStkHMj9shP/ZhUlD45I3YqOq/54qCSXdGTjHytzn0HbGT34qeBdykc5AIz6VFLhI29kk/kBQAxpVHy4OeBxjv07+v5VnsXBIy3X2/xrUnQEjA7p+hzWRKTvbjue3vTENkUrdRL9D9OWrXXPmtj+6v82rBubnzJVZuAAM7eo5z+dbVvdJI7MMgbFHzcHq38+tAGYkEy3YY7inmEZzx0z09AKuX2REfcN+pSpVm3sSucBs8Y9MEH1B6g8EVFdzQlCpbkBuMcgnBx+nr0pXuPY0CMvnIxx+n+RXJzu/mNgnG4/wA66JtUjH3FY/gBWI0hJJ2nk1RJBKQtxluRnJA/zimqNwyc81M4BkbPrVlUXHQflSGQRzyxrtU4HXsTTDIWJJ6nrVhwADgVWpAP3E9aTFApaYH/2Q==",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6a225c88f113769b8c6c3fbf6f2b130f/5BCC6D6A/t51.2885-15/e15/43096020_249495532406234_195797544655642780_n.jpg",
+                                "thumbnail_resources": [{
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/5f8545a2e2b893ffdbbeda402287d845/5BCC905C/t51.2885-15/e15/s150x150/43096020_249495532406234_195797544655642780_n.jpg",
+                                    "config_width": 150,
+                                    "config_height": 150
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/04062db809bfb7a2c4b1157d6b12a34a/5BCC6AA9/t51.2885-15/e15/s240x240/43096020_249495532406234_195797544655642780_n.jpg",
+                                    "config_width": 240,
+                                    "config_height": 240
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/59a88e38518a943dde31a6e919053a56/5BCCB891/t51.2885-15/e15/s320x320/43096020_249495532406234_195797544655642780_n.jpg",
+                                    "config_width": 320,
+                                    "config_height": 320
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/553352fb7ffe0e38100ac4096a0706e1/5BCCCF8D/t51.2885-15/e15/s480x480/43096020_249495532406234_195797544655642780_n.jpg",
+                                    "config_width": 480,
+                                    "config_height": 480
+                                }, {
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6a225c88f113769b8c6c3fbf6f2b130f/5BCC6D6A/t51.2885-15/e15/43096020_249495532406234_195797544655642780_n.jpg",
+                                    "config_width": 640,
+                                    "config_height": 640
+                                }],
+                                "is_video": true,
+                                "video_view_count": 302650
+                            }
+                        }, {
+                            "node": {
+                                "__typename": "GraphSidecar",
+                                "id": "1892481732213946359",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "@Ruth.Perino of CrossFit Athletic Academy (@freedomathleticacademy)\n-\nWorkout of the Day\nThursday 181018\n4 rounds for time of:\n20 squat cleans\n800-m run\nMen: 115 lb.\nWomen: 75 lb.\nPost time to comments.\n-\nSwipe left for scaling options.\n-\n\ud83d\udcf8 @richardveytsman | #CrossFit"}}]},
+                                "shortcode": "BpDchvQhzf3",
+                                "edge_media_to_comment": {"count": 47},
+                                "comments_disabled": false,
+                                "taken_at_timestamp": 1539821424,
                                 "dimensions": {"height": 1080, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/5a6c4d5c4160f1f8b59a58a4c7b98433/5B592BDC/t51.2885-15/e35/30590576_118389625684611_4178553869594263552_n.jpg",
-                                "edge_liked_by": {"count": 797238},
-                                "edge_media_preview_like": {"count": 797238},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/305e5e66d1b69f9f593e090c4853592b/5C442F06/t51.2885-15/e35/42866135_1110858585738938_6072094976708179319_n.jpg",
+                                "edge_liked_by": {"count": 9083},
+                                "edge_media_preview_like": {"count": 9083},
                                 "gating_info": null,
-                                "media_preview": "ACoqk80LKpBwemOpOe59Mc/pipJH5xndUCW6qTITg9fYfWguzfd+VT/Gep/3R2HufwqiCdn2AjPzd8dvYe5/+vUiSfL6Gqqp+Q/z+dS470xBM7lf3eA2RyelWhd4GKpEE8VHu9j+VFguOW3DHfIfMb8lH0Xv+NSnnnOfekLHpSUAVJb4xSbWX5Mfj+nH4frVxZA6hkwQeapzwCQkDr61PEmxQBwB6UAK+44OQD3AppQ+pqXH5UzIFACeZ+VNYg8A80lRH71MROOPxp2cVGaY33W+hoAsbuMjpScelMhGEX6D+lBpDP/Z",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/48cce12983abf6f9f40780e826ae9701/5B587ABD/t51.2885-15/s640x640/sh0.08/e35/30590576_118389625684611_4178553869594263552_n.jpg",
+                                "media_preview": null,
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/2ea92dcc5c777eba667e94515a8bd1a3/5C867EBC/t51.2885-15/sh0.08/e35/s640x640/42866135_1110858585738938_6072094976708179319_n.jpg",
                                 "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/a5f389464cb7b43abaf36c319361265e/5B7488B9/t51.2885-15/s150x150/e35/30590576_118389625684611_4178553869594263552_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/10007c80b6b87021c6446a965660b530/5C675439/t51.2885-15/e35/s150x150/42866135_1110858585738938_6072094976708179319_n.jpg",
                                     "config_width": 150,
                                     "config_height": 150
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/bab34380fec7d449a696a9b12e335a3c/5B6C2386/t51.2885-15/s240x240/e35/30590576_118389625684611_4178553869594263552_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/0dac958c78c8abdbfe7322db625cd32f/5C4B0B3F/t51.2885-15/e35/s240x240/42866135_1110858585738938_6072094976708179319_n.jpg",
                                     "config_width": 240,
                                     "config_height": 240
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/1c0def49c8bd4c67c525dae384ba54c5/5B543DFE/t51.2885-15/s320x320/e35/30590576_118389625684611_4178553869594263552_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/92667d8a3d952116de15e91dd74ee60b/5C464A41/t51.2885-15/e35/s320x320/42866135_1110858585738938_6072094976708179319_n.jpg",
                                     "config_width": 320,
                                     "config_height": 320
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/8b75ef536923b0c4b10b1ce1c41b8463/5B55BC78/t51.2885-15/s480x480/e35/30590576_118389625684611_4178553869594263552_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/fe242d5b4921bcef254d0b6080a84502/5C5B4106/t51.2885-15/e35/s480x480/42866135_1110858585738938_6072094976708179319_n.jpg",
                                     "config_width": 480,
                                     "config_height": 480
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/48cce12983abf6f9f40780e826ae9701/5B587ABD/t51.2885-15/s640x640/sh0.08/e35/30590576_118389625684611_4178553869594263552_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/2ea92dcc5c777eba667e94515a8bd1a3/5C867EBC/t51.2885-15/sh0.08/e35/s640x640/42866135_1110858585738938_6072094976708179319_n.jpg",
                                     "config_width": 640,
                                     "config_height": 640
                                 }],
-                                "is_video": false
+                                "is_video": false,
+                                "accessibility_caption": null
                             }
                         }, {
                             "node": {
-                                "__typename": "GraphImage",
-                                "id": "1759090946789979672",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @reverieroaming\n\u201cSome days you just gotta swap the office for the mountains and the Wi-Fi for the woods and go on a hike with your best friend,\u201d writes Amy Lynn (@reverieroaming) in her caption. #WHPwildthing"}}]},
-                                "shortcode": "Bhpi-VjBbYY",
-                                "edge_media_to_comment": {"count": 4604},
+                                "__typename": "GraphSidecar",
+                                "id": "1892376557205635919",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "On episode 109 of @sanpodcast, the guys reflect on their recent visit to CrossFit HQ. #CrossFit"}}]},
+                                "shortcode": "BpDEnPZhMNP",
+                                "edge_media_to_comment": {"count": 48},
                                 "comments_disabled": false,
-                                "taken_at_timestamp": 1523920003,
-                                "dimensions": {"height": 1350, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/e49d5ac5eaa8758fa234c741c36f73af/5B71CBC5/t51.2885-15/e35/30087512_587995028236388_4322332280694505472_n.jpg",
-                                "edge_liked_by": {"count": 1208060},
-                                "edge_media_preview_like": {"count": 1208060},
+                                "taken_at_timestamp": 1539808886,
+                                "dimensions": {"height": 607, "width": 1080},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/4ee742c5ac3754b9640a12783451ffde/5BCCC8BB/t51.2885-15/fr/e15/s1080x1080/43182919_190892741727235_5280221360857623687_n.jpg",
+                                "edge_liked_by": {"count": 3449},
+                                "edge_media_preview_like": {"count": 3449},
                                 "gating_info": null,
-                                "media_preview": "ACEqtq+D9PWiHGCi9s/h3peCfp/nimxKd5B5HH15rz0tGbErHHJ7Y/Wn25XB3VBIBsOOw7e1NhY7R29PXqaa018xeRdwP7n6miot3uf1oq+f+vd/yFb+tTPkuFRgjHBbp/ntmnAlXYjPKfqOlZV2QTg8npn9c/rVq3JkXJPzIMc9weh6c+/eq5dL/eXZlu1ceTznnI56kc1Db3YeXyxxgEexwc8UyRTEvGecKOMgfj2/Cs6N9sq7eCCB+fFPlTu/u8hW0udHt9zRVTy29T+n+NFY8q/mQ7Pt+RQlUu2WBBY9PUAcn2B/SrHAQZOAefw9v51BbncXLcnLcnn1p83JXPt/Ktmr2Ronpchkcpyudv8AnrUKR+ZKAMjJ3dPTmpJeMAeoqSAYZvZePzFUtNhPUv8AlN6j9KKMmio/rYzv/Vz/2Q==",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/7528fdf7fa863b322d3c30c84ec3eacc/5B723217/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30087512_587995028236388_4322332280694505472_n.jpg",
+                                "media_preview": null,
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/362911ade2d7e178a951623fac3f9ddc/5BCCF71C/t51.2885-15/e15/c236.0.607.607/43182919_190892741727235_5280221360857623687_n.jpg",
                                 "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/bb5cb38fba9be9754257a63b770d2b80/5B5FEAF9/t51.2885-15/s150x150/e35/c0.135.1080.1080/30087512_587995028236388_4322332280694505472_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/6659d6e1655c72859b7415ee8bf07698/5BCC83A9/t51.2885-15/e15/c236.0.607.607/s150x150/43182919_190892741727235_5280221360857623687_n.jpg",
                                     "config_width": 150,
                                     "config_height": 150
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/c8ea4cfa27f5f623afbe9fb1888e4ddc/5B552992/t51.2885-15/s240x240/e35/c0.135.1080.1080/30087512_587995028236388_4322332280694505472_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/a4a48071a3e9f1cbff97eda74e91c4ab/5BCCA123/t51.2885-15/e15/c236.0.607.607/s240x240/43182919_190892741727235_5280221360857623687_n.jpg",
                                     "config_width": 240,
                                     "config_height": 240
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/4a87c7b54fe0ec5a05fa9d3abda04e58/5B5E505A/t51.2885-15/s320x320/e35/c0.135.1080.1080/30087512_587995028236388_4322332280694505472_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/c6d13083d24344280adb48f2f53d83b3/5BCCF719/t51.2885-15/e15/c236.0.607.607/s320x320/43182919_190892741727235_5280221360857623687_n.jpg",
                                     "config_width": 320,
                                     "config_height": 320
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/97172fb438009b9364adf4d64dffa83d/5B51FCB0/t51.2885-15/s480x480/e35/c0.135.1080.1080/30087512_587995028236388_4322332280694505472_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/310c9ca10a1b0d51563f073a7d8307a7/5BCCC803/t51.2885-15/e15/c236.0.607.607/s480x480/43182919_190892741727235_5280221360857623687_n.jpg",
                                     "config_width": 480,
                                     "config_height": 480
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/7528fdf7fa863b322d3c30c84ec3eacc/5B723217/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30087512_587995028236388_4322332280694505472_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/362911ade2d7e178a951623fac3f9ddc/5BCCF71C/t51.2885-15/e15/c236.0.607.607/43182919_190892741727235_5280221360857623687_n.jpg",
                                     "config_width": 640,
                                     "config_height": 640
                                 }],
-                                "is_video": false
+                                "is_video": false,
+                                "accessibility_caption": null
                             }
                         }, {
                             "node": {
-                                "__typename": "GraphImage",
-                                "id": "1759060786724231430",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @michellevalbergphotography\nJumping for joy at the arrival of spring snow. \ud83d\ude0d\nFollow along to see more of our favorites from last weekend\u2019s hashtag project, #WHPwildthing."}}]},
-                                "shortcode": "BhpcHczBFkG",
-                                "edge_media_to_comment": {"count": 5448},
+                                "__typename": "GraphVideo",
+                                "id": "1892305037402033264",
+                                "edge_media_to_caption": {"edges": [{"node": {"text": "Via @bigsmileywink: That's me before I found ADK CrossFit on the left. (The video on the right is of Darlene doing 95 lb. thrusters in June.)\nWow pictures do tend to slap you awake!\n\nSo many things have changed over the last several years in my world, some major changes actually. \nIt all started the day I decided to stop hiding from mirrors and cameras and walked through the door at ADK.\nI wanted a healthier life filled with activity and adventure... not work at a job that was killing me.\n\nI knew I had to earn it and surrounding myself with knowledgeable and positive people makes my journey possible. \nI ask YOU, if not now then when??? Come to our classes tonight or tmrw and I'll show you around your new favorite place to be- ADK CrossFit \ud83d\udc9c\ud83d\udcaa\ud83d\udc9c #adkcrossfit #adkcrossfit_adkstrong #crossfitsaveslives #CrossFit"}}]},
+                                "shortcode": "BpC0WfZB8xw",
+                                "edge_media_to_comment": {"count": 144},
                                 "comments_disabled": false,
-                                "taken_at_timestamp": 1523916408,
-                                "dimensions": {"height": 1080, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/33b9c5548e1f16fed5da48fc58ed828e/5B609D4A/t51.2885-15/e35/30084252_181096276041718_5268656572644458496_n.jpg",
-                                "edge_liked_by": {"count": 979712},
-                                "edge_media_preview_like": {"count": 979712},
+                                "taken_at_timestamp": 1539800536,
+                                "dimensions": {"height": 750, "width": 750},
+                                "display_url": "https://instagram.fphx1-3.fna.fbcdn.net/vp/0def77a70ddc42d7b7d28d43786cbbab/5BCCCE83/t51.2885-15/e15/43817958_925722874300047_3102859656427660659_n.jpg",
+                                "edge_liked_by": {"count": 10980},
+                                "edge_media_preview_like": {"count": 10980},
                                 "gating_info": null,
-                                "media_preview": "ACoq3A+OlKHNMznrVaSRuQoxgjk9x9ab0FuOjnKMQzAl2O0enHT9Cc9KuKRjB61REEYkEnV8cVc8ykhsl47UtRFz64pPMNMCvuA4LAH3IqC4dGG0MP8AaAPOKt+VH12r/wB8j/Cq95EpiO0AHI6AD+VNiELxoA7EDHc+n+TTDf24/jH5H/CovL2MrZyVHQ9GrT2owB2rz7D/AAqUNma+pW6D7+fYA1UOsp2U/mK3fLT+6v8A3yP8KPLT+6v/AHyP8KrUQuaY43DBp1JQIjKblA9DmpVJI54oFLSGFFFFUI//2Q==",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/e6388e7087212b336c9069677e205879/5B53192B/t51.2885-15/s640x640/sh0.08/e35/30084252_181096276041718_5268656572644458496_n.jpg",
+                                "media_preview": "ACoqpzXUgmZd7EbyOGYYGee/YcUs7yCMOsjjJ/vseD+PYVHNH87FhjLMAexGTUzbJECbRx0+tT6FLW9xNNuZiXy7MQoxlie/bNbSuxGWY/rmqNoirC2xAGBwT3I69/T0p5kKclT1654/Q1SEXQc8guT65x/jVtC20fQVjmXcOePQVfhJKKcH7o/lTEY10xIC/wC0x/HJFJAB94/hRMpcnHJDtx7E0REgYORjtikgZdBAjZgf4R9P4uazYpiqBBzk5P09BnvTpZNsTYPOVyB7k8VUTBG4d8/nSRTLBuQrDjIJ5B7f/X5roYZgY1IGPlH8q5Fx82K6W3TESf7q/wAhTEZRbEzD1Zv/AEKrBbmtIwR7ydq5yew9fpTzDH/dX8hTZCOY5aOT3Kn9TUKjAA6df1rqBbxBSNi4OP4R/hTfs8X9xf8Avkf4VKLOeVQSGPUV0kH+rX/dH8hTRbxf3F/75H+FXkRQoAA6DtTEf//Z",
+                                "owner": {"id": "255768340", "username": "crossfit"},
+                                "thumbnail_src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/354d3115a1be98c6cc804746978c6845/5BCCEFBD/t51.2885-15/e15/s640x640/43817958_925722874300047_3102859656427660659_n.jpg",
                                 "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/0299ac121c714b5da5da3759c7b829d2/5B64CE2F/t51.2885-15/s150x150/e35/30084252_181096276041718_5268656572644458496_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/f3d644896947ca1bd85e297fa45026ae/5BCCC1A2/t51.2885-15/e15/s150x150/43817958_925722874300047_3102859656427660659_n.jpg",
                                     "config_width": 150,
                                     "config_height": 150
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/a26e3b963bc62dc968e6f9db11aed331/5B62EE10/t51.2885-15/s240x240/e35/30084252_181096276041718_5268656572644458496_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/320959f5c343992c5be8d4a9a0e8fe82/5BCCBBA8/t51.2885-15/e15/s240x240/43817958_925722874300047_3102859656427660659_n.jpg",
                                     "config_width": 240,
                                     "config_height": 240
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/8f1ea1467a249b194062862aa7334a0a/5B599368/t51.2885-15/s320x320/e35/30084252_181096276041718_5268656572644458496_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/d657d9b306d279285201775a2a3f946d/5BCD1152/t51.2885-15/e15/s320x320/43817958_925722874300047_3102859656427660659_n.jpg",
                                     "config_width": 320,
                                     "config_height": 320
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/4c16b2e86317624c0e36edf89a79415f/5B60EBEE/t51.2885-15/s480x480/e35/30084252_181096276041718_5268656572644458496_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/bef3f581a1cca62d4d2cb421da849402/5BCC9D88/t51.2885-15/e15/s480x480/43817958_925722874300047_3102859656427660659_n.jpg",
                                     "config_width": 480,
                                     "config_height": 480
                                 }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/e6388e7087212b336c9069677e205879/5B53192B/t51.2885-15/s640x640/sh0.08/e35/30084252_181096276041718_5268656572644458496_n.jpg",
+                                    "src": "https://instagram.fphx1-3.fna.fbcdn.net/vp/354d3115a1be98c6cc804746978c6845/5BCCEFBD/t51.2885-15/e15/s640x640/43817958_925722874300047_3102859656427660659_n.jpg",
                                     "config_width": 640,
                                     "config_height": 640
                                 }],
-                                "is_video": false
-                            }
-                        }, {
-                            "node": {
-                                "__typename": "GraphImage",
-                                "id": "1758975641396787428",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "\u201cWe\u2019re just two goofy girls from ATL who like making music,\u201d says Chloe, 19, one-half of Chloe and Halle (@chloexhalle), who attended and performed at Coachella (@coachella) for the first time last weekend. \ud83c\udf34 \u2728 \u201cMy sister and I create all of our music!\u201d says Chloe. \u201cWe executive produced our album [\u201cThe Kids Are Alright\u201d], and it was all done in the living room. We\u2019re so involved with every inch of the process \u2014 because this is how we tell our story.\u201d The past five years have been a whirlwind for the sisters, who signed to Beyonc\u00e9\u2019s label, traveled the world, cut multiple albums and acted in multiple projects.\nFor Chloe and Halle, the energy of festival season charges them up. \u201cWe are around creatives, music and art lovers and feel right at home,\u201d says Halle, 18. \u201cIt\u2019s also always a beautiful thing to watch someone on that stage, be entranced by who they are and take away something from their performance.\u201d\nCheck out today\u2019s story to see their onstage and offstage adventures from the weekend in Indio."}}]},
-                                "shortcode": "BhpIwbCBTjk",
-                                "edge_media_to_comment": {"count": 3691},
-                                "comments_disabled": false,
-                                "taken_at_timestamp": 1523906258,
-                                "dimensions": {"height": 1350, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/aa1008803e8a9150359f2d59e97add55/5B6E1978/t51.2885-15/e35/30087267_354748698351347_3796564146917474304_n.jpg",
-                                "edge_liked_by": {"count": 668551},
-                                "edge_media_preview_like": {"count": 668551},
-                                "gating_info": null,
-                                "media_preview": "ACEqZLKpyhyD2NZ+SCdx4+vJqeWbjbkFyeT6D275qtID/F19altt3FaxYSUMw3EkD9Pr61G6Fzlefp1qN1AUHkf1qzBdKG5z+X+fzoS1GReR/tH8jRWr8vtRW/Kv6v8A5kXMbYxOGyWPA/z2qWe3eKMbhwTkEHP4mteVQx4BBznJx0z09RVSW/DIETduZdoHGMnj9axtqaLYqTwsI1LEZPIUdQpGefr6elEAVtvGRjDD3OcEe9WpkZF2gn5e309ahSJVU4OMk/gAR0+mT+dGwbkuI/8Ab/Kiqu/3H50U+YmxppI0cLYGVweTndz9eayVjaJlc9sED6Gr7ElOecso/DHSoJ+ZADyMj+dT3K6IsCUsruQCScfpSKI9oyy87u/PzAcfhio/4H/3qzOlD1DYl+zf7a/mv+NFRZNFLUR//9k=",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/39f92c0c4d2d3fce4059a022ab570879/5B5C42AA/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30087267_354748698351347_3796564146917474304_n.jpg",
-                                "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/0720e19e68cb28ffa0463dfc63f4fd3d/5B71E344/t51.2885-15/s150x150/e35/c0.135.1080.1080/30087267_354748698351347_3796564146917474304_n.jpg",
-                                    "config_width": 150,
-                                    "config_height": 150
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/27b64e7645884adfffb16d0de3dcc7ae/5B69112F/t51.2885-15/s240x240/e35/c0.135.1080.1080/30087267_354748698351347_3796564146917474304_n.jpg",
-                                    "config_width": 240,
-                                    "config_height": 240
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/5ca47d3b74b2ac73da6a863956ac5a2f/5B5BF6E7/t51.2885-15/s320x320/e35/c0.135.1080.1080/30087267_354748698351347_3796564146917474304_n.jpg",
-                                    "config_width": 320,
-                                    "config_height": 320
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/5510f31d3bed18d249d16afcb09151f1/5B5AC80D/t51.2885-15/s480x480/e35/c0.135.1080.1080/30087267_354748698351347_3796564146917474304_n.jpg",
-                                    "config_width": 480,
-                                    "config_height": 480
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/39f92c0c4d2d3fce4059a022ab570879/5B5C42AA/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30087267_354748698351347_3796564146917474304_n.jpg",
-                                    "config_width": 640,
-                                    "config_height": 640
-                                }],
-                                "is_video": false
-                            }
-                        }, {
-                            "node": {
-                                "__typename": "GraphImage",
-                                "id": "1757493260396228348",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @andreabruce\n\u201cI am drawn to combining the sad with the beautiful,\u201d says American photojournalist Andrea Bruce (@andreabruce). \u201cWhen I went overseas to cover the wars in Iraq and Afghanistan, I realized that community journalism is even more needed in conflict zones \u2014 in areas where you need to get one type of person to relate to another type of person. When people think of conflict photography, they don\u2019t think of someone who has become a part of the community, who has invested in it as a person. But I think successful conflict photographers have done that. And that\u2019s where my biggest strength is.\u201d\nToday in Amsterdam, the International Women\u2019s Media Foundation (@theiwmf) is celebrating Andrea with the Anja Niedringhaus Courage in Photojournalism Award, which honors a female photographer who demonstrates the same bravery in conflict as the late Anja Niedringhaus. \u201cIt\u2019s a tremendous honor,\u201d she says. \u201cThere aren\u2019t too many women in conflict as photographers, and Anja was someone I really looked up to. She led with her heart.\u201d\nCheck out our story to see photos from Andrea and other honorees. \ud83d\udcf8"}}]},
-                                "shortcode": "Bhj3s8JD278",
-                                "edge_media_to_comment": {"count": 9040},
-                                "comments_disabled": false,
-                                "taken_at_timestamp": 1523729544,
-                                "dimensions": {"height": 1080, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/850789af95b9ca6167583d28fbddfb9a/5B73E8EE/t51.2885-15/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                "edge_liked_by": {"count": 838007},
-                                "edge_media_preview_like": {"count": 838007},
-                                "gating_info": null,
-                                "media_preview": "ACoqtCbn5eBUpuG9aw1nUnj5fqanjm6hj07g5zVkmj5rdakSUtxk4qpGT64H0/8Ar1I7+UC+cqBnpikBcaQnp+tR/P7Viw3JCk5yXPPqMdeOwI7/AJCojcHP3T+ZouFiiDj609STgDmpltmySOfYcn8zwPrQY5IznZjI7n8/asyrDd7IcKelKZJH5J4PGO1QlWByalU7CMjGf507jsRySbvmAxxjj0qYXJHRePrUWzcu5WAPdTwfw7H6U3y5P8mi9hWJFldQeoz19/T3/KhndhjII7Zz/WmKeM1ZYfvAPp/KkMVAMdiehHY/59utI0eThuvp0xTYgDnPOG/rUyf+ymgZAV29/wAf8aZk+tL1PNNqSkf/2Q==",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/82bb92bd21b705e07ddeb679ecbf5399/5B65778F/t51.2885-15/s640x640/sh0.08/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/99e00a00effb5ba55fa581ab67d4c570/5B6C248B/t51.2885-15/s150x150/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                    "config_width": 150,
-                                    "config_height": 150
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/33de0d648ba86f9106f5990ba58e5cfb/5B50CCB4/t51.2885-15/s240x240/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                    "config_width": 240,
-                                    "config_height": 240
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/46391d26e22b91824126f620168cbc5b/5B50D0CC/t51.2885-15/s320x320/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                    "config_width": 320,
-                                    "config_height": 320
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/cf3eaf3a61976fba84b1447f28d2c29f/5B62F04A/t51.2885-15/s480x480/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                    "config_width": 480,
-                                    "config_height": 480
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/82bb92bd21b705e07ddeb679ecbf5399/5B65778F/t51.2885-15/s640x640/sh0.08/e35/30087720_114361546087186_3830904802745778176_n.jpg",
-                                    "config_width": 640,
-                                    "config_height": 640
-                                }],
-                                "is_video": false
-                            }
-                        }, {
-                            "node": {
-                                "__typename": "GraphImage",
-                                "id": "1756857313094131615",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Featured photo by @andrewknapp\nSpend time with your favorite furry companion for #WHPwildthing.\nFocus on the animals that bring you joy. Your best friend\u2019s dog, sister\u2019s iguana, classroom hamster or even the birds in your backyard can be great subjects.\nShowcase their unique personality. Video can help highlight what makes your favorite animal friends stand out. Film your pet while playing fetch in the park or finding the perfect spot for a nap.\nShare what you do together. Whether it\u2019s heading out on a weekend road trip or staying curled up at home, capture elements that highlight the activities you do together.\nPROJECT RULES: Please add the #WHPwildthing hashtag only to photos and videos shared over this weekend and only submit your own visuals to the project. If you include music in your video submissions, please only use music to which you own the rights. Any tagged photo or video shared over the weekend is eligible to be featured next week."}}]},
-                                "shortcode": "BhhnGsEBd-f",
-                                "edge_media_to_comment": {"count": 9569},
-                                "comments_disabled": false,
-                                "taken_at_timestamp": 1523653733,
-                                "dimensions": {"height": 1350, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/021de11049b196d34f3808dc8fd82d6a/5B56E9F9/t51.2885-15/e35/30084273_601908126852511_5058151987720224768_n.jpg",
-                                "edge_liked_by": {"count": 1226369},
-                                "edge_media_preview_like": {"count": 1226369},
-                                "gating_info": null,
-                                "media_preview": "ACEq2FuEbvj2P+cVJvz0xj6iqQh9Sv5mneSmOSv4Z/xoAueYgGMj86aZ0HT9KqmIdioH4/41FIVhUtkHAOMHv24J/lQBb+2D0/WiuX81/U/kaKLAVhMy9DjPpThK/qRVdxtOOtXY7JpIjMD06D1x1+hHUetO9gtceAxQyB87TtKnIOevHY/mDVUyAnnOa1YZIba3/egsZSckckY6Hn9DUw02CeMFMqxGQxzz9VPr7YouKxi7x7/nRVr+x7n0X/vqii4GfLGY2Kt1Hoc1sWCjyiQ3zYJIz0/D3rFbt9BV614mXHv/ACNS1oWnZkcMbSNj+EGt+WfyU8xuSO3qfSs20Hyio9QJ3qO2KBDP7Tn/AL1FUaKok//Z",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/a5e870d24e96e2fbd0ef2fda4f9a45c0/5B51F22B/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30084273_601908126852511_5058151987720224768_n.jpg",
-                                "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/3e7a57c7f763379091293d8af95e77d5/5B5CD5C5/t51.2885-15/s150x150/e35/c0.135.1080.1080/30084273_601908126852511_5058151987720224768_n.jpg",
-                                    "config_width": 150,
-                                    "config_height": 150
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/dd3382f7854790fff24ae8b458380ca0/5B7464AE/t51.2885-15/s240x240/e35/c0.135.1080.1080/30084273_601908126852511_5058151987720224768_n.jpg",
-                                    "config_width": 240,
-                                    "config_height": 240
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/209dd9c0ee3fce2f8c5c4edbbdc4a93f/5B655D66/t51.2885-15/s320x320/e35/c0.135.1080.1080/30084273_601908126852511_5058151987720224768_n.jpg",
-                                    "config_width": 320,
-                                    "config_height": 320
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/54b69b4c42bad032727923ecd5687b8d/5B5DFE8C/t51.2885-15/s480x480/e35/c0.135.1080.1080/30084273_601908126852511_5058151987720224768_n.jpg",
-                                    "config_width": 480,
-                                    "config_height": 480
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/a5e870d24e96e2fbd0ef2fda4f9a45c0/5B51F22B/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/30084273_601908126852511_5058151987720224768_n.jpg",
-                                    "config_width": 640,
-                                    "config_height": 640
-                                }],
-                                "is_video": false
-                            }
-                        }, {
-                            "node": {
-                                "__typename": "GraphImage",
-                                "id": "1756129088722827600",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @livingwithpickles\nHello, world! Meet today\u2019s #WeeklyFluff, Pickles and Dill (@livingwithpickles), a pig and pup pair of besties that live in San Francisco. \u201cPickles is one and a half years old, and Dill just turned one,\u201d says Maddie, their human, who rescued Pickles from a farm when he was a piglet. \u201cWe noticed Pickles really loved hanging out with dogs, especially Frenchies. Maybe it\u2019s because they also have a pig-like build, make similar noises and have no shame. And I\u2019m pretty sure Dill thought he was a pig when we first brought him home.\u201d\nThese days, two have become one: Pickles and Dill share everything from bubble baths to fresh veggies together. \u201cIt\u2019s hard to say whether Pickles is more of a dog or if Dill is more of a pig,\u201d says Maddie. \ud83d\udc3d"}}]},
-                                "shortcode": "BhfBhoRDflQ",
-                                "edge_media_to_comment": {"count": 13384},
-                                "comments_disabled": false,
-                                "taken_at_timestamp": 1523566922,
-                                "dimensions": {"height": 810, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/4df977b8ff68ae5564b12250c04c7335/5B6D8DA6/t51.2885-15/e35/30591171_142310966609564_6812307646058594304_n.jpg",
-                                "edge_liked_by": {"count": 1000866},
-                                "edge_media_preview_like": {"count": 1000866},
-                                "gating_info": null,
-                                "media_preview": "ACofiFsH6Abjxk/0qs+mSZ2ggn2zxn19KvQSdfYn3qS6jcL9oj4IwD249fw6YrNXZo7IiEoDLGQS2ccdOMc/Q9v1psllLICFXHJ68fzqK3uvKDs3JkAAH48n+tSxXL242sQfMOct0VenPf8ADoKXKFywbVkUA44AFR+SauRcIMnJPOevHam59/5UKw3dGZDB/D1zzitcSARiMjjGCO1ZqyeV83XAq5FKk6hlPHrW6RiypPCGUt2A+mKmaZJEHHAxk4qcQAAjqDj68VGLdFHQZHp/h0+tZt2LWpM5GPpVfdSXEnloT3rP89qxSND/2Q==",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/1698ea1d98aaae2146ce3c35eeea611b/5B6BC6AC/t51.2885-15/s640x640/sh0.08/e35/c135.0.810.810/30591171_142310966609564_6812307646058594304_n.jpg",
-                                "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/5a9e33e86cfcc98f0cfef6fe203eda46/5B6769EF/t51.2885-15/s150x150/e35/c135.0.810.810/30591171_142310966609564_6812307646058594304_n.jpg",
-                                    "config_width": 150,
-                                    "config_height": 150
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/248b51214092de9dd159468f8efa31df/5B581979/t51.2885-15/s240x240/e35/c135.0.810.810/30591171_142310966609564_6812307646058594304_n.jpg",
-                                    "config_width": 240,
-                                    "config_height": 240
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/1d02a0030b0e80900fcd548d499346d4/5B645091/t51.2885-15/s320x320/e35/c135.0.810.810/30591171_142310966609564_6812307646058594304_n.jpg",
-                                    "config_width": 320,
-                                    "config_height": 320
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/d106c1cb1a69885cf6ed8d2a8bd66164/5B5FB9B8/t51.2885-15/s480x480/e35/c135.0.810.810/30591171_142310966609564_6812307646058594304_n.jpg",
-                                    "config_width": 480,
-                                    "config_height": 480
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/1698ea1d98aaae2146ce3c35eeea611b/5B6BC6AC/t51.2885-15/s640x640/sh0.08/e35/c135.0.810.810/30591171_142310966609564_6812307646058594304_n.jpg",
-                                    "config_width": 640,
-                                    "config_height": 640
-                                }],
-                                "is_video": false
-                            }
-                        }, {
-                            "node": {
-                                "__typename": "GraphImage",
-                                "id": "1755337311191410825",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @ali_lapetina\nWhen she moved to Detroit for college, documentary photographer Ali Lapetina (@ali_lapetina) connected to her new home through her camera. \u201cI soon realized that it was the doorway to interact with residents in various neighborhoods,\u201d she says. \u201cIt became my mission to collaborate with them and share their stories.\u201d\nFrom that mission came Women of Banglatown (@womenofbanglatown), a nonprofit organization and community space for women and girls in Banglatown, a neighborhood on the border of northern Detroit and the city of Hamtramck and an enclave of Bengali and Yemeni immigrants. \u201cThrough free art classes and income-generating activities, conversations are sparked about what it means to navigate this world as a multicultural woman living in the US,\u201d says Ali. \u201cSeeing these women grow and transition as they embark on significant moments in their lives reminds me \u2014 and I hope my followers \u2014 that we are all humans, just evolving and growing into ourselves.\u201d\nWatch our story to meet Ali and some of the women and girls of Banglatown."}}]},
-                                "shortcode": "BhcNfv-jaiJ",
-                                "edge_media_to_comment": {"count": 11292},
-                                "comments_disabled": false,
-                                "taken_at_timestamp": 1523472535,
-                                "dimensions": {"height": 1080, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/0c92a26467d2d9e0669baad433e22f52/5B671E8E/t51.2885-15/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                "edge_liked_by": {"count": 791016},
-                                "edge_media_preview_like": {"count": 791016},
-                                "gating_info": null,
-                                "media_preview": "ACoq3gBT9tcPuPbA696evmHk5P03f0p6i0O2ApcVxREq8jev/fX9KPPcdHYe24/40ajO1xRtriTdzjoz/maZ9ruP77/makZ1ixKvTA+gAp5Ud+AO9QvcLDgNkk+1VryZiAiqSr5BI54IxjHPPoTxVCsXSEzgEZPbr/ke9RvbK3UA1lRAQSKJG2t0C+mT1wfp6kYNWbS+eeQ78KijgA9/U+ufTOBTuKw2TToieBg+3H8sVB/Zw/vN+ZroF+YZI/rS+WvpRzeQWKWS3tQ7rHx0J6ZpwqnefcP1FIooSEyy7nG/+HPbrwCOo7+5rVitdoOTnPtyM8/l6A/jUVuBuz3K/wBaurTYku7uSbse9LvqCQ46etQM7ZPJ/Osyz//Z",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/f1b8e88fe652aae7d86d8768999d7ff7/5B65C8EF/t51.2885-15/s640x640/sh0.08/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/e46603c1f84914731a92ba6cc42fb778/5B6E3DEB/t51.2885-15/s150x150/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                    "config_width": 150,
-                                    "config_height": 150
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/58f188abff28d87e583c7d02831efb83/5B4EB1D4/t51.2885-15/s240x240/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                    "config_width": 240,
-                                    "config_height": 240
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/5a71d5dd780600124e471367e859d0da/5B6F5BAC/t51.2885-15/s320x320/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                    "config_width": 320,
-                                    "config_height": 320
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/8f175166e7830d6f12cc5b8f1c35d7f2/5B56012A/t51.2885-15/s480x480/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                    "config_width": 480,
-                                    "config_height": 480
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/f1b8e88fe652aae7d86d8768999d7ff7/5B65C8EF/t51.2885-15/s640x640/sh0.08/e35/29739835_226138444799489_6181337320612954112_n.jpg",
-                                    "config_width": 640,
-                                    "config_height": 640
-                                }],
-                                "is_video": false
-                            }
-                        }, {
-                            "node": {
-                                "__typename": "GraphImage",
-                                "id": "1754772168850036356",
-                                "edge_media_to_caption": {"edges": [{"node": {"text": "Photo by @kimothyolsen\nWriter Kim Olsen (@kimothyolsen) took this signature \u201cslightly absurd\u201d self-portrait in an abandoned school on a Norwegian archipelago. \u201cOn this island, there are no people and very limited cell phone reception,\u201d he says. \u201cYou have to find things to occupy yourself \u2014 like reading, hiking and playing with the camera.\u201d #WHPimbored"}}]},
-                                "shortcode": "BhaM_2KDFaE",
-                                "edge_media_to_comment": {"count": 9342},
-                                "comments_disabled": false,
-                                "taken_at_timestamp": 1523405165,
-                                "dimensions": {"height": 1189, "width": 1080},
-                                "display_url": "https://scontent-waw1-1.cdninstagram.com/vp/6b4ea8ac0b2f448dfa47971f51405fbd/5B70955E/t51.2885-15/e35/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                "edge_liked_by": {"count": 802797},
-                                "edge_media_preview_like": {"count": 802797},
-                                "gating_info": null,
-                                "media_preview": "ACYq1WQGo8MvQ/5+tVfNuU+8u78P8P8ACnLeDo6lf8/hU3K5X019GWxP/e4p+7PTmoN6sM/z4qAkK2AcH2pWQtS0TRVdJtxxjd7j+oNFFhl40nHeo5ZNiluAB61VjnEgznPOOmKYraXJ3niVtrKACOD6/gP51F9mVn8xemP0qvfbvL3J1Xr9O/5daNPMiqFY7lZd3PVewHvnr7U7ATbVjkGOMqf5iiorglXB68EcA+ooqIJpJPcqWruiW6KONpY4B521VR1QYXJHvTpulQU13DpYsSOWUr2IIqnaq0eSTk8D14HQVK3SmLVXFYdNKxPWioX60UkNn//Z",
-                                "owner": {"id": "25025320"},
-                                "thumbnail_src": "https://scontent-waw1-1.cdninstagram.com/vp/2902405e85847e91216ddebec78bf3f0/5B623601/t51.2885-15/s640x640/sh0.08/e35/c0.54.1080.1080/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                "thumbnail_resources": [{
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/ddc34898567a8e5d4f691323b7bc5967/5B75B2EF/t51.2885-15/s150x150/e35/c0.54.1080.1080/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                    "config_width": 150,
-                                    "config_height": 150
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/175c4d37d9034a36e09d8da35c47cfb3/5B654E84/t51.2885-15/s240x240/e35/c0.54.1080.1080/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                    "config_width": 240,
-                                    "config_height": 240
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/32a382cde0e04a602c954bb35371253b/5B59D84C/t51.2885-15/s320x320/e35/c0.54.1080.1080/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                    "config_width": 320,
-                                    "config_height": 320
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/d899b65c4d5a9ad087df9cb752912666/5B6115A6/t51.2885-15/s480x480/e35/c0.54.1080.1080/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                    "config_width": 480,
-                                    "config_height": 480
-                                }, {
-                                    "src": "https://scontent-waw1-1.cdninstagram.com/vp/2902405e85847e91216ddebec78bf3f0/5B623601/t51.2885-15/s640x640/sh0.08/e35/c0.54.1080.1080/30078667_2078837772334965_7966982639783510016_n.jpg",
-                                    "config_width": 640,
-                                    "config_height": 640
-                                }],
-                                "is_video": false
+                                "is_video": true,
+                                "video_view_count": 149325
                             }
                         }]
                     },
@@ -704,101 +877,149 @@
                         "edges": []
                     }
                 }
+            },
+            "felix_onboarding_video_resources": {
+                "mp4": "/static/videos/felix-onboarding/onboardingVideo.mp4/9d16838ca7f9.mp4",
+                "poster": "/static/images/felix-onboarding/onboardingVideoPoster.png/8fdba7cf2120.png"
             }
         }]
     },
-    "gatekeepers": {"ld": true, "seo": true, "seoht": true},
-    "knobs": {"acct:ntb": 0},
+    "gatekeepers": {"sf": true, "ld": true, "seo": true, "seoht": true, "saa": true, "phone_qp": true, "nt": true},
+    "knobs": {"acct:ntb": 0, "cb": 0, "captcha": 0, "fr": 0},
     "qe": {
-        "dash_for_vod": {"g": "", "p": {}},
-        "aysf": {"g": "", "p": {}},
+        "early_flush": {"g": "", "p": {}},
+        "form_navigation_dialog": {"g": "", "p": {}},
+        "cred_man": {"g": "", "p": {}},
+        "iab": {"g": "test", "p": {"has_open_app_ios": "true"}},
+        "app_upsell_li": {"g": "", "p": {}},
+        "app_upsell": {
+            "g": "control_only_loggedout_upsell",
+            "p": {"has_new_app_upsell_sheet": "false", "has_new_half_sheet": "false"}
+        },
+        "stale_fix": {"g": "", "p": {}},
+        "profile_header_name": {"g": "", "p": {}},
         "bc3l": {"g": "", "p": {}},
-        "comment_reporting": {"g": "", "p": {}},
-        "direct_reporting": {"g": "", "p": {}},
+        "direct_conversation_reporting": {"g": "", "p": {}},
+        "general_reporting": {"g": "", "p": {}},
         "reporting": {"g": "", "p": {}},
-        "media_reporting": {"g": "", "p": {}},
         "acc_recovery_link": {"g": "", "p": {}},
         "notif": {"g": "", "p": {}},
-        "drct_nav": {"g": "", "p": {}},
-        "pl_pivot_li": {"g": "", "p": {}},
-        "pl_pivot_lo": {"g": "", "p": {}},
+        "fb_unlink": {"g": "", "p": {}},
+        "mobile_stories_doodling": {"g": "", "p": {}},
+        "show_copy_link": {"g": "", "p": {}},
+        "p_edit": {"g": "", "p": {}},
         "404_as_react": {"g": "", "p": {}},
-        "acc_recovery": {"g": "control_without_fb_login_02_09_18", "p": {"has_fb_login_button": "false"}},
-        "client_gql": {"g": "", "p": {}},
+        "acc_recovery": {"g": "control", "p": {"has_account_recovery_redesign": "false"}},
+        "async_unread_counts": {"g": "", "p": {}},
         "collections": {"g": "", "p": {}},
         "comment_ta": {"g": "", "p": {}},
-        "connections": {"g": "", "p": {}},
+        "su": {"g": "", "p": {}},
         "disc_ppl": {"g": "", "p": {}},
-        "embeds": {"g": "", "p": {}},
+        "ebd_ul": {"g": "", "p": {}},
         "ebdsim_li": {"g": "", "p": {}},
         "ebdsim_lo": {"g": "", "p": {}},
-        "es6": {"g": "", "p": {}},
+        "empty_feed": {"g": "", "p": {}},
+        "bundles": {"g": "", "p": {}},
         "exit_story_creation": {"g": "", "p": {}},
-        "fs": {"g": "", "p": {}},
-        "gdpr_logged_out": {"g": "", "p": {}},
         "appsell": {"g": "", "p": {}},
         "imgopt": {"g": "", "p": {}},
         "follow_button": {"g": "", "p": {}},
-        "loggedout": {"g": "launch", "p": {"new_cta": "true", "remove_upsell_banner": "true", "update_nav": "true"}},
-        "loggedout_upsell": {"g": "test_with_login_as_primary_cta_03_16_18", "p": {"has_login_as_primary_cta": "true"}},
-        "us_li": {"g": "", "p": {}},
+        "log_cont": {"g": "", "p": {}},
         "msisdn": {"g": "", "p": {}},
         "bg_sync": {"g": "", "p": {}},
-        "onetaplogin": {"g": "", "p": {}},
-        "onetaplogin_userbased": {"g": "", "p": {}},
+        "onetaplogin": {
+            "g": "default_opt_out",
+            "p": {"default_value": "false", "during_reg": "true", "storage_version": "one_tap_storage_version"}
+        },
         "login_poe": {"g": "", "p": {}},
-        "prvcy_tggl": {"g": "", "p": {}},
-        "private_lo": {"g": "", "p": {}},
-        "profile_photo_nux_fbc_v2": {"g": "", "p": {}},
+        "profile_tabs": {"g": "", "p": {}},
         "push_notifications": {"g": "", "p": {}},
-        "reg": {"g": "test_inline_2_01_24", "p": {"has_inline_labels": "true"}},
-        "reg_vp": {"g": "test_group_2", "p": {"hide_value_prop": "true"}},
-        "feed_vp": {"g": "", "p": {}},
-        "report_haf": {"g": "", "p": {}},
+        "qpl_fln": {"g": "", "p": {}},
+        "reg": {"g": "", "p": {}},
+        "em_sig": {
+            "g": "control_no_sug_d",
+            "p": {"has_multi_step_email_suggestion": "false", "has_signup_email_suggestion": "false"}
+        },
+        "multireg_iter": {"g": "", "p": {}},
+        "reg_vp": {"g": "control_group_2", "p": {"hide_value_prop": "false"}},
         "report_media": {"g": "", "p": {}},
         "report_profile": {"g": "", "p": {}},
-        "save": {"g": "", "p": {}},
-        "sidecar": {"g": "", "p": {}},
+        "scroll_log": {"g": "", "p": {}},
+        "sidecar_swipe": {"g": "", "p": {}},
         "su_universe": {"g": "", "p": {}},
         "stale": {"g": "", "p": {}},
-        "stories_lo": {"g": "test_04_16", "p": {"stories_permalink": "true"}},
+        "lo_stories": {"g": "control_others", "p": {"contextual_login_others": "false"}},
         "stories": {"g": "", "p": {}},
         "tp_pblshr": {"g": "", "p": {}},
         "video": {"g": "", "p": {}},
-        "gdpr_settings": {"g": "", "p": {}},
         "gdpr_eu_tos": {"g": "", "p": {}},
-        "gdpr_row_tos": {"g": "", "p": {}}
+        "gdpr_row_tos": {"g": "control_05_01", "p": {"tos_version": "row"}},
+        "felix": {"g": "", "p": {}},
+        "felix_clear_fb_cookie": {"g": "", "p": {}},
+        "felix_creation_duration_limits": {"g": "", "p": {}},
+        "felix_creation_enabled": {"g": "", "p": {}},
+        "felix_creation_fb_crossposting": {"g": "", "p": {}},
+        "felix_creation_fb_crossposting_v2": {"g": "", "p": {}},
+        "felix_creation_validation": {"g": "", "p": {}},
+        "felix_creation_video_upload": {"g": "", "p": {}},
+        "felix_early_onboarding": {"g": "", "p": {}},
+        "unfollow_confirm": {"g": "", "p": {}},
+        "profile_enhance_li": {"g": "", "p": {}},
+        "profile_enhance_lo": {"g": "", "p": {}},
+        "phone_confirm": {"g": "", "p": {}},
+        "comment_enhance": {"g": "", "p": {}},
+        "mweb_topical_explore": {"g": "", "p": {}},
+        "web_nametag": {"g": "", "p": {}},
+        "image_downgrade": {"g": "", "p": {}},
+        "image_downgrade_lite": {"g": "", "p": {}},
+        "follow_all_fb": {"g": "", "p": {}},
+        "lite_direct_upsell": {"g": "", "p": {}},
+        "web_loggedout_noop": {"g": "", "p": {}},
+        "stories_video_preload": {"g": "", "p": {}},
+        "lite_stories_video_preload": {"g": "", "p": {}},
+        "a2hs_heuristic_uc": {"g": "", "p": {}},
+        "a2hs_heuristic_non_uc": {"g": "", "p": {}},
+        "web_hashtag": {"g": "", "p": {}},
+        "header_scroll": {"g": "", "p": {}},
+        "rout": {"g": "", "p": {}},
+        "websr": {"g": "", "p": {}},
+        "web_lo_follow": {"g": "test", "p": {"follow_after_login": "true"}},
+        "web_share": {"g": "", "p": {}},
+        "lite_rating": {"g": "", "p": {}},
+        "web_embeds_share": {"g": "", "p": {}},
+        "web_share_lo": {"g": "", "p": {}},
+        "web_embeds_logged_out": {"g": "", "p": {}},
+        "reg_nux": {"g": "", "p": {}},
+        "web_datasaver_mode": {"g": "", "p": {}},
+        "lite_datasaver_mode": {"g": "", "p": {}},
+        "lite_video_upload": {"g": "", "p": {}},
+        "ig_aat": {"g": "", "p": {}},
+        "lo_returnurl": {"g": "", "p": {}},
+        "forgot_pass": {"g": "", "p": {}}
     },
     "hostname": "www.instagram.com",
-    "display_properties_server_guess": {
-        "pixel_ratio": 1.0,
-        "viewport_width": 1440,
-        "viewport_height": 781,
-        "orientation": ""
-    },
-    "environment_switcher_visible_server_guess": true,
+    "deployment_stage": "c2",
     "platform": "web",
-    "rhx_gis": "a4203ec9f2ca7a090182c4dd205fa137",
-    "nonce": "sFPkISc4os2lKG8x1v7Gew==",
-    "is_bot": false,
+    "rhx_gis": "116e052d62f2052a05b9a74cdc897ca8",
+    "nonce": "mcjhkF3CJ/bIoa6OQSEG+g==",
+    "server_checks": {},
     "zero_data": {},
-    "rollout_hash": "211cc57c74b6",
+    "rollout_hash": "723425780848",
     "bundle_variant": "base",
     "probably_has_app": false,
-    "show_app_install": true
+    "is_canary": true
 };</script>
-
-<script type="text/javascript" src="/static/bundles/base/Vendor.js/0b34a2e2f7c2.js" crossorigin="anonymous"></script>
+<script type="text/javascript">window.__initialDataLoaded(window._sharedData);</script>
 <script type="text/javascript">!function (e) {
     var a = window.webpackJsonp;
     window.webpackJsonp = function (n, r, i) {
-        for (var c, d, f, s = 0, g = []; s < n.length; s++) d = n[s], o[d] && g.push(o[d][0]), o[d] = 0;
+        for (var c, d, g, s = 0, f = []; s < n.length; s++) d = n[s], o[d] && f.push(o[d][0]), o[d] = 0;
         for (c in r) Object.prototype.hasOwnProperty.call(r, c) && (e[c] = r[c]);
-        for (a && a(n, r, i); g.length;) g.shift()();
-        if (i) for (s = 0; s < i.length; s++) f = t(t.s = i[s]);
-        return f
+        for (a && a(n, r, i); f.length;) f.shift()();
+        if (i) for (s = 0; s < i.length; s++) g = t(t.s = i[s]);
+        return g
     };
-    var n = {}, o = {63: 0};
+    var n = {}, o = {82: 0};
 
     function t(a) {
         if (n[a]) return n[a].exports;
@@ -819,128 +1040,166 @@
         var r = document.getElementsByTagName("head")[0], i = document.createElement("script");
         i.type = "text/javascript", i.charset = "utf-8", i.async = !0, i.timeout = 12e4, i.crossOrigin = "anonymous", t.nc && i.setAttribute("nonce", t.nc), i.src = t.p + "" + ({
             0: "SettingsModules",
-            1: "ProfilePageContainer",
-            2: "LikedByListContainer",
-            3: "FollowListContainer",
-            4: "CreationModules",
-            5: "LocationPageContainer",
-            6: "DiscoverMediaPageContainer",
-            7: "DiscoverEmbedsPageContainer",
-            8: "TagPageContainer",
-            9: "UserCollectionMediaPageContainer",
-            10: "DebugInfoNub",
-            11: "FeedPageContainer",
-            12: "PostPageContainer",
-            13: "LandingPage",
-            14: "LoginAndSignupPage",
-            15: "ResetPasswordPageContainer",
-            16: "MobileStoriesPage",
-            17: "DesktopStoriesPage",
-            18: "DirectInboxPageContainer",
-            19: "DiscoverPeoplePageContainer",
-            20: "IGTVVideoUploadPage",
-            21: "UserCollectionsPageContainer",
-            22: "MultiStepSignupPage",
-            23: "DataDownloadRequestPage",
-            24: "ContactHistoryPage",
-            25: "AccessToolViewAllPage",
-            26: "AccessToolPage",
-            27: "DataDownloadRequestConfirmPage",
-            28: "DataControlsSupportPage",
-            29: "EmailConfirmationPage",
-            30: "LocationsDirectoryLandingPage",
-            31: "LocationsDirectoryCountryPage",
-            32: "LocationsDirectoryCityPage",
-            33: "SuggestedDirectoryLandingPage",
-            34: "ProfilesDirectoryLandingPage",
-            35: "HashtagsDirectoryLandingPage",
-            36: "OAuthPermissionsPage",
-            37: "DirectoryPage",
-            38: "HttpErrorPage",
-            39: "ActivityFeedPage",
-            40: "FBSignupPage",
-            41: "StoryCreationPage",
-            42: "NewUserInterstitial",
-            43: "ParentalConsentPage",
-            44: "ParentalConsentNotParentPage",
-            45: "NewTermsConfirmPage",
-            46: "CheckpointUnderageAppealPage",
-            47: "AccountPrivacyBugPage",
-            48: "ContactInvitesOptOutPage",
-            49: "ContactInvitesOptOutStatusPage",
-            50: "Report",
-            51: "Copyright",
-            52: "SupportInfo",
-            53: "Community",
-            54: "GenericSurvey",
-            55: "Challenge",
-            56: "Consumer",
-            57: "EmailSnoozePage",
-            58: "EmailUnsubscribePage",
-            59: "ConfirmFollowDialog",
-            60: "NotificationLandingPage"
+            1: "CreationModules",
+            2: "MobileStoriesPage",
+            3: "DesktopStoriesPage",
+            4: "MobileStoriesLoginPage",
+            5: "DesktopStoriesLoginPage",
+            6: "ProfilePageContainer",
+            7: "CommentLikedByListContainer",
+            8: "LikedByListContainer",
+            9: "LocationPageContainer",
+            10: "DiscoverMediaPageContainer",
+            11: "DiscoverEmbedsPageContainer",
+            12: "TagPageContainer",
+            13: "UserCollectionMediaPageContainer",
+            14: "FollowListModal",
+            15: "DebugInfoNub",
+            16: "FeedPageContainer",
+            17: "MediaChainingPageContainer",
+            18: "PostPageContainer",
+            19: "MobileAllCommentsPage",
+            20: "ExploreMediaPageContainer",
+            21: "IGTVVideoUploadPageContainer",
+            22: "IGTVVideoDraftsPageContainer",
+            23: "FBSignupPage",
+            24: "DirectInboxPageContainer",
+            25: "NametagLandingPage",
+            26: "NewUserInterstitial",
+            27: "MultiStepSignupPage",
+            28: "ResetPasswordPageContainer",
+            29: "AccessToolViewAllPage",
+            30: "AccessToolPage",
+            31: "DataDownloadRequestPage",
+            32: "DataDownloadRequestConfirmPage",
+            33: "ContactHistoryPage",
+            34: "LandingPage",
+            35: "UserCollectionsPageContainer",
+            36: "DataControlsSupportPage",
+            37: "EmailConfirmationPage",
+            38: "LocationsDirectoryLandingPage",
+            39: "LocationsDirectoryCountryPage",
+            40: "LocationsDirectoryCityPage",
+            41: "FollowListPage",
+            42: "DiscoverPeoplePageContainer",
+            43: "PhoneConfirmPage",
+            44: "OneTapUpsell",
+            45: "LoginAndSignupPage",
+            46: "NewTermsConfirmPage",
+            47: "CheckpointUnderageAppealPage",
+            48: "AccountRecoveryLandingPage",
+            49: "TermsUnblockPage",
+            50: "TermsAcceptPage",
+            51: "AdsSettingsPage",
+            52: "SuggestedDirectoryLandingPage",
+            53: "ProfilesDirectoryLandingPage",
+            54: "HashtagsDirectoryLandingPage",
+            55: "ActivityFeedPage",
+            56: "OAuthPermissionsPage",
+            57: "CameraPage",
+            58: "HttpErrorPage",
+            59: "NavigationShell",
+            60: "ParentalConsentPage",
+            61: "ParentalConsentNotParentPage",
+            62: "AndroidBetaPrivacyBugPage",
+            63: "AccountPrivacyBugPage",
+            64: "StoryCreationPage",
+            65: "ContactInvitesOptOutPage",
+            66: "RootShell",
+            67: "ContactInvitesOptOutStatusPage",
+            68: "Docpen",
+            69: "Report",
+            70: "Copyright",
+            71: "RapidReport",
+            72: "Challenge",
+            73: "SupportInfo",
+            74: "Verification",
+            75: "Community",
+            76: "EmailSnoozePage",
+            77: "Consumer",
+            78: "EmailUnsubscribePage",
+            79: "NotificationLandingPage"
         }[e] || e) + ".js/" + {
-            0: "7de245441573",
-            1: "257daa16d8a1",
-            2: "956646e2542b",
-            3: "d120616edeef",
-            4: "a0aac4548260",
-            5: "90131de2eacd",
-            6: "33e7715f6f2f",
-            7: "b26b3ef36796",
-            8: "6b0c8dd62106",
-            9: "767a808c45cd",
-            10: "f35a4802ee92",
-            11: "e444df61c077",
-            12: "dcc7fe8b75bf",
-            13: "8f390588c828",
-            14: "36715b6e0a63",
-            15: "337b939039e1",
-            16: "f3fb847bd002",
-            17: "f5b9a4ae363e",
-            18: "bef0c0cb8ab0",
-            19: "b64ebcb52c75",
-            20: "5c2df51583a6",
-            21: "aa40fd0523c8",
-            22: "cd32b2a00068",
-            23: "97cce76e614e",
-            24: "bf0b02e218f3",
-            25: "ff70632f1c17",
-            26: "e0c45cfafe9f",
-            27: "65791b358770",
-            28: "41c6f065e9b8",
-            29: "77bd1d18384e",
-            30: "99b68b7fd7d3",
-            31: "89a2e5cdfafa",
-            32: "2e7147998a31",
-            33: "10cc21162e2f",
-            34: "ad038f8e255d",
-            35: "f7176e55f65f",
-            36: "ca28d9ddbc86",
-            37: "56e72456ca94",
-            38: "06c6af741489",
-            39: "68966ff992fd",
-            40: "cbaa68550487",
-            41: "cc39b4ba6419",
-            42: "21c6a2dee86c",
-            43: "78706489e1d1",
-            44: "6dbe3ed4742e",
-            45: "923cab04869a",
-            46: "1c4a4976bdf1",
-            47: "7682a2cdf711",
-            48: "d77218dc8ffc",
-            49: "bac25b169247",
-            50: "5163c1e5ae65",
-            51: "59d1cca68805",
-            52: "007dc995b5a6",
-            53: "c57157f679ed",
-            54: "b5e44f9d8566",
-            55: "250dc8b0524f",
-            56: "2f763f3aafa2",
-            57: "b28c775054f5",
-            58: "7b6a89dac74e",
-            59: "7dbdc2d3956c",
-            60: "cbb07159a9d3"
+            0: "641e582c8c6e",
+            1: "ee8765f07fac",
+            2: "7d3037f42f40",
+            3: "524e067b8e70",
+            4: "ee0306b37be4",
+            5: "29c45a5023e3",
+            6: "394c95edd99e",
+            7: "27592d0a2850",
+            8: "3e2a01bea8fb",
+            9: "c50ec5d43d4d",
+            10: "e63e65aa273b",
+            11: "76a093bf3779",
+            12: "0e1aa0353c90",
+            13: "99e7c2626f7f",
+            14: "59d8903608c4",
+            15: "9695a7db6f4c",
+            16: "797395dbe6f1",
+            17: "9e5e1da4df5d",
+            18: "094d0324f89c",
+            19: "003e513494ff",
+            20: "476baa1e60c2",
+            21: "1a8dace93889",
+            22: "e65fdbde8b72",
+            23: "bd5af9120132",
+            24: "5a5cb2f0951f",
+            25: "f1ecbef21997",
+            26: "181b4366cbde",
+            27: "67a9d6c2f9ff",
+            28: "884a618ba192",
+            29: "094687bf5ce8",
+            30: "db5e2d44f181",
+            31: "f7c7cdc6e938",
+            32: "0be19b024983",
+            33: "f696e460d4d0",
+            34: "c0c783c76cc1",
+            35: "b2159c03126b",
+            36: "fb8da1a5dabb",
+            37: "f402294af979",
+            38: "9df8fdf00eb7",
+            39: "c5f70ee34ff7",
+            40: "79dfc800de13",
+            41: "fedc784c546e",
+            42: "b2aa0faaa459",
+            43: "1f413809f27c",
+            44: "1f027387a765",
+            45: "faf957738254",
+            46: "443d86aad11e",
+            47: "5c0038e63db6",
+            48: "093118dbffd1",
+            49: "e1aac6a9bd93",
+            50: "c37b4c6e1b2e",
+            51: "959e1b821c34",
+            52: "5ae637ab207f",
+            53: "eb81e2ad8491",
+            54: "8b821a2edab7",
+            55: "d757e6f023a5",
+            56: "ae52e5fbbba6",
+            57: "1b3e336c72da",
+            58: "5a1e8ae24fc3",
+            59: "d561879893ef",
+            60: "e118c6893548",
+            61: "2835d98091a1",
+            62: "fe6b5c1195fd",
+            63: "7342f87a9dbb",
+            64: "65f84e342ca3",
+            65: "a035b3ae1460",
+            66: "6aeeab351037",
+            67: "d95cdc7a1f83",
+            68: "c3edb63a4132",
+            69: "c23d2f1f2b05",
+            70: "2c852f48c236",
+            71: "07c00981960a",
+            72: "15a05ebc876f",
+            73: "04cb6359d322",
+            74: "f17d336817e4",
+            75: "065c3023d20c",
+            76: "e82b962ed96f",
+            77: "018e492c4ab2",
+            78: "4f378bf29b74",
+            79: "da5ef089c45f"
         }[e] + ".js";
         var c = setTimeout(d, 12e4);
 
@@ -966,12 +1225,13 @@
         throw console.error(e), e
     }
 }([]);</script>
-<script type="text/javascript" src="/static/bundles/base/ProfilePageContainer.js/257daa16d8a1.js"
-        crossorigin="anonymous" charset="utf-8" async=""></script>
-<script type="text/javascript" src="/static/bundles/base/pl_PL.js/c240280c8c8c.js" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/static/bundles/base/ConsumerCommons.js/9485de3e9112.js"
-        crossorigin="anonymous"></script>
-<script type="text/javascript" src="/static/bundles/base/Consumer.js/2f763f3aafa2.js" crossorigin="anonymous"></script>
+<script crossorigin="anonymous" src="/static/bundles/base/Vendor.js/a006613ba95c.js" type="text/javascript"></script>
+<script crossorigin="anonymous" src="/static/bundles/base/pl_PL.js/f9088c38d2f5.js" type="text/javascript"></script>
+<script crossorigin="anonymous" src="/static/bundles/base/ConsumerCommons.js/9fc3a3d540f1.js"
+        type="text/javascript"></script>
+<script crossorigin="anonymous" src="/static/bundles/base/Consumer.js/018e492c4ab2.js" type="text/javascript"></script>
+<script async="" charset="utf-8" crossorigin="anonymous"
+        src="/static/bundles/base/ProfilePageContainer.js/394c95edd99e.js" type="text/javascript"></script>
 
 
 <script>
@@ -1006,5 +1266,39 @@
 </noscript>
 
 
+<script type="text/javascript">
+    (function () {
+        function normalizeError(err) {
+            var errorInfo = err.error || {};
+            return {
+                line: err.line || errorInfo.message || 0,
+                column: err.column || 0,
+                name: 'InitError',
+                message: err.message || errorInfo.message || '',
+                script: errorInfo.script || '',
+                stack: errorInfo.stackTrace || errorInfo.stack || '',
+                timestamp: Date.now(),
+                ref: window.location.href,
+                is_canary: window._sharedData && window._sharedData.is_canary ? window._sharedData.is_canary : false,
+                rollout_hash: window._sharedData && window._sharedData.rollout_hash ? window._sharedData.rollout_hash : '',
+                is_prerelease: window.__PRERELEASE__ || false,
+                bundle_variant: window._sharedData && window._sharedData.bundle_variant ? window._sharedData.bundle_variant : null,
+                request_url: err.url || window.location.href,
+                response_status_code: errorInfo.statusCode || 0
+            }
+        }
+
+        if (window.__bufferedErrors && window.__bufferedErrors.length) {
+            window.__bufferedErrors.map(function (error) {
+                return normalizeError(error)
+            }).forEach(function (normalizedError) {
+                var request = new XMLHttpRequest();
+                request.open('POST', '/client_error/', true);
+                request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                request.send(JSON.stringify(normalizedError));
+            })
+        }
+    }());
+</script>
 </body>
 </html>
