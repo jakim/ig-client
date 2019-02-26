@@ -14,4 +14,7 @@ class Location
     public $hasPublicPage;
     public $name;
     public $slug;
+    public $media;
+    public $lat;
+    public $lng;
 }
