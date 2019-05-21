@@ -9,6 +9,7 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
+use Jakim\Exception\RestrictedProfileException;
 use Jakim\Helper\JsonHelper;
 use jakim\ig\Endpoint;
 use jakim\ig\Url;
@@ -75,6 +76,8 @@ class AccountQuery extends Query
      * @return \Generator
      *
      * @throws \Jakim\Exception\EmptyContentException
+     * @throws \Jakim\Exception\RestrictedProfileException
+     *
      * @see \Jakim\Query\AccountQuery::findPosts
      */
     public function findLastPosts(string $username, int $limit = 12)
@@ -103,6 +106,7 @@ class AccountQuery extends Query
      * @return \Generator
      *
      * @throws \Jakim\Exception\EmptyContentException
+     * @throws \Jakim\Exception\RestrictedProfileException
      * @deprecated
      */
     public function findPosts(string $username, int $limit = 100)
@@ -116,6 +120,10 @@ class AccountQuery extends Query
         $content = $res->getBody()->getContents();
 
         preg_match('/\_sharedData \= (.*?)\;\<\/script\>/s', $content, $matches);
+
+        if (empty($matches) && strpos($content, 'Restricted profile') !== false) {
+            throw new RestrictedProfileException();
+        }
 
         return JsonHelper::decode($matches['1']);
     }

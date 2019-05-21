@@ -7,6 +7,7 @@
 
 namespace Jakim\Query;
 
+use Generator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -39,6 +40,17 @@ class AccountQueryTest extends TestCase
         $this->assertEquals($this->accountInfoModel, $account);
     }
 
+    /**
+     * @expectedException \Jakim\Exception\RestrictedProfileException
+     */
+    public function testFindOneRestricted()
+    {
+        $accountDetails = file_get_contents(__DIR__ . '/../_data/account_details_restricted.html');
+
+        $query = new AccountQuery($this->httpClient([$accountDetails]));
+        $query->findOne('bacardiusa');
+    }
+
     public function testFindOneByUsername()
     {
         $query = new AccountQuery($this->httpClient([$this->accountDetails]));
@@ -62,7 +74,7 @@ class AccountQueryTest extends TestCase
         $query = new AccountQuery($this->httpClient([$this->accountDetails]));
         $posts = $query->findLastPosts('instagram', 2);
 
-        $this->assertInstanceOf(\Generator::class, $posts);
+        $this->assertInstanceOf(Generator::class, $posts);
 
         $i = 0;
         while ($posts->valid()) {
