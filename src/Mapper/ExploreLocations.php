@@ -9,6 +9,7 @@ namespace Jakim\Mapper;
 
 
 use Jakim\Helper\ArrayHelper;
+use Jakim\Model\Account;
 use Jakim\Model\Location;
 use Jakim\Model\Post;
 use Jakim\Model\Tag;
@@ -36,7 +37,16 @@ class ExploreLocations extends AccountDetails
             Post::class => [
                 'envelope' => 'graphql.location.edge_location_to_top_posts.edges',
                 'item' => $postMap,
+                'relations' => [
+                    'account' => Account::class,
+                ],
             ],
+            Account::class => [
+                'envelope' => 'node.owner',
+                'item' => [
+                    'id' => 'id'
+                ],
+            ]
         ];
     }
 }

@@ -37,7 +37,7 @@ class LocationQuery extends Query
         return $this->exploreLocationsMapper->populate(Location::class, $data);
     }
 
-    public function findTopPosts(string $id)
+    public function findTopPosts(string $id, bool $relations = false)
     {
         $url = Endpoint::exploreLocations($id);
         $data = $this->fetchContentAsArray($url);
@@ -46,7 +46,7 @@ class LocationQuery extends Query
 
         $items = $this->exploreLocationsMapper->normalizeData(Post::class, $data);
         foreach ($items as $item) {
-            yield $this->exploreLocationsMapper->populate(Post::class, $item);
+            yield $this->exploreLocationsMapper->populate(Post::class, $item, $relations);
         }
     }
 }
