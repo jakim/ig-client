@@ -1,5 +1,8 @@
 # IG Client
 Instagram public, web api client
+
+**For internal use, only public endpoints that do not require login.**
+
 # Version
 Early dev stage. Use at your own risk.
 
