@@ -73,14 +73,14 @@ class AccountQuery extends Query
     /**
      * @param string $username
      * @param int $limit Max 12, for more see findPosts()
+     * @param bool $relations
      * @return \Generator
      *
      * @throws \Jakim\Exception\EmptyContentException
      * @throws \Jakim\Exception\RestrictedProfileException
-     *
      * @see \Jakim\Query\AccountQuery::findPosts
      */
-    public function findLastPosts(string $username, int $limit = 12)
+    public function findLastPosts(string $username, int $limit = 12, bool $relations = false)
     {
         $url = Url::account($username);
         $data = $this->fetchContentAsArray($url);
@@ -91,7 +91,7 @@ class AccountQuery extends Query
 
         $n = 0;
         foreach ($items as $item) {
-            $model = $this->accountDetailsMapper->populate(Post::class, $item);
+            $model = $this->accountDetailsMapper->populate(Post::class, $item, $relations);
             yield $model;
 
             if (++$n >= $limit) {

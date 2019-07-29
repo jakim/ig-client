@@ -10,6 +10,7 @@ namespace Jakim\Mapper;
 
 use Jakim\Helper\ArrayHelper;
 use Jakim\Model\Account;
+use Jakim\Model\Location;
 use Jakim\Model\Post;
 
 class AccountDetails extends MediaDetails
@@ -44,6 +45,18 @@ class AccountDetails extends MediaDetails
             Post::class => [
                 'envelope' => 'entry_data.ProfilePage.0.graphql.user.edge_owner_to_timeline_media.edges',
                 'item' => $postMap,
+                'relations' => [
+                    'location' => Location::class,
+                ],
+            ],
+            Location::class => [
+                'envelope' => 'node.location',
+                'item' => [
+                    'id' => 'id',
+                    'hasPublicPage' => 'has_public_page',
+                    'name' => 'name',
+                    'slug' => 'slug',
+                ],
             ],
         ];
     }

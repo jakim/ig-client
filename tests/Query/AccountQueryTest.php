@@ -13,7 +13,9 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Jakim\Model\Account;
+use Jakim\Model\Location;
 use Jakim\Model\Post;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
 use PHPUnit\Framework\TestCase;
 
 class AccountQueryTest extends TestCase
@@ -23,7 +25,8 @@ class AccountQueryTest extends TestCase
     protected $accountDetails;
     protected $accountDetailsModel;
 
-    protected $mediaFirstModel;
+    protected $mediaFirstPostModel;
+    protected $mediaFirstPostLocationModel;
 
     public function testFindOne()
     {
@@ -58,6 +61,12 @@ class AccountQueryTest extends TestCase
 
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals($this->accountDetailsModel, $account);
+
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
+        $account = $query->findOneByUsername('instagram');
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals($this->accountDetailsModel, $account);
     }
 
     public function testFindOneById()
@@ -86,7 +95,12 @@ class AccountQueryTest extends TestCase
 
         $query = new AccountQuery($this->httpClient([$this->accountDetails]));
         $posts = $query->findLastPosts('instagram', 2);
-        $this->assertEquals($this->mediaFirstModel, $posts->current());
+        $this->assertEquals($this->mediaFirstPostModel, $posts->current());
+
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
+        $posts = $query->findLastPosts('instagram', 2, true);
+        $this->mediaFirstPostModel->location = $this->mediaFirstPostLocationModel;
+        $this->assertEquals($this->mediaFirstPostModel, $posts->current());
     }
 
     protected function httpClient(array $responses = ['{}'])
@@ -121,32 +135,38 @@ class AccountQueryTest extends TestCase
         $this->accountInfoModel = $model;
 
         $model = new Account();
-        $model->username = 'crossfit';
-        $model->id = '255768340';
-        $model->biography = 'The official Instagram page for #CrossFit. Links';
-        $model->externalUrl = 'https://linktr.ee/crossfit';
-        $model->followedBy = 2600232;
-        $model->follows = 1318;
-        $model->fullName = 'CrossFit';
+        $model->id = '25025320';
+        $model->username = 'instagram';
+        $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/2cd4ceda40e5e0d2bd1acd51709271fb/5DC75A25/t51.2885-19/s320x320/59381178_2348911458724961_5863612957363011584_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
+        $model->fullName = 'Instagram';
+        $model->biography = 'Bringing you closer to the people and things you love. ❤️';
+        $model->externalUrl = 'https://instagram-press.com/blog/2019/07/08/our-commitment-to-lead-the-fight-against-online-bullying/';
+        $model->followedBy = 308268458;
+        $model->follows = 222;
+        $model->media = 5953;
         $model->isPrivate = false;
-        $model->media = 9402;
-        $model->profilePicUrl = 'https://instagram.fphx1-3.fna.fbcdn.net/vp/6ce20f16cd5d48cd576de10301235c03/5C87C219/t51.2885-19/s320x320/10723747_996967810364381_270381264_a.jpg';
         $model->isVerified = true;
-        $model->isBusiness = true;
-        $model->businessCategory = 'Publishers';
+        $model->isBusiness = false;
         $this->accountDetailsModel = $model;
 
         $model = new Post();
-        $model->id = '1893729035025305076';
-        $model->caption = 'Tap the link in our bio for details on the CrossFit Anatomy Online Course.';
-        $model->shortcode = 'BpH4IYhhs30';
-        $model->takenAt = 1539970114;
-        $model->comments = 17;
-        $model->likes = 880;
+        $model->id = '2098222880075746713';
+        $model->caption = '#HelloFrom Cenote Calavera in Tulum, Mexico.';
+        $model->shortcode = 'B0eYpeygw2Z';
+        $model->takenAt = 1564347680;
+        $model->comments = 10441;
+        $model->likes = 743410;
         $model->isVideo = false;
         $model->typename = 'GraphImage';
-        $model->url = 'https://instagram.fphx1-3.fna.fbcdn.net/vp/4cba95fd75eafd96922603d5b238c1a0/5C87E45B/t51.2885-15/e35/43269938_1925477977548595_6860073546614294782_n.jpg';
-        $this->mediaFirstModel = $model;
+        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/208c8f0aadc8de3cf8cd710fbabcf961/5DCD398C/t51.2885-15/e35/p1080x1080/66155155_1404613096371381_980496478990375238_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
+        $this->mediaFirstPostModel = $model;
+
+        $model = new Location();
+        $model->id = '720186901467144';
+        $model->hasPublicPage = true;
+        $model->name = 'Cenote Calavera';
+        $model->slug = 'cenote-calavera';
+        $this->mediaFirstPostLocationModel = $model;
     }
 
 }
