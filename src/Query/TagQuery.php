@@ -36,7 +36,7 @@ class TagQuery extends Query
         return $this->exploreTagsMapper->populate(Tag::class, $data);
     }
 
-    public function findTopPosts(string $tagName)
+    public function findTopPosts(string $tagName, bool $relations = false)
     {
         $url = Endpoint::exploreTags($tagName);
         $data = $this->fetchContentAsArray($url);
@@ -45,7 +45,7 @@ class TagQuery extends Query
 
         $items = $this->exploreTagsMapper->normalizeData(Post::class, $data);
         foreach ($items as $item) {
-            yield $this->exploreTagsMapper->populate(Post::class, $item);
+            yield $this->exploreTagsMapper->populate(Post::class, $item, $relations);
         }
     }
 }

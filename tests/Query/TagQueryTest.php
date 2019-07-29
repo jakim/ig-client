@@ -7,10 +7,12 @@
 
 namespace Jakim\Query;
 
+use Generator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Jakim\Model\Account;
 use Jakim\Model\Post;
 use Jakim\Model\Tag;
 use PHPUnit\Framework\TestCase;
@@ -18,8 +20,21 @@ use PHPUnit\Framework\TestCase;
 class TagQueryTest extends TestCase
 {
     protected $tagData;
+
+    /**
+     * @var \Jakim\Model\Tag
+     */
     protected $tagModel;
+
+    /**
+     * @var \Jakim\Model\Post
+     */
     protected $firstPostModel;
+
+    /**
+     * @var \Jakim\Model\Account
+     */
+    protected $firstPostAccountModel;
 
     public function testFindOne()
     {
@@ -33,11 +48,16 @@ class TagQueryTest extends TestCase
         $query = new TagQuery($this->httpClient([$this->tagData]));
         $posts = $query->findTopPosts('aktywnemazury');
 
-        $this->assertInstanceOf(\Generator::class, $posts);
+        $this->assertInstanceOf(Generator::class, $posts);
         $this->assertContainsOnlyInstancesOf(Post::class, $posts);
 
         $query = new TagQuery($this->httpClient([$this->tagData]));
         $posts = $query->findTopPosts('aktywnemazury');
+        $this->assertEquals($this->firstPostModel, $posts->current());
+
+        $query = new TagQuery($this->httpClient([$this->tagData]));
+        $posts = $query->findTopPosts('aktywnemazury', true);
+        $this->firstPostModel->account = $this->firstPostAccountModel;
         $this->assertEquals($this->firstPostModel, $posts->current());
     }
 
@@ -57,27 +77,41 @@ class TagQueryTest extends TestCase
 
         $model = new Tag();
         $model->name = 'aktywnemazury';
-        $model->media = 16336;
+        $model->media = 23258;
         $model->topPostsOnly = false;
-        $model->likes = 1254;
-        $model->minLikes = 64;
-        $model->maxLikes = 336;
-        $model->comments = 44;
-        $model->minComments = 0;
-        $model->maxComments = 25;
+        $model->likes = 19669;
+        $model->minLikes = 518;
+        $model->maxLikes = 11051;
+        $model->comments = 714;
+        $model->minComments = 3;
+        $model->maxComments = 204;
         $this->tagModel = $model;
 
         $model = new Post();
-        $model->id = '1868727993151374809';
-        $model->caption = '#fotozakreceni #landscapes #mazury #pieknemazury #mazurskiejeziora #aktywnemazury #magicofpoland #landscape #landscapephotography #landscapeporn #mazurywonderofnature #mazurycudnatury #photography #road #krajobraz #nature #viadernypl #earthescope';
-        $model->shortcode = 'BnvDjV1ncXZ';
-        $model->comments = 2;
-        $model->takenAt = 1536989758;
-        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/768fce07a62cc3138d397da2085fdfee/5C5C6A31/t51.2885-15/e35/41192720_311098896109012_3099403454891343286_n.jpg';
-        $model->likes = 123;
+        $model->id = '2098027880902919499';
+        $model->caption = '#AktywneMazury
+Mazury w obiektywie 📷: @photo_dota
+----- Oznaczaj zdjęcia, zostań wyróżniony na największym, mazurskim profilu!
+ @aktywnemazury
+ @aktywnemazury
+---
+Tag #AktywneMazury
+Follow @aktywnemazury
+-----
+#mazury
+#niebo#chmury#pole#droga#zboże';
+        $model->shortcode = 'B0dsT3qFYVL';
+        $model->comments = 3;
+        $model->takenAt = 1564324434;
+        $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/c134279d2a60a9ce1ab9d4a48d78f2c5/5DCB1E76/t51.2885-15/e35/66292103_431372087452059_3822089688326988513_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
+        $model->likes = 518;
         $model->isVideo = false;
         $model->videoViews = null;
         $model->typename = 'GraphImage';
         $this->firstPostModel = $model;
+
+        $account = new Account();
+        $account->id = '2080433615';
+        $this->firstPostAccountModel = $account;
     }
 }

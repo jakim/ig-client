@@ -32,31 +32,31 @@ abstract class Mapper
     public function populate(string $class, array $data, $relations = false)
     {
         $itemMap = ArrayHelper::getValue($this->map(), "$class.item", []);
-
         $model = new $class();
         foreach ($itemMap as $to => $from) {
             $model->$to = ArrayHelper::getValue($data, $from);
         }
 
         if ($relations) {
-            $this->populateRelations($model, $data);
+            $this->populateRelations($model, $data, $relations);
         }
 
         return $model;
     }
 
     /**
-     * @param array $data
      * @param $model
+     * @param array $data
+     * @param bool $relations
      */
-    private function populateRelations($model, array $data): void
+    private function populateRelations($model, array $data, bool $relations = false): void
     {
         $class = get_class($model);
         $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations", []);
         foreach ($relationsMap as $to => $class) {
             $relationData = $this->normalizeData($class, $data);
             if ($relationData) {
-                $model->$to = $this->populate($class, $relationData);
+                $model->$to = $this->populate($class, $relationData, $relations);
             }
         }
     }
