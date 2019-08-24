@@ -35,12 +35,6 @@ class AccountQueryTest extends TestCase
 
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals($this->accountDetailsModel, $account);
-
-        $query = new AccountQuery($this->httpClient([$this->accountInfo]));
-        $account = $query->findOne('198945880');
-
-        $this->assertInstanceOf(Account::class, $account);
-        $this->assertEquals($this->accountInfoModel, $account);
     }
 
     /**
@@ -119,19 +113,8 @@ class AccountQueryTest extends TestCase
         $this->accountDetails = file_get_contents(__DIR__ . '/../_data/account_details.html');
 
         $model = new Account();
-        $model->username = 'schwarzenegger';
-        $model->id = '198945880';
-        $model->biography = 'Former Mr. Olympia, Conan, Terminator, and Governor of California. I killed the Predator. I told you I\'d be back.';
-        $model->externalUrl = 'https://www.menshealth.com/entertainment/a23621596/arnold-schwarzenegger-bodybuilding-interview/';
-        $model->followedBy = 15297107;
-        $model->follows = 57;
-        $model->fullName = 'Arnold Schwarzenegger';
-        $model->isPrivate = false;
-        $model->media = 629;
-        $model->profilePicUrl = 'https://instagram.fphx1-3.fna.fbcdn.net/vp/f0fa95c44a90f043dae6dd2ece9cbbef/5C66CCFF/t51.2885-19/12964988_243704659317412_177347800_a.jpg';
-        $model->isVerified = true;
-        $model->isBusiness = null;
-        $model->businessCategory = null;
+        $model->username = 'instagram';
+        $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/a76a53c7fc27a4025c9ba80fd3627732/5DDBC45D/t51.2885-19/s150x150/59381178_2348911458724961_5863612957363011584_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
         $this->accountInfoModel = $model;
 
         $model = new Account();

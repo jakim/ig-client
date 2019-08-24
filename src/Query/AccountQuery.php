@@ -34,16 +34,14 @@ class AccountQuery extends Query
     }
 
     /**
-     * @param mixed $ident username or account id
+     * @param mixed $username username or account id
      * @return \Jakim\Model\Account
+     *
+     * @since 1.1.0 Only username is acceptable
      */
-    public function findOne($ident): Account
+    public function findOne($username): Account
     {
-        if (is_numeric($ident)) {
-            return $this->findOneById($ident);
-        }
-
-        return $this->findOneByUsername($ident);
+        return $this->findOneByUsername($username);
     }
 
     public function findOneByUsername(string $username)

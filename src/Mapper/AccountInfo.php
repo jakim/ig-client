@@ -26,17 +26,8 @@ class AccountInfo extends Mapper implements MapperInterface
             Account::class => [
                 'envelope' => 'user',
                 'item' => [
-                    'biography' => 'biography',
-                    'externalUrl' => 'external_url',
-                    'followedBy' => 'follower_count',
-                    'follows' => 'following_count',
-                    'fullName' => 'full_name',
-                    'id' => 'pk',
-                    'isPrivate' => 'is_private',
-                    'profilePicUrl' => 'hd_profile_pic_url_info.url',
+                    'profilePicUrl' => 'profile_pic_url',
                     'username' => 'username',
-                    'media' => 'media_count',
-                    'isVerified' => 'is_verified',
                 ],
             ],
         ];
