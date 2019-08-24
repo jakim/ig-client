@@ -9,6 +9,7 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
+use Jakim\Exception\LoginAndSignupPageException;
 use Jakim\Exception\RestrictedProfileException;
 use Jakim\Helper\JsonHelper;
 use jakim\ig\Endpoint;
@@ -118,6 +119,10 @@ class AccountQuery extends Query
         $content = $res->getBody()->getContents();
 
         preg_match('/\_sharedData \= (.*?)\;\<\/script\>/s', $content, $matches);
+
+        if (isset($matches['1']) && strpos($matches['1'], 'LoginAndSignupPage') !== false) {
+            throw new LoginAndSignupPageException();
+        }
 
         if (empty($matches) && strpos($content, 'Restricted profile') !== false) {
             throw new RestrictedProfileException();
