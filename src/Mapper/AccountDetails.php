@@ -22,6 +22,7 @@ class AccountDetails extends MediaDetails
         array_walk($postMap, function (&$item) {
             $item = "node.{$item}";
         });
+        $postMap['comments'] = 'node.edge_media_to_comment.count'; // fix: likes from sharedData
 
         return [
             Account::class => [

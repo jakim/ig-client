@@ -27,7 +27,7 @@ class MediaDetails extends Mapper implements MapperInterface
                     'url' => 'display_url',
                     'caption' => 'edge_media_to_caption.edges.0.node.text',
                     'likes' => 'edge_media_preview_like.count',
-                    'comments' => 'edge_media_to_comment.count',
+                    'comments' => 'edge_media_preview_comment.count',
                     'takenAt' => 'taken_at_timestamp',
                     'isVideo' => 'is_video',
                     'videoViews' => 'video_view_count',
@@ -56,6 +56,7 @@ class MediaDetails extends Mapper implements MapperInterface
                     'hasPublicPage' => 'has_public_page',
                     'name' => 'name',
                     'slug' => 'slug',
+                    'addressJson' => 'address_json'
                 ],
             ],
         ];

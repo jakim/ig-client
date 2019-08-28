@@ -17,4 +17,5 @@ class Location
     public $media;
     public $lat;
     public $lng;
+    public $addressJson;
 }

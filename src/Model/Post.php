@@ -17,6 +17,7 @@ class Post
     public $videoViews;
     public $videoUrl;
     public $caption;
+    public $accessibilityCaption;
     public $takenAt;
     public $likes;
     public $comments;
