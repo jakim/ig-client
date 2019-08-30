@@ -142,6 +142,7 @@ class AccountQueryTest extends TestCase
         $model->isVideo = false;
         $model->typename = 'GraphImage';
         $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/208c8f0aadc8de3cf8cd710fbabcf961/5DCD398C/t51.2885-15/e35/p1080x1080/66155155_1404613096371381_980496478990375238_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
+        $model->accessibilityCaption = 'Obraz może zawierać: na zewnątrz i woda';
         $this->mediaFirstPostModel = $model;
 
         $model = new Location();

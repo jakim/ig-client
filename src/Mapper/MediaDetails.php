@@ -33,6 +33,7 @@ class MediaDetails extends Mapper implements MapperInterface
                     'videoViews' => 'video_view_count',
                     'videoUrl' => 'video_url',
                     'typename' => '__typename',
+                    'accessibilityCaption' => 'accessibility_caption',
                 ],
                 'relations' => [
                     'account' => Account::class,
@@ -56,7 +57,7 @@ class MediaDetails extends Mapper implements MapperInterface
                     'hasPublicPage' => 'has_public_page',
                     'name' => 'name',
                     'slug' => 'slug',
-                    'addressJson' => 'address_json'
+                    'addressJson' => 'address_json',
                 ],
             ],
         ];

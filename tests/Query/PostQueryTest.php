@@ -54,6 +54,7 @@ class PostQueryTest extends TestCase
         $post->takenAt = 1566921731;
         $post->likes = 450474;
         $post->typename = 'GraphImage';
+        $post->accessibilityCaption = 'Close-up of a face with sky, cloud and rainbow makeup.';
 
         $account = new Account();
         $account->id = '25025320';

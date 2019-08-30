@@ -108,6 +108,7 @@ Follow @aktywnemazury
         $model->isVideo = false;
         $model->videoViews = null;
         $model->typename = 'GraphImage';
+        $model->accessibilityCaption = 'Obraz może zawierać: chmura, niebo, trawa, na zewnątrz i przyroda';
         $this->firstPostModel = $model;
 
         $account = new Account();
