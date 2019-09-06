@@ -29,12 +29,22 @@ class TagQueryTest extends TestCase
     /**
      * @var \Jakim\Model\Post
      */
-    protected $firstPostModel;
+    protected $firstTopPostsModel;
 
     /**
      * @var \Jakim\Model\Account
      */
     protected $firstPostAccountModel;
+
+    /**
+     * @var \Jakim\Model\Post
+     */
+    protected $firstMediaModel;
+
+    /**
+     * @var \Jakim\Model\Account
+     */
+    protected $firstMediaAccountModel;
 
     public function testFindOne()
     {
@@ -53,12 +63,30 @@ class TagQueryTest extends TestCase
 
         $query = new TagQuery($this->httpClient([$this->tagData]));
         $posts = $query->findTopPosts('aktywnemazury');
-        $this->assertEquals($this->firstPostModel, $posts->current());
+        $this->assertEquals($this->firstTopPostsModel, $posts->current());
 
         $query = new TagQuery($this->httpClient([$this->tagData]));
         $posts = $query->findTopPosts('aktywnemazury', true);
-        $this->firstPostModel->account = $this->firstPostAccountModel;
-        $this->assertEquals($this->firstPostModel, $posts->current());
+        $this->firstTopPostsModel->account = $this->firstPostAccountModel;
+        $this->assertEquals($this->firstTopPostsModel, $posts->current());
+    }
+
+    public function testFindMedia()
+    {
+        $query = new TagQuery($this->httpClient([$this->tagData]));
+        $posts = $query->findMedia('aktywnemazury');
+
+        $this->assertInstanceOf(Generator::class, $posts);
+        $this->assertContainsOnlyInstancesOf(Post::class, $posts);
+
+        $query = new TagQuery($this->httpClient([$this->tagData]));
+        $posts = $query->findMedia('aktywnemazury');
+        $this->assertEquals($this->firstMediaModel, $posts->current());
+
+        $query = new TagQuery($this->httpClient([$this->tagData]));
+        $posts = $query->findMedia('aktywnemazury', true);
+        $this->firstMediaModel->account = $this->firstMediaAccountModel;
+        $this->assertEquals($this->firstMediaModel, $posts->current());
     }
 
     protected function httpClient(array $responses = ['{}'])
@@ -109,10 +137,28 @@ Follow @aktywnemazury
         $model->videoViews = null;
         $model->typename = 'GraphImage';
         $model->accessibilityCaption = 'Obraz może zawierać: chmura, niebo, trawa, na zewnątrz i przyroda';
-        $this->firstPostModel = $model;
+        $this->firstTopPostsModel = $model;
 
         $account = new Account();
         $account->id = '2080433615';
         $this->firstPostAccountModel = $account;
+
+        $model2 = new Post();
+        $model2->id = '2098720829868392659';
+        $model2->caption = '#giycko #port #mazury #odpoczynek';
+        $model2->shortcode = 'B0gJ3mrBMDT';
+        $model2->comments = 0;
+        $model2->takenAt = 1564407040;
+        $model2->url = 'https://scontent-waw1-1.cdninstagram.com/vp/4d9e5bbe8efab26f69b0da6ed618d8bf/5DE6DD88/t51.2885-15/fr/e15/s1080x1080/67442218_1360998334058330_2606638084047220141_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
+        $model2->likes = 1;
+        $model2->isVideo = false;
+        $model2->videoViews = null;
+        $model2->typename = 'GraphImage';
+        $model2->accessibilityCaption = 'Obraz mo';
+        $this->firstMediaModel = $model2;
+
+        $account2 = new Account();
+        $account2->id = '2876261960';
+        $this->firstMediaAccountModel = $account2;
     }
 }
