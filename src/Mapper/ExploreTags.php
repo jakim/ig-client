@@ -15,6 +15,11 @@ use Jakim\Model\Tag;
 
 class ExploreTags extends AccountDetails
 {
+    const TOP_POSTS_ENVELOPE = 'graphql.hashtag.edge_hashtag_to_top_posts.edges';
+    const MEDIA_ENVELOPE = 'graphql.hashtag.edge_hashtag_to_media.edges';
+
+    public $postsEnvelope = self::TOP_POSTS_ENVELOPE;
+
     protected function map(): array
     {
         $class = Post::class;
@@ -56,7 +61,7 @@ class ExploreTags extends AccountDetails
                 ],
             ],
             Post::class => [
-                'envelope' => 'graphql.hashtag.edge_hashtag_to_top_posts.edges',
+                'envelope' => $this->postsEnvelope,
                 'item' => $postMap,
                 'relations' => [
                     'account' => Account::class,
@@ -65,9 +70,9 @@ class ExploreTags extends AccountDetails
             Account::class => [
                 'envelope' => 'node.owner',
                 'item' => [
-                    'id' => 'id'
+                    'id' => 'id',
                 ],
-            ]
+            ],
         ];
     }
 }
