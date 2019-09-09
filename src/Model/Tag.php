@@ -10,14 +10,8 @@ namespace Jakim\Model;
 
 class Tag
 {
+    public $id;
     public $name;
     public $media;
     public $topPostsOnly;
-
-    public $likes;
-    public $minLikes;
-    public $maxLikes;
-    public $comments;
-    public $minComments;
-    public $maxComments;
 }

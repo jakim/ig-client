@@ -10,62 +10,48 @@ namespace Jakim\Query;
 
 use Jakim\Base\Query;
 use jakim\ig\Endpoint;
+use Jakim\Mapper\EdgeMedia;
 use Jakim\Mapper\ExploreTags;
-use Jakim\Model\Post;
+use Jakim\Model\MediaCollection;
 use Jakim\Model\Tag;
 
 class TagQuery extends Query
 {
-    protected $exploreTagsMapper;
+    protected $findOneByName;
+    protected $findLatestMedia;
+    protected $findTopPosts;
 
-    public function __construct($httpClient, ExploreTags $exploreTagsMapper = null)
+    public function __construct(
+        $httpClient,
+        ExploreTags $findOneByName = null,
+        EdgeMedia $findLatestMedia = null,
+        EdgeMedia $findTopPosts = null
+    )
     {
         parent::__construct($httpClient);
-        $this->exploreTagsMapper = $exploreTagsMapper ?? new ExploreTags();
+        $this->findOneByName = $findOneByName;
+        $this->findLatestMedia = $findLatestMedia;
+        $this->findTopPosts = $findTopPosts;
     }
 
-    public function findOne(string $tagName): Tag
-    {
-        $data = $this->fetchData($tagName);
-        $data = $this->exploreTagsMapper->normalizeData(Tag::class, $data);
-
-        return $this->exploreTagsMapper->populate(Tag::class, $data);
-    }
-
-    public function findTopPosts(string $tagName, bool $relations = false)
-    {
-        $this->exploreTagsMapper->postsEnvelope = ExploreTags::TOP_POSTS_ENVELOPE;
-
-        $data = $this->fetchData($tagName);
-        $items = $this->exploreTagsMapper->normalizeData(Post::class, $data);
-        foreach ($items as $item) {
-            yield $this->exploreTagsMapper->populate(Post::class, $item, $relations);
-        }
-    }
-
-    public function findMedia(string $tagName, bool $relations = false)
-    {
-        $this->exploreTagsMapper->postsEnvelope = ExploreTags::MEDIA_ENVELOPE;
-
-        $data = $this->fetchData($tagName);
-        $items = $this->exploreTagsMapper->normalizeData(Post::class, $data);
-        foreach ($items as $item) {
-            yield $this->exploreTagsMapper->populate(Post::class, $item, $relations);
-        }
-    }
-
-    /**
-     * @param string $tagName
-     * @return array|null
-     * @throws \Jakim\Exception\EmptyContentException
-     */
-    private function fetchData(string $tagName)
+    public function findOneByName(string $tagName): Tag
     {
         $url = Endpoint::exploreTags($tagName);
-        $data = $this->fetchContentAsArray($url);
 
-        $this->throwEmptyContentExceptionIfEmpty($data);
+        return $this->createResult($url, $this->findOneByName, false);
+    }
 
-        return $data;
+    public function findLatestMedia(string $tagName, bool $relations = false): MediaCollection
+    {
+        $url = Endpoint::exploreTags($tagName);
+
+        return $this->createResult($url, $this->findLatestMedia, $relations);
+    }
+
+    public function findTopPosts(string $tagName, bool $relations = false): MediaCollection
+    {
+        $url = Endpoint::exploreTags($tagName);
+
+        return $this->createResult($url, $this->findTopPosts, $relations);
     }
 }

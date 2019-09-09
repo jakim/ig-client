@@ -7,15 +7,17 @@
 
 namespace Jakim\Query;
 
-use Generator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Jakim\Mapper\AccountDetails;
+use Jakim\Mapper\AccountInfo;
+use Jakim\Mapper\EdgeMedia;
 use Jakim\Model\Account;
 use Jakim\Model\Location;
+use Jakim\Model\MediaCollection;
 use Jakim\Model\Post;
-use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
 use PHPUnit\Framework\TestCase;
 
 class AccountQueryTest extends TestCase
@@ -26,15 +28,25 @@ class AccountQueryTest extends TestCase
     protected $accountDetailsModel;
 
     protected $mediaFirstPostModel;
+    protected $mediaFirstPostAccountModel;
     protected $mediaFirstPostLocationModel;
 
-    public function testFindOne()
+    public function testFindOneByUsername()
     {
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
-        $account = $query->findOne('instagram');
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]), new AccountDetails());
+        $account = $query->findOneByUsername('instagram');
 
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals($this->accountDetailsModel, $account);
+    }
+
+    public function testFindOneById()
+    {
+        $query = new AccountQuery($this->httpClient([$this->accountInfo]), null, new AccountInfo());
+        $account = $query->findOneById('198945880');
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals($this->accountInfoModel, $account);
     }
 
     /**
@@ -44,57 +56,29 @@ class AccountQueryTest extends TestCase
     {
         $accountDetails = file_get_contents(__DIR__ . '/../_data/account_details_restricted.html');
 
-        $query = new AccountQuery($this->httpClient([$accountDetails]));
-        $query->findOne('bacardiusa');
-    }
-
-    public function testFindOneByUsername()
-    {
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
-        $account = $query->findOneByUsername('instagram');
-
-        $this->assertInstanceOf(Account::class, $account);
-        $this->assertEquals($this->accountDetailsModel, $account);
-
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
-        $account = $query->findOneByUsername('instagram');
-
-        $this->assertInstanceOf(Account::class, $account);
-        $this->assertEquals($this->accountDetailsModel, $account);
-    }
-
-    public function testFindOneById()
-    {
-        $query = new AccountQuery($this->httpClient([$this->accountInfo]));
-        $account = $query->findOneById('198945880');
-
-        $this->assertInstanceOf(Account::class, $account);
-        $this->assertEquals($this->accountInfoModel, $account);
+        $query = new AccountQuery($this->httpClient([$accountDetails]), new AccountDetails());
+        $query->findOneByUsername('bacardiusa');
     }
 
     public function testFindLastPosts()
     {
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
-        $posts = $query->findLastPosts('instagram', 2);
+        $edgeMedia = new EdgeMedia(EdgeMedia::ACCOUNT_DETAILS_ENVELOPE);
 
-        $this->assertInstanceOf(Generator::class, $posts);
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]), null, null, $edgeMedia);
+        $mediaCollection = $query->findLatestMedia('instagram', false);
 
-        $i = 0;
-        while ($posts->valid()) {
-            $this->assertInstanceOf(Post::class, $posts->current());
-            $posts->next();
-            $i++;
-        }
-        $this->assertEquals(2, $i);
+        $this->assertInstanceOf(MediaCollection::class, $mediaCollection);
+        $this->assertEquals(5953, $mediaCollection->count);
+        $this->assertNull($mediaCollection->pageInfo);
+        $this->assertNull($mediaCollection->posts);
 
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
-        $posts = $query->findLastPosts('instagram', 2);
-        $this->assertEquals($this->mediaFirstPostModel, $posts->current());
+        $query = new AccountQuery($this->httpClient([$this->accountDetails]), null, null, $edgeMedia);
+        $mediaCollection = $query->findLatestMedia('instagram', true);
 
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]));
-        $posts = $query->findLastPosts('instagram', 2, true);
+        $this->assertCount(12, $mediaCollection->posts);
+        $this->mediaFirstPostModel->account = $this->mediaFirstPostAccountModel;
         $this->mediaFirstPostModel->location = $this->mediaFirstPostLocationModel;
-        $this->assertEquals($this->mediaFirstPostModel, $posts->current());
+        $this->assertEquals($this->mediaFirstPostModel, $mediaCollection->posts['0']);
     }
 
     protected function httpClient(array $responses = ['{}'])
@@ -144,6 +128,11 @@ class AccountQueryTest extends TestCase
         $model->url = 'https://scontent-waw1-1.cdninstagram.com/vp/208c8f0aadc8de3cf8cd710fbabcf961/5DCD398C/t51.2885-15/e35/p1080x1080/66155155_1404613096371381_980496478990375238_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
         $model->accessibilityCaption = 'Obraz może zawierać: na zewnątrz i woda';
         $this->mediaFirstPostModel = $model;
+
+        $model = new Account();
+        $model->id = '25025320';
+        $model->username = 'instagram';
+        $this->mediaFirstPostAccountModel = $model;
 
         $model = new Location();
         $model->id = '720186901467144';

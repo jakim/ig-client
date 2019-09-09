@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Jakim\Mapper\MediaDetails;
 use Jakim\Model\Account;
 use Jakim\Model\Location;
 use Jakim\Model\Post;
@@ -21,10 +22,10 @@ class PostQueryTest extends TestCase
     protected $postData;
     protected $postModel;
 
-    public function testFindOne()
+    public function testFindOneByShortcode()
     {
-        $query = new PostQuery($this->httpClient([$this->postData]));
-        $post = $query->findOne('instagram', true);
+        $query = new PostQuery($this->httpClient([$this->postData]), new MediaDetails());
+        $post = $query->findOneByShortcode('instagram', true);
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertEquals($this->postModel, $post);
@@ -71,6 +72,19 @@ class PostQueryTest extends TestCase
         $location->slug = 'louisville-kentucky';
         $location->addressJson = "{\"street_address\": \"\", \"zip_code\": \"major: 402xx, minor: 400xx, 401xx\", \"city_name\": \"Louisville, Kentucky\", \"region_name\": \"\", \"country_code\": \"US\", \"exact_city_match\": true, \"exact_region_match\": false, \"exact_country_match\": false}";
         $post->location = $location;
+
+        $sponsor = new Account();
+        $sponsor->id = '208';
+        $sponsor->username = 'john_doe';
+        $post->sponsor = $sponsor;
+
+        $tagged = new Account();
+        $tagged->fullName = 'Sunny';
+        $tagged->id = '4508251517';
+        $tagged->isVerified = false;
+        $tagged->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/07243757f60e454b8e30c2767ac7d930/5E13C205/t51.2885-19/s150x150/58453733_815524285500569_7092081128525266944_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
+        $tagged->username = 'sun_muun';
+        $post->tagged[] = $tagged;
 
         $this->postModel = $post;
     }

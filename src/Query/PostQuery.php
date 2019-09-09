@@ -15,23 +15,18 @@ use Jakim\Model\Post;
 
 class PostQuery extends Query
 {
-    protected $mediaDetailsMapper;
+    protected $findOneByShortcode;
 
-    public function __construct($httpClient, MediaDetails $mediaDetailsMapper = null)
+    public function __construct($httpClient, MediaDetails $findOneByShortcode)
     {
         parent::__construct($httpClient);
-        $this->mediaDetailsMapper = $mediaDetailsMapper ?: new MediaDetails();
+        $this->findOneByShortcode = $findOneByShortcode;
     }
 
-    public function findOne(string $shortCode, $relations = false): Post
+    public function findOneByShortcode(string $shortCode, $relations = false): Post
     {
         $url = Endpoint::mediaDetails($shortCode);
-        $data = $this->fetchContentAsArray($url);
 
-        $this->throwEmptyContentExceptionIfEmpty($data);
-
-        $data = $this->mediaDetailsMapper->normalizeData(Post::class, $data);
-
-        return $this->mediaDetailsMapper->populate(Post::class, $data, $relations);
+        return $this->createResult($url, $this->findOneByShortcode, $relations);
     }
 }

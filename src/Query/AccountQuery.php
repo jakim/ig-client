@@ -16,101 +16,65 @@ use jakim\ig\Endpoint;
 use jakim\ig\Url;
 use Jakim\Mapper\AccountDetails;
 use Jakim\Mapper\AccountInfo;
-use Jakim\Mapper\AccountMedia;
+use Jakim\Mapper\EdgeMedia;
 use Jakim\Model\Account;
-use Jakim\Model\Post;
+use Jakim\Model\MediaCollection;
 
 class AccountQuery extends Query
 {
-    protected $accountDetailsMapper;
-    protected $accountMediaMapper;
-    protected $accountInfoMapper;
+    /**
+     * @var \Jakim\Base\Mapper|\Jakim\Mapper\AccountDetails
+     */
+    protected $findOneByUsername;
 
-    public function __construct($httpClient, AccountDetails $accountDetailsMapper = null, AccountMedia $accountMediaMapper = null, AccountInfo $accountInfoMapper = null)
+    /**
+     * @var \Jakim\Base\Mapper|\Jakim\Mapper\AccountInfo
+     */
+    protected $findOneByOne;
+
+    /**
+     * @var \Jakim\Base\Mapper|\Jakim\Mapper\EdgeMedia
+     */
+    protected $findLatestMedia;
+
+    public function __construct(
+        $httpClient,
+        AccountDetails $findOneByUsername = null,
+        AccountInfo $findOneById = null,
+        EdgeMedia $findLatestMedia = null
+    )
     {
         parent::__construct($httpClient);
-        $this->accountDetailsMapper = $accountDetailsMapper ?? new AccountDetails();
-        $this->accountMediaMapper = $accountMediaMapper ?? new AccountMedia();
-        $this->accountInfoMapper = $accountInfoMapper ?? new AccountInfo();
+        $this->findOneByUsername = $findOneByUsername;
+        $this->findOneByOne = $findOneById;
+        $this->findLatestMedia = $findLatestMedia;
     }
 
-    /**
-     * @param mixed $username username or account id
-     * @return \Jakim\Model\Account
-     *
-     * @since 1.1.0 Only username is acceptable
-     */
-    public function findOne($username): Account
-    {
-        return $this->findOneByUsername($username);
-    }
-
-    public function findOneByUsername(string $username)
+    public function findOneByUsername(string $username): Account
     {
         $url = Url::account($username);
-        $data = $this->fetchContentAsArray($url);
 
-        $this->throwEmptyContentExceptionIfEmpty($data);
-
-        $data = $this->accountDetailsMapper->normalizeData(Account::class, $data);
-
-        return $this->accountDetailsMapper->populate(Account::class, $data);
+        return $this->createResult($url, $this->findOneByUsername, false);
     }
 
-    public function findOneById($accountId)
+    public function findOneById($accountId): Account
     {
         $url = Endpoint::accountInfo($accountId);
-        $data = parent::fetchContentAsArray($url);
+        $content = parent::fetchContentAsArray($url); // from api, not sharedData :)
 
-        $this->throwEmptyContentExceptionIfEmpty($data);
+        $this->throwEmptyContentExceptionIfEmpty($content);
 
-        $data = $this->accountInfoMapper->normalizeData(Account::class, $data);
+        $config = $this->findOneByOne->config();
+        $data = $this->findOneByOne->getData($content, $config);
 
-        return $this->accountInfoMapper->populate(Account::class, $data);
+        return $this->findOneByOne->createModel($data, $config);
     }
 
-    /**
-     * @param string $username
-     * @param int $limit Max 12, for more see findPosts()
-     * @param bool $relations
-     * @return \Generator
-     *
-     * @throws \Jakim\Exception\EmptyContentException
-     * @throws \Jakim\Exception\RestrictedProfileException
-     * @see \Jakim\Query\AccountQuery::findPosts
-     */
-    public function findLastPosts(string $username, int $limit = 12, bool $relations = false)
+    public function findLatestMedia(string $username, bool $relations = false): MediaCollection
     {
         $url = Url::account($username);
-        $data = $this->fetchContentAsArray($url);
 
-        $this->throwEmptyContentExceptionIfEmpty($data);
-
-        $items = $this->accountDetailsMapper->normalizeData(Post::class, $data);
-
-        $n = 0;
-        foreach ($items as $item) {
-            $model = $this->accountDetailsMapper->populate(Post::class, $item, $relations);
-            yield $model;
-
-            if (++$n >= $limit) {
-                break;
-            }
-        }
-    }
-
-    /**
-     * @param string $username
-     * @param int $limit
-     * @return \Generator
-     *
-     * @throws \Jakim\Exception\EmptyContentException
-     * @throws \Jakim\Exception\RestrictedProfileException
-     * @deprecated
-     */
-    public function findPosts(string $username, int $limit = 100)
-    {
-        yield from $this->findLastPosts($username, $limit);
+        return $this->createResult($url, $this->findLatestMedia, $relations);
     }
 
     protected function fetchContentAsArray(string $url): ?array
