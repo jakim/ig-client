@@ -17,28 +17,31 @@ abstract class Mapper
      *
      * @return array
      */
-    abstract protected function map(): array;
+    abstract public function config(): array;
 
-    public function normalizeData(string $class, array $data)
+    public function getData(array $content, array $config)
     {
-        $envelopeKey = ArrayHelper::getValue($this->map(), "$class.envelope");
+        $envelopeKey = ArrayHelper::getValue($config, 'envelope');
         if ($envelopeKey) {
-            $data = ArrayHelper::getValue($data, $envelopeKey, []);
+            $content = ArrayHelper::getValue($content, $envelopeKey, []);
         }
 
-        return $data;
+        return $content;
     }
 
-    public function populate(string $class, array $data, $relations = false)
+    public function createModel(array $data, array $config, bool $relations = false)
     {
-        $itemMap = ArrayHelper::getValue($this->map(), "$class.item", []);
-        $model = new $class();
-        foreach ($itemMap as $to => $from) {
+        $modelClass = ArrayHelper::getValue($config, 'class');
+        $propertiesMap = ArrayHelper::getValue($config, 'properties', []);
+
+        $model = new $modelClass();
+        foreach ($propertiesMap as $to => $from) {
             $model->$to = ArrayHelper::getValue($data, $from);
         }
 
-        if ($relations) {
-            $this->populateRelations($model, $data, $relations);
+        if ($relations === true) {
+            $relationsConfig = ArrayHelper::getValue($config, 'relations', []);
+            $this->createRelations($model, $data, $relationsConfig, $relations);
         }
 
         return $model;
@@ -47,16 +50,21 @@ abstract class Mapper
     /**
      * @param $model
      * @param array $data
+     * @param array $relationsConfig
      * @param bool $relations
      */
-    private function populateRelations($model, array $data, bool $relations = false): void
+    protected function createRelations($model, array $data, array $relationsConfig, bool $relations = false): void
     {
-        $class = get_class($model);
-        $relationsMap = ArrayHelper::getValue($this->map(), "$class.relations", []);
-        foreach ($relationsMap as $to => $class) {
-            $relationData = $this->normalizeData($class, $data);
+        foreach ($relationsConfig as $property => $config) {
+            $relationData = $this->getData($data, $config);
             if ($relationData) {
-                $model->$to = $this->populate($class, $relationData, $relations);
+                if (ArrayHelper::getValue($config, 'multiple', false)) {
+                    foreach ($relationData as $rData) {
+                        $model->$property[] = $this->createModel($rData, $config, $relations);
+                    }
+                } else {
+                    $model->$property = $this->createModel($relationData, $config, $relations);
+                }
             }
         }
     }

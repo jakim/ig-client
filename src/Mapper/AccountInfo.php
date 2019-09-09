@@ -9,26 +9,18 @@ namespace Jakim\Mapper;
 
 
 use Jakim\Base\Mapper;
-use Jakim\Contract\MapperInterface;
 use Jakim\Model\Account;
 
-class AccountInfo extends Mapper implements MapperInterface
+class AccountInfo extends Mapper
 {
-
-    /**
-     * Attributes map.
-     *
-     * @return array
-     */
-    protected function map(): array
+    public function config(): array
     {
         return [
-            Account::class => [
-                'envelope' => 'user',
-                'item' => [
-                    'profilePicUrl' => 'profile_pic_url',
-                    'username' => 'username',
-                ],
+            'class' => Account::class,
+            'envelope' => 'user',
+            'properties' => [
+                'profilePicUrl' => 'profile_pic_url',
+                'username' => 'username',
             ],
         ];
     }

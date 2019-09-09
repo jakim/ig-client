@@ -37,7 +37,7 @@
           {
             "node": {
               "user": {
-                "full_name": "Sunny \u2600\ufe0f\ud83c\udf15",
+                "full_name": "Sunny",
                 "id": "4508251517",
                 "is_verified": false,
                 "profile_pic_url": "https://scontent-waw1-1.cdninstagram.com/vp/07243757f60e454b8e30c2767ac7d930/5E13C205/t51.2885-19/s150x150/58453733_815524285500569_7092081128525266944_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com",
@@ -741,7 +741,16 @@
         "edges": []
       },
       "edge_media_to_sponsor_user": {
-        "edges": []
+        "edges": [
+          {
+            "node": {
+              "sponsor": {
+                "id": "208",
+                "username": "john_doe"
+              }
+            }
+          }
+        ]
       },
       "location": {
         "id": "113226037",

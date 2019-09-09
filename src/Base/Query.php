@@ -33,9 +33,30 @@ abstract class Query
         return JsonHelper::decode($content);
     }
 
-    protected function throwEmptyContentExceptionIfEmpty($data)
+    /**
+     * @param string $url
+     * @param \Jakim\Base\Mapper $mapper
+     * @param bool $relations
+     * @return mixed
+     * @throws \Jakim\Exception\EmptyContentException
+     * @throws \Jakim\Exception\LoginAndSignupPageException
+     * @throws \Jakim\Exception\RestrictedProfileException
+     */
+    protected function createResult(string $url, Mapper $mapper, bool $relations)
     {
-        if (empty($data)) {
+        $content = $this->fetchContentAsArray($url);
+
+        $this->throwEmptyContentExceptionIfEmpty($content);
+
+        $config = $mapper->config();
+        $data = $mapper->getData($content, $config);
+
+        return $mapper->createModel($data, $config, $relations);
+    }
+
+    protected function throwEmptyContentExceptionIfEmpty($content)
+    {
+        if (empty($content)) {
             throw new EmptyContentException();
         }
     }

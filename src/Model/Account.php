@@ -7,7 +7,6 @@
 
 namespace Jakim\Model;
 
-
 class Account
 {
     public $id;
