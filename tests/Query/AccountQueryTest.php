@@ -97,6 +97,7 @@ class AccountQueryTest extends TestCase
         $this->accountDetails = file_get_contents(__DIR__ . '/../_data/account_details.html');
 
         $model = new Account();
+        $model->id = '666';
         $model->username = 'instagram';
         $model->profilePicUrl = 'https://scontent-waw1-1.cdninstagram.com/vp/a76a53c7fc27a4025c9ba80fd3627732/5DDBC45D/t51.2885-19/s150x150/59381178_2348911458724961_5863612957363011584_n.jpg?_nc_ht=scontent-waw1-1.cdninstagram.com';
         $this->accountInfoModel = $model;

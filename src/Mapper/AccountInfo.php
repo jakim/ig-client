@@ -19,6 +19,7 @@ class AccountInfo extends Mapper
             'class' => Account::class,
             'envelope' => 'user',
             'properties' => [
+                'id' => 'pk',
                 'profilePicUrl' => 'profile_pic_url',
                 'username' => 'username',
             ],
