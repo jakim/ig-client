@@ -8,7 +8,7 @@
 namespace Jakim\Model;
 
 
-class Tag
+class Tag implements ModelInterface
 {
     public $id;
     public $name;

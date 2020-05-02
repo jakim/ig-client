@@ -7,7 +7,7 @@
 
 namespace Jakim\Model;
 
-class Account
+class Account implements ModelInterface
 {
     public $id;
     public $username;

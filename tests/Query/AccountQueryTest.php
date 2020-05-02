@@ -5,20 +5,17 @@
  * Date: 15.03.2018
  */
 
-namespace Jakim\Query;
+namespace Query;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use Jakim\Mapper\AccountDetails;
-use Jakim\Mapper\AccountInfo;
-use Jakim\Mapper\EdgeMedia;
+use Jakim\Exception\RestrictedProfileException;
+use Jakim\IGClient;
 use Jakim\Model\Account;
 use Jakim\Model\Location;
-use Jakim\Model\MediaCollection;
 use Jakim\Model\Post;
+use Jakim\Query\AccountQuery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
 class AccountQueryTest extends TestCase
 {
@@ -33,7 +30,7 @@ class AccountQueryTest extends TestCase
 
     public function testFindOneByUsername()
     {
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]), new AccountDetails());
+        $query = new AccountQuery($this->IGClient([$this->accountDetails]));
         $account = $query->findOneByUsername('instagram');
 
         $this->assertInstanceOf(Account::class, $account);
@@ -42,38 +39,27 @@ class AccountQueryTest extends TestCase
 
     public function testFindOneById()
     {
-        $query = new AccountQuery($this->httpClient([$this->accountInfo]), null, new AccountInfo());
+        $query = new AccountQuery($this->IGClient([$this->accountInfo]));
         $account = $query->findOneById('198945880');
 
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals($this->accountInfoModel, $account);
     }
 
-    /**
-     * @expectedException \Jakim\Exception\RestrictedProfileException
-     */
     public function testFindOneRestricted()
     {
+        $this->expectException(RestrictedProfileException::class);
+
         $accountDetails = file_get_contents(__DIR__ . '/../_data/account_details_restricted.html');
 
-        $query = new AccountQuery($this->httpClient([$accountDetails]), new AccountDetails());
+        $query = new AccountQuery($this->IGClient([$accountDetails]));
         $query->findOneByUsername('bacardiusa');
     }
 
     public function testFindLastPosts()
     {
-        $edgeMedia = new EdgeMedia(EdgeMedia::ACCOUNT_DETAILS_ENVELOPE);
-
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]), null, null, $edgeMedia);
-        $mediaCollection = $query->findLatestMedia('instagram', false);
-
-        $this->assertInstanceOf(MediaCollection::class, $mediaCollection);
-        $this->assertEquals(5953, $mediaCollection->count);
-        $this->assertNull($mediaCollection->pageInfo);
-        $this->assertNull($mediaCollection->posts);
-
-        $query = new AccountQuery($this->httpClient([$this->accountDetails]), null, null, $edgeMedia);
-        $mediaCollection = $query->findLatestMedia('instagram', true);
+        $query = new AccountQuery($this->IGClient([$this->accountDetails]));
+        $mediaCollection = $query->findLatestMedia('instagram');
 
         $this->assertCount(12, $mediaCollection->posts);
         $this->mediaFirstPostModel->account = $this->mediaFirstPostAccountModel;
@@ -81,14 +67,16 @@ class AccountQueryTest extends TestCase
         $this->assertEquals($this->mediaFirstPostModel, $mediaCollection->posts['0']);
     }
 
-    protected function httpClient(array $responses = ['{}'])
+    protected function IGClient(array $responses = ['{}'])
     {
-        $mock = new MockHandler(array_map(function ($response) {
-            return new Response(200, ['Content-Type' => 'application/json'], $response);
+        $client = new MockHttpClient(array_map(function ($response) {
+            return new MockResponse($response, [
+                'http_code' => 200,
+                'response_headers' => ['Content-Type' => 'application/json'],
+            ]);
         }, $responses));
-        $handler = HandlerStack::create($mock);
 
-        return new Client(['handler' => $handler]);
+        return new IGClient($client);
     }
 
     protected function setUp()

@@ -5,7 +5,7 @@
  * Date: 16.03.2018
  */
 
-namespace Jakim\Mapper;
+namespace Jakim\Map;
 
 
 use Jakim\Base\Mapper;
@@ -16,9 +16,9 @@ class ExploreTags extends Mapper
     public function config(): array
     {
         return [
-            'class' => Tag::class,
-            'envelope' => 'graphql.hashtag',
-            'properties' => [
+            MapInterface::MODEL => Tag::class,
+            MapInterface::ENVELOPE => 'graphql.hashtag',
+            MapInterface::PROPERTIES => [
                 'id' => 'id',
                 'name' => 'name',
                 'media' => 'edge_hashtag_to_media.count',

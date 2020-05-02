@@ -8,7 +8,7 @@
 namespace Jakim\Model;
 
 
-class AccountsCollection
+class AccountsCollection implements ModelInterface
 {
     public $count;
 

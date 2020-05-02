@@ -9,24 +9,34 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
+use Jakim\Helper\JsonHelper;
+use Jakim\Hydrator\ModelHydrator;
 use jakim\ig\Endpoint;
-use Jakim\Mapper\MediaDetails;
+use Jakim\Map\MediaDetails;
 use Jakim\Model\Post;
 
 class PostQuery extends Query
 {
-    protected $findOneByShortcode;
-
-    public function __construct($httpClient, MediaDetails $findOneByShortcode)
-    {
-        parent::__construct($httpClient);
-        $this->findOneByShortcode = $findOneByShortcode;
-    }
-
-    public function findOneByShortcode(string $shortCode, $relations = false): Post
+    /**
+     * @param string $shortCode
+     * @return \Jakim\Model\Post|\Jakim\Model\ModelInterface
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function findOneByShortcode(string $shortCode): Post
     {
         $url = Endpoint::mediaDetails($shortCode);
 
-        return $this->createResult($url, $this->findOneByShortcode, $relations);
+        $response = $this->IGClient->get($url);
+        $content = $response->getContent();
+
+
+        $content = JsonHelper::decode($content);
+        $hydrator = new ModelHydrator((new MediaDetails())->config());
+
+        return $hydrator->hydrate(new Post(), $content);
     }
 }

@@ -5,7 +5,7 @@
  * Date: 24/12/2019
  */
 
-namespace Jakim\Mapper;
+namespace Jakim\Map;
 
 
 use Jakim\Base\Mapper;
@@ -35,25 +35,23 @@ class EdgeAccounts extends Mapper
     public function config(): array
     {
         return [
-            'class' => AccountsCollection::class,
-            'envelope' => $this->envelope,
-            'properties' => [
+            MapInterface::MODEL => AccountsCollection::class,
+            MapInterface::ENVELOPE => $this->envelope,
+            MapInterface::PROPERTIES => [
                 'count' => 'count',
-            ],
-            'relations' => [
                 'pageInfo' => [
-                    'class' => PageInfo::class,
-                    'envelope' => 'page_info',
-                    'properties' => [
+                    MapInterface::MODEL => PageInfo::class,
+                    MapInterface::ENVELOPE => 'page_info',
+                    MapInterface::PROPERTIES => [
                         'hasNextPage' => 'has_next_page',
                         'endCursor' => 'end_cursor',
                     ],
                 ],
                 'accounts' => [
-                    'multiple' => true,
-                    'class' => Account::class,
-                    'envelope' => 'edges',
-                    'properties' => [
+                    MapInterface::MULTIPLE => true,
+                    MapInterface::MODEL => Account::class,
+                    MapInterface::ENVELOPE => 'edges',
+                    MapInterface::PROPERTIES => [
                         'id' => 'node.id',
                         'username' => 'node.username',
                         'fullName' => 'node.full_name',

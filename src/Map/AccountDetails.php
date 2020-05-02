@@ -5,7 +5,7 @@
  * Date: 14.03.2018
  */
 
-namespace Jakim\Mapper;
+namespace Jakim\Map;
 
 
 use Jakim\Base\Mapper;
@@ -14,16 +14,16 @@ use Jakim\Model\Account;
 /**
  * Account SharedData.
  *
- * @package Jakim\Mapper
+ * @package Jakim\Map
  */
-class AccountDetails extends Mapper
+class AccountDetails implements MapInterface
 {
     public function config(): array
     {
         return [
-            'class' => Account::class,
-            'envelope' => 'entry_data.ProfilePage.0.graphql.user',
-            'properties' => [
+            self::MODEL => Account::class,
+            self::ENVELOPE => 'entry_data.ProfilePage.0.graphql.user',
+            self::PROPERTIES => [
                 'biography' => 'biography',
                 'externalUrl' => 'external_url',
                 'followedBy' => 'edge_followed_by.count',

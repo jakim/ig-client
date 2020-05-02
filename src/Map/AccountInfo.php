@@ -5,20 +5,19 @@
  * Date: 20.04.2018
  */
 
-namespace Jakim\Mapper;
+namespace Jakim\Map;
 
 
-use Jakim\Base\Mapper;
 use Jakim\Model\Account;
 
-class AccountInfo extends Mapper
+class AccountInfo implements MapInterface
 {
     public function config(): array
     {
         return [
-            'class' => Account::class,
-            'envelope' => 'user',
-            'properties' => [
+            self::MODEL => Account::class,
+            self::ENVELOPE => 'user',
+            self::PROPERTIES => [
                 'id' => 'pk',
                 'profilePicUrl' => 'profile_pic_url',
                 'username' => 'username',

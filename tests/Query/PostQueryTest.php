@@ -5,17 +5,16 @@
  * Date: 23.03.2018
  */
 
-namespace Jakim\Query;
+namespace Query;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use Jakim\Mapper\MediaDetails;
+use Jakim\IGClient;
 use Jakim\Model\Account;
 use Jakim\Model\Location;
 use Jakim\Model\Post;
+use Jakim\Query\PostQuery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
 class PostQueryTest extends TestCase
 {
@@ -24,21 +23,23 @@ class PostQueryTest extends TestCase
 
     public function testFindOneByShortcode()
     {
-        $query = new PostQuery($this->httpClient([$this->postData]), new MediaDetails());
-        $post = $query->findOneByShortcode('instagram', true);
+        $query = new PostQuery($this->IGClient([$this->postData]));
+        $post = $query->findOneByShortcode('instagram');
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertEquals($this->postModel, $post);
     }
 
-    protected function httpClient(array $responses = ['{}'])
+    protected function IGClient(array $responses = ['{}'])
     {
-        $mock = new MockHandler(array_map(function ($response) {
-            return new Response(200, ['Content-Type' => 'application/json'], $response);
+        $client = new MockHttpClient(array_map(function ($response) {
+            return new MockResponse($response, [
+                'http_code' => 200,
+                'response_headers' => ['Content-Type' => 'application/json'],
+            ]);
         }, $responses));
-        $handler = HandlerStack::create($mock);
 
-        return new Client(['handler' => $handler]);
+        return new IGClient($client);
     }
 
     protected function setUp()

@@ -5,19 +5,19 @@
  * Date: 16.03.2018
  */
 
-namespace Jakim\Query;
+namespace Query;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use Jakim\Mapper\EdgeMedia;
-use Jakim\Mapper\ExploreTags;
+use Jakim\IGClient;
+use Jakim\Map\EdgeMedia;
 use Jakim\Model\Account;
+use Jakim\Model\Location;
 use Jakim\Model\MediaCollection;
 use Jakim\Model\Post;
 use Jakim\Model\Tag;
+use Jakim\Query\TagQuery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
 class TagQueryTest extends TestCase
 {
@@ -50,7 +50,7 @@ class TagQueryTest extends TestCase
 
     public function testFindOne()
     {
-        $query = new TagQuery($this->httpClient([$this->tagData]), new ExploreTags());
+        $query = new TagQuery($this->IGClient([$this->tagData]));
         $tag = $query->findOneByName('aktywnemazury');
 
         $this->assertInstanceOf(Tag::class, $tag);
@@ -59,18 +59,8 @@ class TagQueryTest extends TestCase
 
     public function testFindLastMedia()
     {
-        $edgeMedia = new EdgeMedia(EdgeMedia::EXPLORE_TAGS_HASHTAG_MEDIA_ENVELOPE);
-
-        $query = new TagQuery($this->httpClient([$this->tagData]), null, $edgeMedia);
-        $mediaCollection = $query->findLatestMedia('aktywnemazury', false);
-
-        $this->assertInstanceOf(MediaCollection::class, $mediaCollection);
-        $this->assertEquals(23258, $mediaCollection->count);
-        $this->assertNull($mediaCollection->pageInfo);
-        $this->assertNull($mediaCollection->posts);
-
-        $query = new TagQuery($this->httpClient([$this->tagData]), null, $edgeMedia);
-        $mediaCollection = $query->findLatestMedia('aktywnemazury', true);
+        $query = new TagQuery($this->IGClient([$this->tagData]));
+        $mediaCollection = $query->findLatestMedia('aktywnemazury');
         $this->assertNotNull($mediaCollection->posts);
 
         $this->firstMediaModel->account = $this->firstMediaAccountModel;
@@ -79,34 +69,25 @@ class TagQueryTest extends TestCase
 
     public function testFindTopPosts()
     {
-        $edgeMedia = new EdgeMedia(EdgeMedia::EXPLORE_TAGS_TOP_POSTS_ENVELOPE);
-
-        $query = new TagQuery($this->httpClient([$this->tagData]), null, null, $edgeMedia);
-        $mediaCollection = $query->findTopPosts('aktywnemazury', false);
-
-        $this->assertInstanceOf(MediaCollection::class, $mediaCollection);
+        $query = new TagQuery($this->IGClient([$this->tagData]));
+        $mediaCollection = $query->findTopPosts('aktywnemazury');
         $this->assertNull($mediaCollection->count);
-        $this->assertNull($mediaCollection->pageInfo);
-        $this->assertNull($mediaCollection->posts);
-
-        $query = new TagQuery($this->httpClient([$this->tagData]), null, null, $edgeMedia);
-        $mediaCollection = $query->findTopPosts('aktywnemazury', true);
-        $this->assertNull($mediaCollection->count);
-        $this->assertNull($mediaCollection->pageInfo);
+        $this->assertFalse($mediaCollection->pageInfo->hasNextPage);
+        $this->assertNull($mediaCollection->pageInfo->endCursor);
         $this->assertNotNull($mediaCollection->posts);
-
-        $this->firstTopPostsModel->account = $this->firstTopPostAccountModel;
         $this->assertEquals($this->firstTopPostsModel, $mediaCollection->posts['0']);
     }
 
-    protected function httpClient(array $responses = ['{}'])
+    protected function IGClient(array $responses = ['{}'])
     {
-        $mock = new MockHandler(array_map(function ($response) {
-            return new Response(200, ['Content-Type' => 'application/json'], $response);
+        $client = new MockHttpClient(array_map(function ($response) {
+            return new MockResponse($response, [
+                'http_code' => 200,
+                'response_headers' => ['Content-Type' => 'application/json'],
+            ]);
         }, $responses));
-        $handler = HandlerStack::create($mock);
 
-        return new Client(['handler' => $handler]);
+        return new IGClient($client);
     }
 
     protected function setUp()
@@ -132,6 +113,7 @@ class TagQueryTest extends TestCase
         $model2->videoViews = null;
         $model2->typename = 'GraphImage';
         $model2->accessibilityCaption = 'Obraz mo';
+        $model2->location = new Location();
         $this->firstMediaModel = $model2;
 
         $account2 = new Account();
@@ -160,6 +142,10 @@ Follow @aktywnemazury
         $model->videoViews = null;
         $model->typename = 'GraphImage';
         $model->accessibilityCaption = 'Obraz może zawierać: chmura, niebo, trawa, na zewnątrz i przyroda';
+        $model->account = new Account();
+        $model->account->id = '2080433615';
+        $model->location = new Location();
+
         $this->firstTopPostsModel = $model;
 
         $account = new Account();

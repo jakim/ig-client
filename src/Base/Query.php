@@ -8,56 +8,20 @@
 namespace Jakim\Base;
 
 
-use Jakim\Exception\EmptyContentException;
-use Jakim\Helper\JsonHelper;
+use Jakim\IGClient;
 
 abstract class Query
 {
+    protected IGClient $IGClient;
+
     /**
-     * Psr7 compatible client.
+     * Query constructor.
      *
-     * @var \GuzzleHttp\Client
+     * @param \Jakim\IGClient $IGClient
      */
-    protected $httpClient;
-
-    public function __construct($httpClient)
+    public function __construct(IGClient $IGClient)
     {
-        $this->httpClient = $httpClient;
+        $this->IGClient = $IGClient;
     }
 
-    protected function fetchContentAsArray(string $url): ?array
-    {
-        $res = $this->httpClient->get($url);
-        $content = $res->getBody()->getContents();
-
-        return JsonHelper::decode($content);
-    }
-
-    /**
-     * @param string $url
-     * @param \Jakim\Base\Mapper $mapper
-     * @param bool $relations
-     * @return mixed
-     * @throws \Jakim\Exception\EmptyContentException
-     * @throws \Jakim\Exception\LoginAndSignupPageException
-     * @throws \Jakim\Exception\RestrictedProfileException
-     */
-    protected function createResult(string $url, Mapper $mapper, bool $relations)
-    {
-        $content = $this->fetchContentAsArray($url);
-
-        $this->throwEmptyContentExceptionIfEmpty($content);
-
-        $config = $mapper->config();
-        $data = $mapper->getData($content, $config);
-
-        return $mapper->createModel($data, $config, $relations);
-    }
-
-    protected function throwEmptyContentExceptionIfEmpty($content)
-    {
-        if (empty($content)) {
-            throw new EmptyContentException();
-        }
-    }
 }

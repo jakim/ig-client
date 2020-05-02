@@ -5,17 +5,18 @@
  * Date: 09/09/2019
  */
 
-namespace Jakim\Query;
+namespace Query;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use Jakim\Mapper\EdgeMedia;
+use Jakim\IGClient;
+use Jakim\Map\EdgeMedia;
 use Jakim\Model\Account;
+use Jakim\Model\Location;
 use Jakim\Model\MediaCollection;
 use Jakim\Model\Post;
+use Jakim\Query\MediaGraphqlQuery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
 class MediaGraphqlQueryTest extends TestCase
 {
@@ -35,7 +36,7 @@ class MediaGraphqlQueryTest extends TestCase
     public function testFindAccountMedia()
     {
         $edgeMedia = new EdgeMedia(EdgeMedia::GRAPHQL_ACCOUNT_MEDIA_ENVELOPE);
-        $query = new MediaGraphqlQuery($this->httpClient([$this->queryAccountData]), $edgeMedia);
+        $query = new MediaGraphqlQuery($this->IGClient([$this->queryAccountData]), $edgeMedia);
         $mediaCollection = $query->findMedia('query_hash', [
             'id' => '666',
             'first' => '',
@@ -45,7 +46,7 @@ class MediaGraphqlQueryTest extends TestCase
         $this->assertInstanceOf(MediaCollection::class, $mediaCollection);
         $this->assertEquals(6021, $mediaCollection->count);
         $this->assertTrue($mediaCollection->pageInfo->hasNextPage);
-        $this->assertEquals($mediaCollection->pageInfo->endCursor, 'QVFENGdzaFpRbHg5dXBYWmo2MGMtQnB6SFZkSl8wVjRkVUVnRFNPaXVpd01RckRINXJMdlNGQm5Id0pEX1FtQW82YVl0YVlBZTZDdWZteFVzY0lpWUJtNQ==');
+        $this->assertEquals('QVFENGdzaFpRbHg5dXBYWmo2MGMtQnB6SFZkSl8wVjRkVUVnRFNPaXVpd01RckRINXJMdlNGQm5Id0pEX1FtQW82YVl0YVlBZTZDdWZteFVzY0lpWUJtNQ==', $mediaCollection->pageInfo->endCursor);
         $this->assertNotNull($mediaCollection->posts);
 
         $this->assertEquals($this->accountFirstMediaModel, $mediaCollection->posts['0']);
@@ -54,7 +55,7 @@ class MediaGraphqlQueryTest extends TestCase
     public function testFindTagMedia()
     {
         $edgeMedia = new EdgeMedia(EdgeMedia::GRAPHQL_HASHTAG_MEDIA_ENVELOPE);
-        $query = new MediaGraphqlQuery($this->httpClient([$this->queryTagData]), $edgeMedia);
+        $query = new MediaGraphqlQuery($this->IGClient([$this->queryTagData]), $edgeMedia);
         $mediaCollection = $query->findMedia('query_hash', [
             'tag_name' => 'ig',
             'first' => '',
@@ -70,14 +71,16 @@ class MediaGraphqlQueryTest extends TestCase
 
     }
 
-    protected function httpClient(array $responses = ['{}'])
+    protected function IGClient(array $responses = ['{}'])
     {
-        $mock = new MockHandler(array_map(function ($response) {
-            return new Response(200, ['Content-Type' => 'application/json'], $response);
+        $client = new MockHttpClient(array_map(function ($response) {
+            return new MockResponse($response, [
+                'http_code' => 200,
+                'response_headers' => ['Content-Type' => 'application/json'],
+            ]);
         }, $responses));
-        $handler = HandlerStack::create($mock);
 
-        return new Client(['handler' => $handler]);
+        return new IGClient($client);
     }
 
     protected function setUp()
@@ -100,6 +103,8 @@ class MediaGraphqlQueryTest extends TestCase
         $account1->id = '5824900270';
         $post1->account = $account1;
 
+        $location1 = new Location();
+        $post1->location = $location1;
         $this->tagFirstMediaModel = $post1;
 
         $this->queryAccountData = file_get_contents(__DIR__ . '/../_data/graphql_account.json');
@@ -120,6 +125,9 @@ class MediaGraphqlQueryTest extends TestCase
         $account2->id = '25025320';
         $account2->username = 'instagram';
         $post2->account = $account2;
+
+        $location2 = new Location();
+        $post2->location = $location2;
 
         $this->accountFirstMediaModel = $post2;
     }

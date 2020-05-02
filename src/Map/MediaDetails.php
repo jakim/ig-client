@@ -5,7 +5,7 @@
  * Date: 23.03.2018
  */
 
-namespace Jakim\Mapper;
+namespace Jakim\Map;
 
 
 use Jakim\Base\Mapper;
@@ -16,16 +16,16 @@ use Jakim\Model\Post;
 /**
  * Specific media mapper.
  *
- * @package Jakim\Mapper
+ * @package Jakim\Map
  */
 class MediaDetails extends Mapper
 {
     public function config(): array
     {
         return [
-            'class' => Post::class,
-            'envelope' => 'graphql.shortcode_media',
-            'properties' => [
+            MapInterface::MODEL => Post::class,
+            MapInterface::ENVELOPE => 'graphql.shortcode_media',
+            MapInterface::PROPERTIES => [
                 'id' => 'id',
                 'shortcode' => 'shortcode',
                 'url' => 'display_url',
@@ -38,12 +38,10 @@ class MediaDetails extends Mapper
                 'videoUrl' => 'video_url',
                 'typename' => '__typename',
                 'accessibilityCaption' => 'accessibility_caption',
-            ],
-            'relations' => [
                 'account' => [
-                    'class' => Account::class,
-                    'envelope' => 'owner', //related to parent map
-                    'properties' => [
+                    MapInterface::MODEL => Account::class,
+                    MapInterface::ENVELOPE => 'owner', //related to parent map
+                    MapInterface::PROPERTIES => [
                         'id' => 'id',
                         'username' => 'username',
                         'profilePicUrl' => 'profile_pic_url',
@@ -52,9 +50,9 @@ class MediaDetails extends Mapper
                     ],
                 ],
                 'location' => [
-                    'class' => Location::class,
-                    'envelope' => 'location',
-                    'properties' => [
+                    MapInterface::MODEL => Location::class,
+                    MapInterface::ENVELOPE => 'location',
+                    MapInterface::PROPERTIES => [
                         'id' => 'id',
                         'hasPublicPage' => 'has_public_page',
                         'name' => 'name',
@@ -63,18 +61,18 @@ class MediaDetails extends Mapper
                     ],
                 ],
                 'sponsor' => [
-                    'class' => Account::class,
-                    'envelope' => 'edge_media_to_sponsor_user.edges.0.node.sponsor', //related to parent map
-                    'properties' => [
+                    MapInterface::MODEL => Account::class,
+                    MapInterface::ENVELOPE => 'edge_media_to_sponsor_user.edges.0.node.sponsor', //related to parent map
+                    MapInterface::PROPERTIES => [
                         'id' => 'id',
                         'username' => 'username',
                     ],
                 ],
                 'tagged' => [
-                    'multiple' => true,
-                    'class' => Account::class,
-                    'envelope' => 'edge_media_to_tagged_user.edges',
-                    'properties' => [
+                    MapInterface::MULTIPLE => true,
+                    MapInterface::MODEL => Account::class,
+                    MapInterface::ENVELOPE => 'edge_media_to_tagged_user.edges',
+                    MapInterface::PROPERTIES => [
                         'id' => 'node.user.id',
                         'username' => 'node.user.username',
                         'profilePicUrl' => 'node.user.profile_pic_url',

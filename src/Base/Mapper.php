@@ -10,6 +10,9 @@ namespace Jakim\Base;
 
 use Jakim\Helper\ArrayHelper;
 
+/**
+ * @deprecated
+ */
 abstract class Mapper
 {
     /**
@@ -19,6 +22,7 @@ abstract class Mapper
      */
     abstract public function config(): array;
 
+    /** @deprecated */
     public function getData(array $content, array $config)
     {
         $envelopeKey = ArrayHelper::getValue($config, 'envelope');
@@ -29,6 +33,7 @@ abstract class Mapper
         return $content;
     }
 
+    /** @deprecated */
     public function createModel(array $data, array $config, bool $relations = false)
     {
         $modelClass = ArrayHelper::getValue($config, 'class');
@@ -47,12 +52,7 @@ abstract class Mapper
         return $model;
     }
 
-    /**
-     * @param $model
-     * @param array $data
-     * @param array $relationsConfig
-     * @param bool $relations
-     */
+    /** @deprecated */
     protected function createRelations($model, array $data, array $relationsConfig, bool $relations = false): void
     {
         foreach ($relationsConfig as $property => $config) {

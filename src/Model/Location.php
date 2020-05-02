@@ -8,7 +8,7 @@
 namespace Jakim\Model;
 
 
-class Location
+class Location implements ModelInterface
 {
     public $id;
     public $hasPublicPage;

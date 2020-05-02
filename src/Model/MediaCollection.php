@@ -8,7 +8,7 @@
 namespace Jakim\Model;
 
 
-class MediaCollection
+class MediaCollection implements ModelInterface
 {
     public $count;
 

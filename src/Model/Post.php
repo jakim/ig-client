@@ -8,7 +8,7 @@
 namespace Jakim\Model;
 
 
-class Post
+class Post implements ModelInterface
 {
     public $id;
     public $shortcode;

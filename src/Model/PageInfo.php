@@ -8,7 +8,7 @@
 namespace Jakim\Model;
 
 
-class PageInfo
+class PageInfo implements ModelInterface
 {
     public $hasNextPage = false;
     public $endCursor = null;

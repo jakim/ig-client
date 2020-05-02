@@ -9,49 +9,81 @@ namespace Jakim\Query;
 
 
 use Jakim\Base\Query;
+use Jakim\Helper\JsonHelper;
+use Jakim\Hydrator\ModelHydrator;
 use jakim\ig\Endpoint;
-use Jakim\Mapper\EdgeMedia;
-use Jakim\Mapper\ExploreTags;
+use Jakim\Map\AccountInfo;
+use Jakim\Map\EdgeMedia;
+use Jakim\Map\ExploreTags;
+use Jakim\Model\Account;
 use Jakim\Model\MediaCollection;
 use Jakim\Model\Tag;
 
 class TagQuery extends Query
 {
-    protected $findOneByName;
-    protected $findLatestMedia;
-    protected $findTopPosts;
 
-    public function __construct(
-        $httpClient,
-        ExploreTags $findOneByName = null,
-        EdgeMedia $findLatestMedia = null,
-        EdgeMedia $findTopPosts = null
-    )
-    {
-        parent::__construct($httpClient);
-        $this->findOneByName = $findOneByName;
-        $this->findLatestMedia = $findLatestMedia;
-        $this->findTopPosts = $findTopPosts;
-    }
-
+    /**
+     * @param string $tagName
+     * @return \Jakim\Model\Tag|\Jakim\Model\ModelInterface
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
     public function findOneByName(string $tagName): Tag
     {
         $url = Endpoint::exploreTags($tagName);
+        $response = $this->IGClient->get($url);
+        $content = $response->getContent();
 
-        return $this->createResult($url, $this->findOneByName, false);
+        $content = JsonHelper::decode($content);
+        $hydrator = new ModelHydrator((new ExploreTags())->config());
+
+        return $hydrator->hydrate(new Tag(), $content);
     }
 
-    public function findLatestMedia(string $tagName, bool $relations = false): MediaCollection
+    /**
+     * @param string $tagName
+     * @return \Jakim\Model\MediaCollection|\Jakim\Model\ModelInterface
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function findLatestMedia(string $tagName): MediaCollection
     {
         $url = Endpoint::exploreTags($tagName);
 
-        return $this->createResult($url, $this->findLatestMedia, $relations);
+        $response = $this->IGClient->get($url);
+        $content = $response->getContent();
+
+        $content = JsonHelper::decode($content);
+        $hydrator = new ModelHydrator((new EdgeMedia(EdgeMedia::EXPLORE_TAGS_HASHTAG_MEDIA_ENVELOPE))->config());
+
+        return $hydrator->hydrate(new MediaCollection(), $content);
     }
 
-    public function findTopPosts(string $tagName, bool $relations = false): MediaCollection
+    /**
+     * @param string $tagName
+     * @return \Jakim\Model\MediaCollection|\Jakim\Model\ModelInterface
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function findTopPosts(string $tagName): MediaCollection
     {
         $url = Endpoint::exploreTags($tagName);
 
-        return $this->createResult($url, $this->findTopPosts, $relations);
+        $response = $this->IGClient->get($url);
+        $content = $response->getContent();
+
+        $content = JsonHelper::decode($content);
+        $hydrator = new ModelHydrator((new EdgeMedia(EdgeMedia::EXPLORE_TAGS_TOP_POSTS_ENVELOPE))->config());
+
+        return $hydrator->hydrate(new MediaCollection(), $content);
     }
 }
